@@ -4,7 +4,7 @@
 3. in your SSH session, type:
 
 > wget https://raw.githubusercontent.com/zaemliss/installers/master/nodium/nodium.sh
-chmod +x nodium.sh
-./nodium.sh
+> chmod +x nodium.sh
+> ./nodium.sh
 
 and follow the on-screen instructions
