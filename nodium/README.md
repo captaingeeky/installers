@@ -3,7 +3,7 @@
 2. stop at section 4.3 and continue with the instructions below:
 3. in your SSH session, type:
 
-```bash
+```javascript
 wget https://raw.githubusercontent.com/zaemliss/installers/master/nodium/nodium.sh
 chmod +x nodium.sh
 ./nodium.sh
