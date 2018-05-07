@@ -1,5 +1,6 @@
 # Installers
 #### Collection of Masternode Installers
-1. Torocoin
-2. Timecoin
-3. Aetheneum
+1. Nodium
+2. Torocoin
+3. Timecoin
+4. Aetheneum
