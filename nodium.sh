@@ -6,7 +6,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;36m'
 NC='\033[0m'
 
-echo -e '${RED}Enter your masternode key for your confir gile (you created this in windows), then ${GREEN}[ENTER]${NC}: ' 
+echo -e '${RED}Enter your masternode key for your conf gile (you created this in windows), then ${GREEN}[ENTER]${NC}: ' 
 echo
 read -p 'Masternode Private Key: ' GENKEY
 echo -e "${BLUE}Installing pwgen...${NC}"
