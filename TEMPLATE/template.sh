@@ -1,20 +1,25 @@
 #!/bin/bash
 
+# installer template by chris, 2018.
+# many elements inspired by @clicktoinstall
+
+PROJECT_NAME="XXXX"
 TMP_FOLDER=$(mktemp -d)
-CONFIG_FILE="xuma.conf"
-DEFAULT_USER="xuma-mn1"
-DEFAULT_PORT=19777
+CONFIG_FILE="XXXX.conf"
+DEFAULT_USER="XXXX-Admin"
+DEFAULT_PORT=NNNN
 DEFAULT_RPC_PORT=19643
 DEFAULT_SSH_PORT=22
-DAEMON_BINARY="xumad"
-CLI_BINARY="xuma-cli"
+DAEMON_BINARY="XXXXd"
+CLI_BINARY="XXXX-cli"
 DAEMON_BINARY_FILE="/usr/local/bin/$DAEMON_BINARY"
 CLI_BINARY_FILE="/usr/local/bin/$CLI_BINARY"
-GITHUB_REPO="https://github.com/xumacoin/xuma-core.git"
+GITHUB_REPO="https://github.com/PATH/TO/XXXX.git"
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
+RED='\033[1;31m'
+GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
+BLUE='\033[1;36m'
 NC='\033[0m'
 
 function checks() 
@@ -30,7 +35,7 @@ function checks()
   fi
 
   if [ -n "$(pidof $DAEMON_BINARY)" ]; then
-    echo -e "The Xuma daemon is already running. Xuma does not support multiple masternodes on one host."
+    echo -e "The $PROJECT_NAME daemon is already running. $PROJECT_NAME does not support multiple masternodes on one host."
     NEW_NODE="n"
     clear
   else
@@ -66,7 +71,7 @@ function prepare_system()
   echo -e "${GREEN}Upgrading existing packages, it may take some time to finish.${NC}"
   DEBIAN_FRONTEND=noninteractive apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" -y -qq upgrade 
   
-  echo -e "${GREEN}Installing all dependencies for the Xuma coin master node, it may take some time to finish.${NC}"
+  echo -e "${GREEN}Installing all dependencies for the $PROJECT_NAME coin master node, it may take some time to finish.${NC}"
   apt install -y git wget pwgen automake build-essential libtool autotools-dev autoconf pkg-config libssl-dev libboost-all-dev software-properties-common fail2ban ufw htop unzip
   apt-add-repository -y ppa:bitcoin/bitcoin
   apt update
@@ -75,7 +80,8 @@ function prepare_system()
   apt autoclean -y
   clear
   
-  if [ "$?" -gt "0" ]; then
+  #check if any errors reported by previous opertation(s)
+  if [ "$?" -gt "0" ]; then 
       echo -e "${RED}Not all of the required packages were installed correctly.\n"
       echo -e "Try to install them manually by running the following commands:${NC}\n"
       echo -e "apt update"
@@ -95,11 +101,11 @@ function prepare_system()
 function deploy_binary() 
 {
   if [ -f $DAEMON_BINARY_FILE ]; then
-    echo -e "${GREEN}Xuma daemon binary file already exists, using binary from $DAEMON_BINARY_FILE.${NC}"
+    echo -e "${GREEN}$PROJECT_NAME daemon binary file already exists, using binary from $DAEMON_BINARY_FILE.${NC}"
   else
     cd $TMP_FOLDER
 
-    echo -e "${GREEN}Downloading source code from the Xuma GitHub repository at $GITHUB_REPO.${NC}"
+    echo -e "${GREEN}Downloading source code from the $PROJECT_NAME GitHub repository at $GITHUB_REPO.${NC}"
     git clone $GITHUB_REPO
     cd xuma-core
 
@@ -126,8 +132,8 @@ function enable_firewall()
   apt install ufw -y >/dev/null 2>&1
 
   ufw disable >/dev/null 2>&1
-  ufw allow $DAEMON_PORT/tcp comment "Xuma Masternode port" >/dev/null 2>&1
-  ufw allow $DEFAULT_RPC_PORT/tcp comment "Xuma Masernode RPC port" >/dev/null 2>&1
+  ufw allow $DAEMON_PORT/tcp comment "$PROJECT_NAME Masternode port" >/dev/null 2>&1
+  ufw allow $DEFAULT_RPC_PORT/tcp comment "$PROJECT_NAME Masernode RPC port" >/dev/null 2>&1
   
   ufw allow $SSH_PORTNUMBER/tcp comment "Custom SSH port" >/dev/null 2>&1
   ufw limit $SSH_PORTNUMBER/tcp >/dev/null 2>&1
@@ -147,7 +153,7 @@ function add_daemon_service()
 {
   cat << EOF > /etc/systemd/system/$USER_NAME.service
 [Unit]
-Description=Xuma deamon service
+Description=$PROJECT_NAME deamon service
 After=network.target
 After=syslog.target
 [Service]
@@ -173,14 +179,14 @@ EOF
   systemctl daemon-reload
   sleep 3
 
-  echo -e "${GREEN}Starting the Xuma service from $DAEMON_BINARY_FILE on port $DAEMON_PORT.${NC}"
+  echo -e "${GREEN}Starting the $PROJECT_NAME service from $DAEMON_BINARY_FILE on port $DAEMON_PORT.${NC}"
   systemctl start $USER_NAME.service >/dev/null 2>&1
   
   echo -e "${GREEN}Enabling the service to start on reboot.${NC}"
   systemctl enable $USER_NAME.service >/dev/null 2>&1
 
   if [[ -z $(pidof $DAEMON_BINARY) ]]; then
-    echo -e "${RED}The Xuma masternode service is not running${NC}. You should start by running the following commands as root:"
+    echo -e "${RED}The $PROJECT_NAME masternode service is not running${NC}. You should start by running the following commands as root:"
     echo "systemctl start $USER_NAME.service"
     echo "systemctl status $USER_NAME.service"
     echo "less /var/log/syslog"
@@ -190,12 +196,12 @@ EOF
 
 function ask_port() 
 {
-  read -e -p "$(echo -e $YELLOW Enter a port to run the Xuma service on: $NC)" -i $DEFAULT_PORT DAEMON_PORT
+  read -e -p "$(echo -e $YELLOW Enter a port to run the $PROJECT_NAME service on: $NC)" -i $DEFAULT_PORT DAEMON_PORT
 }
 
 function ask_user() 
 {  
-  read -e -p "$(echo -e $YELLOW Enter a new username to run the Xuma service as: $NC)" -i $DEFAULT_USER USER_NAME
+  read -e -p "$(echo -e $YELLOW Enter a new username to run the $PROJECT_NAME service as: $NC)" -i $DEFAULT_USER USER_NAME
 
   if [ -z "$(getent passwd $USER_NAME)" ]; then
     useradd -m $USER_NAME
@@ -277,7 +283,7 @@ function create_key()
     sleep 5
 
     if [ -z "$(pidof $DAEMON_BINARY)" ]; then
-    echo -e "${RED}Xuma deamon couldn't start, could not generate a private key. Check /var/log/syslog for errors.${NC}"
+    echo -e "${RED}$PROJECT_NAME deamon couldn't start, could not generate a private key. Check /var/log/syslog for errors.${NC}"
     exit 1
     fi
 
@@ -321,19 +327,19 @@ function show_output()
  echo
  echo -e "================================================================================================================================"
  echo
- echo -e "${GREEN}Your Xuma coin master node is up and running.${NC}" 
+ echo -e "${GREEN}Your $PROJECT_NAME coin master node is up and running.${NC}" 
  echo
  echo -e "${YELLOW}It is recommended that you copy/paste all of this information and keep it in a safely kept file on your local PC"
- echo -e "so you know how to use the commands below to manage your Xuma master node.${NC}"
+ echo -e "so you know how to use the commands below to manage your $PROJECT_NAME master node.${NC}"
  echo
  echo -e " - it is running as user ${GREEN}$USER_NAME${NC} and it is listening on port ${GREEN}$DAEMON_PORT${NC} at your VPS address ${GREEN}$DAEMON_IP${NC}."
  echo -e " - the ${GREEN}$USER_NAME password${NC} is ${GREEN}$USER_PASSWORD${NC}"
- echo -e " - the Xuma binary files are installed to ${GREEN}/usr/local/bin${NC}"
+ echo -e " - the $PROJECT_NAME binary files are installed to ${GREEN}/usr/local/bin${NC}"
  echo -e " - all data and configuration for the masternode is located at ${GREEN}$DATA_DIR${NC} and the folders within"
- echo -e " - the Xuma configuration file is located at ${GREEN}$DATA_DIR/mainnet/$CONFIG_FILE${NC}"
+ echo -e " - the $PROJECT_NAME configuration file is located at ${GREEN}$DATA_DIR/mainnet/$CONFIG_FILE${NC}"
  echo -e " - the masternode privkey is ${GREEN}$PRIV_KEY${NC}"
  echo
- echo -e "You can manage your Xuma service from your SSH cmdline with the following commands:"
+ echo -e "You can manage your $PROJECT_NAME service from your SSH cmdline with the following commands:"
  echo -e " - ${GREEN}systemctl start $USER_NAME.service${NC} to start the service."
  echo -e " - ${GREEN}systemctl stop $USER_NAME.service${NC} to stop the service."
  echo -e " - ${GREEN}systemctl status $USER_NAME.service${NC} to get the status of the service."
@@ -352,7 +358,7 @@ function show_output()
  echo -e "  running the ${GREEN}getinfo${NC} command."
  echo -e "  NOTE: the deamon must be running first before trying this command. See notes above on service commands usage."
  echo 
- echo -e "You can run ${GREEN}htop${NC} if you want to verify the Xuma service is running or to monitor your server."
+ echo -e "You can run ${GREEN}htop${NC} if you want to verify the $PROJECT_NAME service is running or to monitor your server."
  if [[ $SSH_PORTNUMBER -ne $DEFAULT_SSH_PORT ]]; then
  echo
  echo -e " ATTENTION: you have changed your SSH port, make sure you modify your SSH client to use port $SSH_PORTNUMBER so you can login."
@@ -379,22 +385,15 @@ function setup_node()
 clear
 
 echo
-echo -e "========================================================================================================="
-echo -e "${GREEN}"
-echo -e "                                        Yb  dP 8b    d8 Yb  dP"
-echo    "                                         YbdP  88b  d88  YbdP"
-echo    "                                         dPYb  88YbdP88  dPYb" 
-echo -e "                                        dP  Yb 88 YY 88 dP  Yb" 
-echo                          
-echo -e "${NC}"
-echo -e "This script will automate the installation of your Xuma coin masternode and server configuration by"
+echo -e "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"
+echo -e "This script will automate the installation of your $PROJECT_NAME coin masternode and server configuration by"
 echo -e "performing the following steps:"
 echo
 echo -e " - Create a swap file if VPS is < 2GB RAM for better performance"
 echo -e " - Prepare your system with the required dependencies"
-echo -e " - Obtain the latest Xuma masternode files from the Xuma GitHub repository"
-echo -e " - Create a user and password to run the Xuma masternode service"
-echo -e " - Install the Xuma masternode service"
+echo -e " - Obtain the latest $PROJECT_NAME masternode files from the $PROJECT_NAME GitHub repository"
+echo -e " - Create a user and password to run the $PROJECT_NAME masternode service"
+echo -e " - Install the $PROJECT_NAME masternode service"
 echo -e " - Update your system with a non-standard SSH port (optional)"
 echo -e " - Add DDoS protection using fail2ban"
 echo -e " - Update the system firewall to only allow; SSH, the masternode ports and outgoing connections"
@@ -402,13 +401,7 @@ echo -e " - Manage your log files using the logrotate utility"
 echo
 echo -e "The script will output ${YELLOW}questions${NC}, ${GREEN}information${NC} and ${RED}errors${NC}"
 echo -e "When finished the script will show a summary of what has been done."
-echo
-echo -e "Script created by click2install"
-echo -e " - GitHub: https://github.com/click2install/xumacoin"
-echo -e " - Discord: click2install#9625"
-echo -e " - Xuma: XWKSQTpNqx63tuNdKnxvLAuX6sz1GCVWY6"
-echo 
-echo -e "========================================================================================================="
+echo -e "■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■"
 echo
 read -e -p "$(echo -e $YELLOW Do you want to continue? [Y/N] $NC)" CHOICE
 
@@ -423,6 +416,6 @@ if [[ "$NEW_NODE" == "new" ]]; then
   deploy_binary
   setup_node
 else
-    echo -e "${GREEN}The Xuma daemon is already running. Xuma does not support multiple masternodes on one host.${NC}"
+    echo -e "${GREEN}The $PROJECT_NAME daemon is already running. $PROJECT_NAME does not support multiple masternodes on one host.${NC}"
   exit 0
 fi
