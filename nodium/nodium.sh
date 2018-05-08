@@ -1,13 +1,14 @@
 #!/bin/bash
 
-RED='\033[0;31m'
-GREEN='\033[0;32m'
+RED='\033[1;31m'
+GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
-BLUE='\033[0;36m'
+BLUE='\033[1;36m'
 NC='\033[0m'
 
-echo -e '${BLUE}Enter your masternode key for your conf file (you created this in windows), then ${GREEN}[ENTER]${NC}: ' 
-echo
+echo -e "${YELLOW}Enter your masternode key for your conf file ${BLUE}(you created this in windows)${YELLOW}, then press ${GREEN}[ENTER]${NC}: " 
+echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy from your ${BLUE}masternode genkey ${RED}in your windows/Mac wallet and then paste the key below."
+echo -e "Typing the key out incorrectly is 99% of the installation issues. ${NC}"
 read -p 'Masternode Private Key: ' GENKEY
 echo -e "${BLUE}Installing pwgen...${NC}"
 sudo apt-get install pwgen
