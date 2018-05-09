@@ -6,8 +6,8 @@
 https://github.com/nodiumproject/Wallets <br />
 1.2 Launch the wallet and allow it to synchronize <br />
 1.3 Click on `debug console` found in `tools` - Type `masternode genkey` - copy the generated key - exit console <br />
-1.4 Go to `receiving wallets` found in `files` - create masternode wallet, by creating a new wallet, called `masternode1` <br />
-1.5 Send EXACTLY 10,000 coins to `masternode1` wallet <br />
+1.4 Go to `receiving wallets` found in `files` - create masternode wallet, by creating a new wallet, called `MN011` or `MN0x` if it's not your first i.e.: `MN04` <br />
+1.5 Send EXACTLY 10,000 coins to the new `MN0x` wallet <br />
 1.6. Go back to `debug console` - Type `masternode outputs` <br />
 1.7: Now you should see a transaction hash and the output id, keep them for later. <br />
 
@@ -20,18 +20,18 @@ The format is like this:
 ```
 # Masternode config file
 # Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index
-# Example: mn1 127.0.0.2:51474 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0
+# Example: MN01 127.0.0.2:51474 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0
 ```
 
 2.2. Add your own real working node details under it. <br />
-2.3. Put the masternode wallet name, i.e - `masternode1` <br />
+2.3. Put the masternode wallet name, i.e - `MN01` <br />
 2.4 Put the server IP address ( your vultr ip or other vps/vm ip) followed by the port :6250 <br />
 2.5 Put the private key generated in step 1.3 <br />
 2.6 Put the transaction hash and output id from step 1.7 <br />
 Example below
 
 ```
-masternode1 124.842.07.0:6250 119cCx5YeA519YkTzun4EptdexAo3RvQXaPdkP 838328ce57cc8b168d932d138001781b77b22470c05cf2235a3284093cb0019db 0
+MN01 124.842.07.0:6250 119cCx5YeA519YkTzun4EptdexAo3RvQXaPdkP 838328ce57cc8b168d932d138001781b77b22470c05cf2235a3284093cb0019db 0
 ```
 
 2.7 Once complete, save the file <br />
@@ -41,7 +41,7 @@ The file will look like this:
 # Masternode config file
 # Format: alias IP:port masternodeprivkey collateral_output_txid collateral_output_index
 # Example: mn1 127.0.0.2:51474 93HaYBVUCYjEMeeH1Y4sBGLALQZE1Yc1K64xiqgX37tGBDQL8Xg 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 0
-masternode1 124.842.07.0:6250 119cCx5YeA519YkTzun4EptdexAo3RvQXaPdkP 838328ce57cc8b168d932d138001781b77b22470c05cf2235a3284093cb0019db 0
+MN01 124.842.07.0:6250 119cCx5YeA519YkTzun4EptdexAo3RvQXaPdkP 838328ce57cc8b168d932d138001781b77b22470c05cf2235a3284093cb0019db 0
 ```
 
 
