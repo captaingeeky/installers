@@ -59,7 +59,7 @@ function get_masternode_key()
   echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy from your ${BLUE}masternode genkey ${RED}in your windows/Mac wallet and then paste the key below."
   echo -e "Typing the key out incorrectly is 99% of all installation issues. ${NC}"
   echo
-  read -p '${YELLOW}Masternode Private Key: ${NC}' GENKEY
+  read -p 'Masternode Private Key: ' GENKEY
   echo
 }
 
