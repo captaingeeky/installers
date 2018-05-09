@@ -70,69 +70,86 @@ function create_swap()
   echo -e "/swapfile none swap sw 0 0 \n" >> /etc/fstab
 }
 
-echo
-echo -e "${BLUE}Cloning GitHUB${NC}"
-cd /root/
-git clone https://github.com/nodiumproject/Nodium nodium
+function clone_github()
+{
+  echo
+  echo -e "${BLUE}Cloning GitHUB${NC}"
+  cd /root/
+  git clone https://github.com/nodiumproject/Nodium nodium
+}
 
-cd nodium
-echo
-echo -e "${BLUE}Installing Pre-requisites${NC}"
-sudo apt-get install -y pkg-config
-sudo apt-get -y install build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
-sudo add-apt-repository ppa:bitcoin/bitcoin -y
+function install_prerequisites()
+{
+  cd nodium
+  echo
+  echo -e "${BLUE}Installing Pre-requisites${NC}"
+  sudo apt-get install -y pkg-config
+  sudo apt-get -y install build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
+  sudo add-apt-repository ppa:bitcoin/bitcoin -y
+  sudo apt-get update
+  sudo apt-get upgrade
+  sudo apt-get install libdb4.8-dev libdb4.8++-dev
+}
 
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install libdb4.8-dev libdb4.8++-dev
+function build_project()
+{
+  echo
+  echo -e "${BLUE}Compiling the wallet (this can take 20 minutes)${NC}"
+  sudo chmod +x share/genbuild.sh
+  sudo chmod +x autogen.sh
+  sudo chmod 755 src/leveldb/build_detect_platform
+  sudo ./autogen.sh
+  sudo ./configure
+  sudo make
+}
 
-echo
-echo -e "${BLUE}Compiling the wallet (this can take 20 minutes)${NC}"
-sudo chmod +x share/genbuild.sh
-sudo chmod +x autogen.sh
-sudo chmod 755 src/leveldb/build_detect_platform
-sudo ./autogen.sh
-sudo ./configure
-sudo make
+function create_conf_file()
+{
+  echo
+  echo -e "${BLUE}Starting daemon to create conf file${NC}"
+  cd src
+  ./$DAEMON -daemon
+  sleep 30
+  ./$CLI getmininginfo
+  ./$CLI stop
+  echo
+  echo -e "${BLUE}Stopping the daemon and writing config${NC}"
 
-echo
-echo -e "${BLUE}Starting daemon to create conf file${NC}"
-cd src
-./Nodiumd -daemon
-sleep 30
-./Nodium-cli getmininginfo
-./Nodium-cli stop
-echo
-echo -e "${BLUE}Stopping the daemon and writing config${NC}"
+  cat <<EOF > ~/.Nodium/Nodium.conf
+  rpcuser=$RPC_USER
+  rpcpassword=$PASSWORD
+  listen=1
+  server=1
+  daemon=1
+  logtimestamps=1
+  maxconnections=256
+  masternode=1
+  externalip=$WANIP
+  bind=$WANIP
+  masternodeaddr=$WANIP:$MN_PORT
+  masternodeprivkey=$GENKEY
+  EOF
+}
 
-cat <<EOF > ~/.Nodium/Nodium.conf
-rpcuser=nodiumadmin
-rpcpassword=$PASSWORD
-listen=1
-server=1
-daemon=1
-logtimestamps=1
-maxconnections=256
-masternode=1
-externalip=$WANIP
-bind=$WANIP
-masternodeaddr=$WANIP:6250
-masternodeprivkey=$GENKEY
-EOF
+function configure_firewall()
+{
+  echo
+  echo -e "${BLUE}setting up firewall to keep bad guys out...${NC}"
+  sudo apt-get install -y ufw
+  sudo apt-get update -y
+  
+  #configure ufw firewall to keep bad guys out
+  sudo ufw default allow outgoing
+  sudo ufw default deny incoming
+  sudo ufw allow ssh/tcp
+  sudo ufw limit ssh/tcp
+  sudo ufw allow $MN_PORT/tcp
+  sudo ufw logging on
+}
 
-echo
-echo -e "${BLUE}setting up firewall to keep bad guys out...${NC}"
-sudo apt-get install -y ufw
-sudo apt-get update -y
-
-#configure ufw firewall to keep bad guys out
-sudo ufw default allow outgoing
-sudo ufw default deny incoming
-sudo ufw allow ssh/tcp
-sudo ufw limit ssh/tcp
-sudo ufw allow 6250/tcp
-sudo ufw logging on
-
-echo
-echo -e "${BLUE}Re-Starting the wallet...${NC}"
-./Nodiumd -daemon
+function start_wallet()
+{
+  echo
+  echo -e "${BLUE}Re-Starting the wallet...${NC}"
+  ./DAEMON -daemon
+}
