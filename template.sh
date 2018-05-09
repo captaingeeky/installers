@@ -33,18 +33,18 @@ function show_header()
 {
   clear
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
-  echo -e "${yellow}$PROJECT Masternode Installer v1.0 - chris 2018 | On server VPS IP: $WANIP${NC}"
+  echo -e "${YELLOW}$PROJECT Masternode Installer v1.0 - chris 2018 | On server VPS IP: $WANIP${NC}"
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
   echo
   echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
   echo -e "It will:"
   echo
-  echo -e " ${yellow}■${NC} Create a swap file"
-  echo -e " ${yellow}■${NC} Prepare your system with the required dependencies"
-  echo -e " ${yellow}■${NC} Obtain the latest $PROJECT masternode files from the official $PROJECT repository"
-  echo -e " ${yellow}■${NC} Create a user and password to run the $PROJECT masternode service and install it"
-  echo -e " ${yellow}■${NC} Add DDoS protection using fail2ban"
-  echo -e " ${yellow}■${NC} Update the system firewall to only allow; SSH, the masternode ports and outgoing connections"
+  echo -e " ${YELLOW}■${NC} Create a swap file"
+  echo -e " ${YELLOW}■${NC} Prepare your system with the required dependencies"
+  echo -e " ${YELLOW}■${NC} Obtain the latest $PROJECT masternode files from the official $PROJECT repository"
+  echo -e " ${YELLOW}■${NC} Create a user and password to run the $PROJECT masternode service and install it"
+  echo -e " ${YELLOW}■${NC} Add DDoS protection using fail2ban"
+  echo -e " ${YELLOW}■${NC} Update the system firewall to only allow; SSH, the masternode ports and outgoing connections"
   echo
   echo -e "The script will output ${YELLOW}questions${NC}, ${BLUE}information${NC} and ${RED}errors${NC}"
   echo
