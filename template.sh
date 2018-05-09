@@ -118,20 +118,20 @@ function create_conf_file()
   echo
   echo -e "${BLUE}Stopping the daemon and writing config${NC}"
 
-  cat <<EOF > $CONF_FILE
-  rpcuser=$RPC_USER
-  rpcpassword=$PASSWORD
-  listen=1
-  server=1
-  daemon=1
-  logtimestamps=1
-  maxconnections=256
-  masternode=1
-  externalip=$WANIP
-  bind=$WANIP
-  masternodeaddr=$WANIP:$MN_PORT
-  masternodeprivkey=$GENKEY
-  EOF
+cat <<EOF > $CONF_FILE
+rpcuser=$RPC_USER
+rpcpassword=$PASSWORD
+listen=1
+server=1
+daemon=1
+logtimestamps=1
+maxconnections=256
+masternode=1
+externalip=$WANIP
+bind=$WANIP
+masternodeaddr=$WANIP:$MN_PORT
+masternodeprivkey=$GENKEY
+EOF
 }
 
 function configure_firewall()
