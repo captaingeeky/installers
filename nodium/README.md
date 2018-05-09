@@ -44,39 +44,10 @@ The file will look like this:
 masternode1 124.842.07.0:6250 119cCx5YeA519YkTzun4EptdexAo3RvQXaPdkP 838328ce57cc8b168d932d138001781b77b22470c05cf2235a3284093cb0019db 0
 ```
 
-## 3. Preparing the VPS config file with wallet information
 
-(Get ready for some linux, as seen in steps below you will use it) <br />
+# 3. Set up the Masternode on a Linux VPS
 
-3.1 Copy this, and save as a file to use later on your desktop for example.
-
-1. externalip and bind = your vultr ip address
-2. masternodeaddr = your vultr ip address + port
-3. masternodeprivkey = masternode gen key
-
-(Keep the private key to yourself and do not share it with anyone !!!! )
-
-```
-listen=1
-server=1
-daemon=1
-logtimestamps=1
-maxconnections=256
-masternode=1
-externalip=207.148.3.88
-bind=207.148.3.88
-masternodeaddr=207.148.3.88
-masternodeprivkey=13bkESxBStGfzHAGAAke61kX0E5tLUeNgTTHWhpmJ5EBai4XZFa
-```
-
-Above is a non functioning dummy, replace with your own
-The Wallet configuration is now completed. Congratulations!
-
-*****
-
-# 4. Set up the Masternode on a Linux VPS
-
-## 4.1 Choose your VPS
+## 3.1 Choose your VPS
 
 VPS server required: We recommend the following specifications:
 - www.vultr.com
@@ -85,7 +56,7 @@ VPS server required: We recommend the following specifications:
 - Ubuntu 16.04.x64
 - Server (Name anything you want, i.e matrix)
 
-## 4.2 Start an SSH session
+## 3.2 Start an SSH session
 
 Depending upon which operating system you are using. Download the following software:
 
@@ -94,13 +65,13 @@ Depending upon which operating system you are using. Download the following soft
 
 Next:
 
-4.2.1 Load the SSH terminal<br />
-4.2.2 Copy your IP from the VPS - And for windows Putty simply put in the IP and press enter. For Mac, use the command: ssh root@(yourserveripaddress)<br />
-4.2.3 It will login to server. Follow the commands below, typing one by one, each line, followed by pressing enter<br />
-4.2.4 Username: root<br />
-4.2.5 Password: (vultr password)<br />
+3.2.1 Load the SSH terminal<br />
+3.2.2 Copy your IP from the VPS - And for windows Putty simply put in the IP and press enter. For Mac, use the command: ssh root@(yourserveripaddress)<br />
+3.2.3 It will login to server. Follow the commands below, typing one by one, each line, followed by pressing enter<br />
+3.2.4 Username: root<br />
+3.2.5 Password: (vultr password)<br />
 
-4.3 in your SSH session, type:
+3.3 in your SSH session, type:
 
 ```
 wget https://raw.githubusercontent.com/zaemliss/installers/master/nodium/nodium.sh
@@ -110,4 +81,5 @@ chmod +x nodium.sh
 
 and follow the on-screen instructions
 
+# 4 Once the VPS is installed and running...
 Wait a few minutes then go to your Windows or Mac wallet, Masternodes tab, Start All.
