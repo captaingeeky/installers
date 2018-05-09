@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
@@ -42,13 +41,12 @@ function show_header()
   echo -e " ${YELLOW}■${NC} Create a swap file"
   echo -e " ${YELLOW}■${NC} Prepare your system with the required dependencies"
   echo -e " ${YELLOW}■${NC} Obtain the latest $PROJECT masternode files from the official $PROJECT repository"
-  echo -e " ${YELLOW}■${NC} Create a user and password to run the $PROJECT masternode service and install it"
+  #echo -e " ${YELLOW}■${NC} Create a user and password to run the $PROJECT masternode service and install it"
   echo -e " ${YELLOW}■${NC} Add DDoS protection using fail2ban"
-  echo -e " ${YELLOW}■${NC} Update the system firewall to only allow; SSH, the masternode ports and outgoing connections"
+  echo -e " ${YELLOW}■${NC} Update the system firewall to only allow SSH, the masternode ports and outgoing connections"
+  echo -e " ${YELLOW}■${NC} Add a schedule entry for the service to restart automatically on power cycles/reboots."
   echo
-  echo -e "The script will output ${YELLOW}questions${NC}, ${BLUE}information${NC} and ${RED}errors${NC}"
-  echo
-  read -e -p "$(echo -e $YELLOW Do you want to continue? [Y/N] $NC)" CHOICE
+  read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
 
 if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
   exit 1;
@@ -60,7 +58,8 @@ function get_masternode_key()
   echo -e "${YELLOW}Enter your masternode key for your conf file ${BLUE}(you created this in windows)${YELLOW}, then press ${GREEN}[ENTER]${NC}: " 
   echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy from your ${BLUE}masternode genkey ${RED}in your windows/Mac wallet and then paste the key below."
   echo -e "Typing the key out incorrectly is 99% of all installation issues. ${NC}"
-  read -p 'Masternode Private Key: ' GENKEY
+  echo
+  read -p '${YELLOW}Masternode Private Key: ${NC}' GENKEY
   echo
 }
 
@@ -91,7 +90,7 @@ function install_prerequisites()
   sudo apt-get -y install build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
   sudo add-apt-repository ppa:bitcoin/bitcoin -y
   sudo apt-get update
-  sudo apt-get upgrade
+  sudo apt-get upgrade -y
   sudo apt-get install libdb4.8-dev libdb4.8++-dev
 }
 
@@ -111,6 +110,7 @@ function create_conf_file()
 {
   echo
   echo -e "${BLUE}Starting daemon to create conf file${NC}"
+  echo -e "${YELLOW}Ignore any errors you see below. This will take 30 seconds.${NC}"
   $DAEMON_START
   sleep 30
   $CLI_BINARY getmininginfo
@@ -159,7 +159,7 @@ function start_wallet()
 {
   echo
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
-  ./DAEMON -daemon
+  $DAEMON_START
 }
 
 function deploy()
