@@ -42,7 +42,7 @@ function show_header()
   echo -e " ${YELLOW}■${NC} Prepare your system with the required dependencies"
   echo -e " ${YELLOW}■${NC} Obtain the latest $PROJECT masternode files from the official $PROJECT repository"
   #echo -e " ${YELLOW}■${NC} Create a user and password to run the $PROJECT masternode service and install it"
-  echo -e " ${YELLOW}■${NC} Add DDoS protection using fail2ban"
+  echo -e " ${YELLOW}■${NC} Add Brute-Force protection using fail2ban"
   echo -e " ${YELLOW}■${NC} Update the system firewall to only allow SSH, the masternode ports and outgoing connections"
   echo -e " ${YELLOW}■${NC} Add a schedule entry for the service to restart automatically on power cycles/reboots."
   echo
