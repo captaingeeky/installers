@@ -6,20 +6,17 @@ YELLOW='\033[1;33m'
 BLUE='\033[1;36m'
 NC='\033[0m'
 
-PROJECT="XXXX"
+PROJECT="Nodium"
+PROJECT_FOLDER="nodium"
+DAEMON_START="/root/nodium/src/Nodiumd -daemon"
+CLI_BINARY="/root/nodium/src/Nodium-cli"
+CONF_FFILE="/root/.Nodium/Nodium.conf"
 TMP_FOLDER=$(mktemp -d)
-CONF_FILE="XXXX.conf"
-RPC_USER="XXXX-Admin"
-MN_PORT=NNNN
-RPC_PORT=19643
-
-DAEMON="XXXXd"
-CLI="XXXX-cli"
-DAEMON_BINARY_FILE="/usr/local/bin/$DAEMON_BINARY"
-DAEMON_START="$DAEMON_BINARY_FILE -daemon"
-CLI_BINARY_FILE="/usr/local/bin/$CLI_BINARY"
+RPC_USER="nodium-Admin"
+MN_PORT=6250
+RPC_PORT=19647
 CRONTAB_LINE="@reboot $DAEMON_START"
-GITHUB_REPO="https://github.com/PATH/TO/XXXX.git"
+GITHUB_REPO="https://github.com/nodiumproject/Nodium"
 
 function pre_install()
 {
@@ -61,7 +58,7 @@ function get_masternode_key()
 {
   echo -e "${YELLOW}Enter your masternode key for your conf file ${BLUE}(you created this in windows)${YELLOW}, then press ${GREEN}[ENTER]${NC}: " 
   echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy from your ${BLUE}masternode genkey ${RED}in your windows/Mac wallet and then paste the key below."
-  echo -e "Typing the key out incorrectly is 99% of the installation issues. ${NC}"
+  echo -e "Typing the key out incorrectly is 99% of all installation issues. ${NC}"
   read -p 'Masternode Private Key: ' GENKEY
   echo
 }
@@ -81,12 +78,12 @@ function clone_github()
   echo
   echo -e "${BLUE}Cloning GitHUB${NC}"
   cd /root/
-  git clone https://github.com/nodiumproject/Nodium nodium
+  git clone $GITHUB_REPO $PROJECT_FOLDER
 }
 
 function install_prerequisites()
 {
-  cd nodium
+  cd $PROJECT_FOLDER
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
   sudo apt-get install -y pkg-config
@@ -113,11 +110,10 @@ function create_conf_file()
 {
   echo
   echo -e "${BLUE}Starting daemon to create conf file${NC}"
-  cd src
-  ./$DAEMON -daemon
+  $DAEMON_START
   sleep 30
-  ./$CLI getmininginfo
-  ./$CLI stop
+  $CLI_BINARY getmininginfo
+  $CLI_BINARY stop
   echo
   echo -e "${BLUE}Stopping the daemon and writing config${NC}"
 
