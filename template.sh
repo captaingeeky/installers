@@ -16,8 +16,9 @@ RPC_PORT=19643
 DAEMON="XXXXd"
 CLI="XXXX-cli"
 DAEMON_BINARY_FILE="/usr/local/bin/$DAEMON_BINARY"
+DAEMON_START="$DAEMON_BINARY_FILE -daemon"
 CLI_BINARY_FILE="/usr/local/bin/$CLI_BINARY"
-
+CRONTAB_LINE="@reboot $DAEMON_START"
 GITHUB_REPO="https://github.com/PATH/TO/XXXX.git"
 
 function pre_install()
@@ -49,6 +50,11 @@ function show_header()
   echo
   echo -e "The script will output ${YELLOW}questions${NC}, ${BLUE}information${NC} and ${RED}errors${NC}"
   echo
+  read -e -p "$(echo -e $YELLOW Do you want to continue? [Y/N] $NC)" CHOICE
+
+if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
+  exit 1;
+fi
 }
 
 function get_masternode_key()
@@ -147,9 +153,31 @@ function configure_firewall()
   sudo ufw logging on
 }
 
+function add_cron()
+{
+(crontab -l; echo "$CRONTAB_LINE") | crontab -
+}
+
 function start_wallet()
 {
   echo
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
   ./DAEMON -daemon
 }
+
+function deploy()
+{
+  pre_install
+  show_header
+  get_masternode_key
+  create_swap
+  clone_github
+  install_prerequisites
+  build_project
+  create_conf_file
+  configure_firewall
+  add_cron
+  start_wallet
+}
+
+deploy
