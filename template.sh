@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
@@ -10,7 +11,7 @@ PROJECT="Nodium"
 PROJECT_FOLDER="nodium"
 DAEMON_START="/root/nodium/src/Nodiumd -daemon"
 CLI_BINARY="/root/nodium/src/Nodium-cli"
-CONF_FFILE="/root/.Nodium/Nodium.conf"
+CONF_FILE="/root/.Nodium/Nodium.conf"
 TMP_FOLDER=$(mktemp -d)
 RPC_USER="nodium-Admin"
 MN_PORT=6250
@@ -117,7 +118,7 @@ function create_conf_file()
   echo
   echo -e "${BLUE}Stopping the daemon and writing config${NC}"
 
-  cat <<EOF > ~/.Nodium/Nodium.conf
+  cat <<EOF > $CONF_FILE
   rpcuser=$RPC_USER
   rpcpassword=$PASSWORD
   listen=1
@@ -136,11 +137,11 @@ function create_conf_file()
 function configure_firewall()
 {
   echo
-  echo -e "${BLUE}setting up firewall to keep bad guys out...${NC}"
+  echo -e "${BLUE}setting up firewall...${NC}"
   sudo apt-get install -y ufw
   sudo apt-get update -y
   
-  #configure ufw firewall to keep bad guys out
+  #configure ufw firewall
   sudo ufw default allow outgoing
   sudo ufw default deny incoming
   sudo ufw allow ssh/tcp
