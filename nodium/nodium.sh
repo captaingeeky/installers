@@ -71,7 +71,7 @@ maxconnections=256
 masternode=1
 externalip=$WANIP
 bind=$WANIP
-masternodeaddr=$WANIP:27117
+masternodeaddr=$WANIP:6250
 masternodeprivkey=$GENKEY
 EOF
 
