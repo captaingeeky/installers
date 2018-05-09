@@ -160,6 +160,11 @@ function start_wallet()
   echo
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
   $DAEMON_START
+  echo
+  echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
+  echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
+  echo -e "${BLUE}go to your Masternodes tab and press on ${YELLOW}Start Missing${NC}"
+  echo -e "${BLUE}Conmgratulations, you've set up tour masternode!${NC}"
 }
 
 function deploy()
