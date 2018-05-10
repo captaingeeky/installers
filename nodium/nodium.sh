@@ -87,7 +87,7 @@ function install_prerequisites()
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
   sudo apt-get install -y pkg-config
-  sudo apt-get -y install build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
+  sudo apt-get install -y build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
   sudo add-apt-repository ppa:bitcoin/bitcoin -y
   sudo apt-get update
   sudo apt-get upgrade -y
