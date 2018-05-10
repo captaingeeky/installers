@@ -7,7 +7,7 @@ BLUE='\033[1;36m'
 NC='\033[0m'
 
 PROJECT="Nodium"
-PROJECT_FOLDER="~/nodium"
+PROJECT_FOLDER="nodium"
 DAEMON_START="~/nodium/src/Nodiumd -daemon"
 CLI_BINARY="~/nodium/src/Nodium-cli"
 CONF_FILE="~/.Nodium/Nodium.conf"
