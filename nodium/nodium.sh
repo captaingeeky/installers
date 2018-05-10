@@ -7,12 +7,12 @@ BLUE='\033[1;36m'
 NC='\033[0m'
 
 PROJECT="Nodium"
-PROJECT_FOLDER="nodium"
+PROJECT_FOLDER="/root/nodium"
 DAEMON_BINARY="Nodiumd"
-DAEMON_BINARY_PATH="~/nodium/src/Nodiumd"
-DAEMON_START="~/nodium/src/Nodiumd -daemon"
-CLI_BINARY="~/nodium/src/Nodium-cli"
-CONF_FILE="~/.Nodium/Nodium.conf"
+DAEMON_BINARY_PATH="/root/nodium/src/Nodiumd"
+DAEMON_START="/root/nodium/src/Nodiumd -daemon"
+CLI_BINARY="/root/nodium/src/Nodium-cli"
+CONF_FILE="/root/.Nodium/Nodium.conf"
 TMP_FOLDER=$(mktemp -d)
 RPC_USER="nodium-Admin"
 MN_PORT=6250
@@ -100,14 +100,14 @@ function clone_github()
 {
   echo
   echo -e "${BLUE}Cloning GitHUB${NC}"
-  cd ~
+  cd /root/
   git clone $GITHUB_REPO $PROJECT_FOLDER
   if [ $? -eq 0 ]; then
     echo -e "${BLUE}GitHUB Cloned - Proceeding to next step. ${NC}"
     echo
   else
     RETVAL = $?
-    echo -e "${RED}installation has failed. Please see error above : $RETVAL ${NC}"
+    echo -e "${RED}Git Clone has failed. Please see error above : $RETVAL ${NC}"
     exit 1
   fi
 }
@@ -127,6 +127,7 @@ function install_prerequisites()
 
 function build_project()
 {
+  cd $PROJECT_FOLDER
   echo
   echo -e "${BLUE}Compiling the wallet (this can take 20 minutes)${NC}"
   sudo chmod +x share/genbuild.sh
