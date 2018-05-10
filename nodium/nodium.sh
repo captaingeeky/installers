@@ -8,6 +8,8 @@ NC='\033[0m'
 
 PROJECT="Nodium"
 PROJECT_FOLDER="nodium"
+DAEMON_BINARY="Nodiumd"
+DAEMON_BINARY_PATH="~/nodium/src/Nodiumd"
 DAEMON_START="~/nodium/src/Nodiumd -daemon"
 CLI_BINARY="~/nodium/src/Nodium-cli"
 CONF_FILE="~/.Nodium/Nodium.conf"
@@ -17,6 +19,27 @@ MN_PORT=6250
 RPC_PORT=19647
 CRONTAB_LINE="@reboot $DAEMON_START"
 GITHUB_REPO="https://github.com/nodiumproject/Nodium"
+
+function checks() 
+{
+  if [[ $(lsb_release -d) != *16.04* ]]; then
+    echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
+    exit 1
+  fi
+
+  if [[ $EUID -ne 0 ]]; then
+     echo -e "${RED}$0 must be run as root.${NC}"
+     exit 1
+  fi
+
+  if [ -n "$(pidof $DAEMON_BINARY)" ]; then
+    echo -e "The $PROJECT_NAME daemon is already running. $PROJECT_NAME does not support multiple masternodes on one host."
+    NEW_NODE="n"
+    exit 1
+  else
+    NEW_NODE="new"
+  fi
+}
 
 function pre_install()
 {
@@ -79,6 +102,14 @@ function clone_github()
   echo -e "${BLUE}Cloning GitHUB${NC}"
   cd ~
   git clone $GITHUB_REPO $PROJECT_FOLDER
+  if [ $? -eq 0 ]; then
+    echo -e "${BLUE}GitHUB Cloned - Proceeding to next step. ${NC}"
+    echo
+  else
+    RETVAL = $?
+    echo -e "${RED}installation has failed. Please see error above : $RETVAL ${NC}"
+    exit 1
+  fi
 }
 
 function install_prerequisites()
@@ -104,6 +135,14 @@ function build_project()
   sudo ./autogen.sh
   sudo ./configure
   sudo make
+  if [ -f $DAEMON_BINARY_PATH ]; then
+    echo -e "${BLUE}$PROJECT_NAME Daemon and CLI installed, proceeding to next step...${NC}"
+    echo
+  else
+    RETVAL = $?
+    echo -e "${RED}installation has failed. Please see error above : $RETVAL ${NC}"
+    exit 1
+  fi
 }
 
 function create_conf_file()
@@ -159,16 +198,23 @@ function start_wallet()
 {
   echo
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
-  $DAEMON_START
-  echo
-  echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
-  echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
-  echo -e "${BLUE}go to your Masternodes tab and press on ${YELLOW}Start Missing${NC}"
-  echo -e "${BLUE}Conmgratulations, you've set up tour masternode!${NC}"
+  if [ -f $DAEMON_BINARY_PATH ]; then
+    $DAEMON_START
+    echo
+    echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
+    echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
+    echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
+    echo -e "${BLUE}Congratulations, you've set up tour masternode!${NC}"
+  else
+    RETVAL = $?
+    echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
+    exit 1
+  fi
 }
 
 function deploy()
 {
+  checks
   pre_install
   show_header
   get_masternode_key
