@@ -106,7 +106,7 @@ function clone_github()
     echo -e "${BLUE}GitHUB Cloned - Proceeding to next step. ${NC}"
     echo
   else
-    RETVAL = $?
+    RETVAL=$?
     echo -e "${RED}Git Clone has failed. Please see error above : $RETVAL ${NC}"
     exit 1
   fi
@@ -118,7 +118,7 @@ function install_prerequisites()
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
   sudo apt-get install -y pkg-config
-  sudo apt-get install -y build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
+  sudo apt-get install -y git build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
   sudo add-apt-repository ppa:bitcoin/bitcoin -y
   sudo apt-get update
   sudo apt-get upgrade -y
@@ -220,8 +220,8 @@ function deploy()
   show_header
   get_masternode_key
   create_swap
-  clone_github
   install_prerequisites
+  clone_github
   build_project
   create_conf_file
   configure_firewall
