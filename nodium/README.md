@@ -83,4 +83,4 @@ chmod +x nodium.sh
 and follow the on-screen instructions
 
 # 4 Once the VPS is installed and running...
-Wait a few minutes then go to your Windows or Mac wallet, Masternodes tab, Start All.
+Wait a few minutes then go to your Windows or Mac wallet, Masternodes tab, right-click on the new masternode and Start Alias.
