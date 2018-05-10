@@ -139,7 +139,7 @@ function build_project()
     echo -e "${BLUE}$PROJECT_NAME Daemon and CLI installed, proceeding to next step...${NC}"
     echo
   else
-    RETVAL = $?
+    RETVAL=$?
     echo -e "${RED}installation has failed. Please see error above : $RETVAL ${NC}"
     exit 1
   fi
@@ -206,7 +206,7 @@ function start_wallet()
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
     echo -e "${BLUE}Congratulations, you've set up tour masternode!${NC}"
   else
-    RETVAL = $?
+    RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
     exit 1
   fi
