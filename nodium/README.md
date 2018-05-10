@@ -74,6 +74,7 @@ Next:
 3.3 in your SSH session, type:
 
 ```
+cd ~
 wget https://raw.githubusercontent.com/zaemliss/installers/master/nodium/nodium.sh
 chmod +x nodium.sh
 ./nodium.sh
