@@ -7,10 +7,10 @@ BLUE='\033[1;36m'
 NC='\033[0m'
 
 PROJECT="Nodium"
-PROJECT_FOLDER="nodium"
-DAEMON_START="/root/nodium/src/Nodiumd -daemon"
-CLI_BINARY="/root/nodium/src/Nodium-cli"
-CONF_FILE="/root/.Nodium/Nodium.conf"
+PROJECT_FOLDER="~/nodium"
+DAEMON_START="~/nodium/src/Nodiumd -daemon"
+CLI_BINARY="~/nodium/src/Nodium-cli"
+CONF_FILE="~/.Nodium/Nodium.conf"
 TMP_FOLDER=$(mktemp -d)
 RPC_USER="nodium-Admin"
 MN_PORT=6250
@@ -77,7 +77,7 @@ function clone_github()
 {
   echo
   echo -e "${BLUE}Cloning GitHUB${NC}"
-  cd /root/
+  cd ~
   git clone $GITHUB_REPO $PROJECT_FOLDER
 }
 
