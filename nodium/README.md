@@ -7,7 +7,7 @@ https://github.com/nodiumproject/Wallets <br />
 1.2 Launch the wallet and allow it to synchronize <br />
 1.3 Click on `debug console` found in `tools` - Type `masternode genkey` - copy the generated key - exit console <br />
 1.4 Go to `receiving wallets` found in `files` - create masternode wallet, by creating a new wallet, called `MN011` or `MN0x` if it's not your first i.e.: `MN04` <br />
-1.5 Send **EXACTLY 10,000 coins** to the new `MN0x` wallet : Note that this has to be in **ONE transaction**.<br />
+1.5 Send **EXACTLY 10,000 coins** to the new `MN0x` wallet : Note that this has to be sent in **ONE transaction**.<br />
 1.6. Go back to `debug console` - Type `masternode outputs` <br />
 1.7: Now you should see a transaction hash and the output id, keep them for later. <br />
 
