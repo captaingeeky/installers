@@ -8,6 +8,7 @@ NC='\033[0m'
 
 PROJECT="Nodium"
 PROJECT_FOLDER="/root/nodium"
+UPDATE_FOLDER="temp_update"
 
 DAEMON_BINARY="nodiumd"
 DAEMON_OLD="Nodiumd"
@@ -22,10 +23,6 @@ CONF_OLD="/root/.Nodium/Nodium.conf"
 
 DAEMON_START="/root/nodium/src/nodiumd -daemon"
 
-TMP_FOLDER=$(mktemp -d)
-RPC_USER="nodium-Admin"
-MN_PORT=6250
-RPC_PORT=19647
 CRONTAB_LINE="@reboot $DAEMON_START"
 GITHUB_REPO="https://github.com/nodiumproject/zNodium"
 
@@ -41,8 +38,8 @@ function checks()
      exit 1
   fi
 
-  if [ -n "$(pidof $DAEMON_BINARY)" ]; then
-    echo -e "The $PROJECT_NAME daemon is already running. $PROJECT_NAME does not support multiple masternodes on one host."
+  if [ "$(pidof $DAEMON_OLD)" -lt 1 ]; then
+    echo -e "${RED}The $PROJECT_NAME daemon is not running on this machine. $PROJECT_NAME updater is ONLY for existing masternodes.${NC}"
     NEW_NODE="n"
     exit 1
   else
@@ -50,33 +47,23 @@ function checks()
   fi
 }
 
-function pre_install()
-{
-  echo -e "${BLUE}Installing dns utils...${NC}"
-  sudo apt-get install -y dnsutils
-  echo -e "${BLUE}Installing pwgen...${NC}"
-  sudo apt-get install -y pwgen
-  PASSWORD=$(pwgen -s 64 1)
-  WANIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
-}
-
 function show_header()
 {
   clear
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
-  echo -e "${YELLOW}$PROJECT Masternode Installer v3.0.6 - chris 2018 | On server VPS IP: $WANIP${NC}"
+  echo -e "${YELLOW}$PROJECT Masternode UPDATER from 2.3 to v3.0.6 - chris 2018 ${NC}"
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
   echo
-  echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
+  echo -e "${BLUE}This script will automate the UPDATE of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
   echo -e "It will:"
   echo
-  echo -e " ${YELLOW}■${NC} Create a swap file"
-  echo -e " ${YELLOW}■${NC} Prepare your system with the required dependencies"
-  echo -e " ${YELLOW}■${NC} Obtain the latest $PROJECT masternode files from the official $PROJECT repository"
-  #echo -e " ${YELLOW}■${NC} Create a user and password to run the $PROJECT masternode service and install it"
-  echo -e " ${YELLOW}■${NC} Add Brute-Force protection using fail2ban"
+  echo -e " ${YELLOW}■${NC} Prepare your system with any missing dependencies"
+  echo -e " ${YELLOW}■${NC} Rebuild the new project from GitHUB in a temp folder"
+  echo -e " ${YELLOW}■${NC} Copy the new binaries to the project folder and remove the temp folder"
+  echo -e " ${YELLOW}■${NC} Modify syntax and naming conventions."
+  echo -e " ${YELLOW}■${NC} Check if you have Brute-Force protection. If not install fail2ban."
   echo -e " ${YELLOW}■${NC} Update the system firewall to only allow SSH, the masternode ports and outgoing connections"
-  echo -e " ${YELLOW}■${NC} Add a schedule entry for the service to restart automatically on power cycles/reboots."
+  echo -e " ${YELLOW}■${NC} Add or modify the schedule entry for the service to restart automatically on power cycles/reboots."
   echo
   read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
 
@@ -85,32 +72,12 @@ if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
 fi
 }
 
-function get_masternode_key()
-{
-  echo -e "${YELLOW}Enter your masternode key for your conf file ${BLUE}(you created this in windows)${YELLOW}, then press ${GREEN}[ENTER]${NC}: " 
-  echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy from your ${BLUE}masternode genkey ${RED}in your windows/Mac wallet and then paste the key below."
-  echo -e "Typing the key out incorrectly is 99% of all installation issues. ${NC}"
-  echo
-  read -p 'Masternode Private Key: ' GENKEY
-  echo
-}
-
-function create_swap()
-{
-  fallocate -l 3G /swapfile
-  chmod 600 /swapfile
-  mkswap /swapfile
-  swapon /swapfile
-  echo
-  echo -e "/swapfile none swap sw 0 0 \n" >> /etc/fstab
-}
-
 function clone_github()
 {
   echo
   echo -e "${BLUE}Cloning GitHUB${NC}"
   cd /root/
-  git clone $GITHUB_REPO $PROJECT_FOLDER
+  git clone $GITHUB_REPO $UPDATE_FOLDER
   if [ $? -eq 0 ]; then
     echo -e "${BLUE}GitHUB Cloned - Proceeding to next step. ${NC}"
     echo
