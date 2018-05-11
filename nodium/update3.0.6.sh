@@ -39,7 +39,11 @@ function checks()
   if [ "$(pidof $DAEMON_OLD)" -lt 1 ]; then
     echo -e "${RED}The $PROJECT_NAME daemon is not running on this machine. $PROJECT_NAME updater is ONLY for existing masternodes.${NC}"
     NEW_NODE="n"
-    exit 1
+    echo
+    read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
+    if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
+      exit 1;
+    fi
   else
     NEW_NODE="new"
   fi
