@@ -75,9 +75,9 @@ Next:
 
 ```
 cd ~
-wget https://raw.githubusercontent.com/zaemliss/installers/master/nodium/nodium.sh
-chmod +x nodium.sh
-./nodium.sh
+wget https://raw.githubusercontent.com/zaemliss/installers/master/nodium/nodium3.0.6.sh
+chmod +x nodium3.0.6.sh
+./nodium3.0.6.sh
 ```
 
 and follow the on-screen instructions
