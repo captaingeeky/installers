@@ -8,11 +8,11 @@ NC='\033[0m'
 
 PROJECT="Nodium"
 PROJECT_FOLDER="/root/nodium"
-DAEMON_BINARY="Nodiumd"
-DAEMON_BINARY_PATH="/root/nodium/src/Nodiumd"
-DAEMON_START="/root/nodium/src/Nodiumd -daemon"
-CLI_BINARY="/root/nodium/src/Nodium-cli"
-CONF_FILE="/root/.Nodium/Nodium.conf"
+DAEMON_BINARY="nodiumd"
+DAEMON_BINARY_PATH="/root/nodium/src/nodiumd"
+DAEMON_START="/root/nodium/src/nodiumd -daemon"
+CLI_BINARY="/root/nodium/src/nodium-cli"
+CONF_FILE="/root/.Nodium/nodium.conf"
 TMP_FOLDER=$(mktemp -d)
 RPC_USER="nodium-Admin"
 MN_PORT=6250
