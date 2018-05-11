@@ -180,10 +180,17 @@ function start_wallet()
   if [ -f $DAEMON_BINARY_PATH ]; then
     $DAEMON_START
     echo
-    echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
-    echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
-    echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
     echo -e "${BLUE}Congratulations, you've updated your masternode!${NC}"
+    echo
+    echo -e "${RED}---===>>> TROUBLESHOOTING TIPS <<<===---${NC}"
+    echo -e "${BLUE}If there are any issues with your masternode going to MISSING${NC}"
+    echo -e "${BLUE}in the Windows/Mac wallet, just wait 20 minutes then${NC}"
+    echo -e "${BLUE}type this in the VPN:${NC}"
+    echo -e "${GREEN}~/nodium/src/nodium-cli stop${NC}"
+    echo -e "${GREEN}~/nodium/src/nodiumd -daemon${NC}"
+    echo -e "${BLUE}(or simply reboot your server)${NC}"
+    echo -e "${BLUE}Once restarted, on your Windows/Mac wallet:${NC}"
+    echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
