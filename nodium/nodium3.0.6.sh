@@ -114,7 +114,6 @@ function clone_github()
 
 function install_prerequisites()
 {
-  cd $PROJECT_FOLDER
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
   sudo apt-get install -y pkg-config
