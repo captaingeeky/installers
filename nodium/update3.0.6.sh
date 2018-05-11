@@ -8,22 +8,21 @@ NC='\033[0m'
 
 PROJECT="Nodium"
 PROJECT_FOLDER="/root/nodium"
-UPDATE_FOLDER="temp_update"
+UPDATE_FOLDER="/root/temp_update"
 
 DAEMON_BINARY="nodiumd"
 DAEMON_OLD="Nodiumd"
 
 DAEMON_BINARY_PATH="/root/nodium/src/nodiumd"
-DAEMON_OLD_PATH="/root/nodium/src/Nodiumd"
-OLD_BINARY="/root/nodium/src/Nodiumd"
+DAEMON_OLD="/root/nodium/src/Nodiumd"
 CLI_BINARY="/root/nodium/src/nodium-cli"
 CLI_OLD="/root/nodium/src/Nodium-cli"
 CONF_FILE="/root/.Nodium/nodium.conf"
 CONF_OLD="/root/.Nodium/Nodium.conf"
 
 DAEMON_START="/root/nodium/src/nodiumd -daemon"
-
 CRONTAB_LINE="@reboot $DAEMON_START"
+
 GITHUB_REPO="https://github.com/nodiumproject/zNodium"
 
 function checks() 
@@ -122,32 +121,22 @@ function build_project()
   fi
 }
 
-function create_conf_file()
+function copy_binaries()
 {
-  echo
-  echo -e "${BLUE}Starting daemon to create conf file${NC}"
-  echo -e "${YELLOW}Ignore any errors you see below. This will take 30 seconds.${NC}"
-  $DAEMON_START
-  sleep 30
-  $CLI_BINARY getmininginfo
-  $CLI_BINARY stop
-  echo
-  echo -e "${BLUE}Stopping the daemon and writing config${NC}"
-
-cat <<EOF > $CONF_FILE
-rpcuser=$RPC_USER
-rpcpassword=$PASSWORD
-listen=1
-server=1
-daemon=1
-logtimestamps=1
-maxconnections=256
-masternode=1
-externalip=$WANIP
-bind=$WANIP
-masternodeaddr=$WANIP:$MN_PORT
-masternodeprivkey=$GENKEY
-EOF
+ echo -e "${BLUE}Stopping Daemon...${NC}"
+ $CLI_OLD stop
+ sleep 15
+ echo
+ echo -e "${BLUE}renaming files to backup...${NC}"
+ mv $DAEMON_OLD $DAEMON_OLD.bak
+ mv $CLI_OLD $CLI_OLD.bak
+ echo
+ echo -e "${BLUE}renaming files to backup...${NC}"
+ mv $CONF_OLD $CONF_FILE
+ echo
+ echo -e "${BLUE}copying new binaries...${NC}"
+ cp $UPDATE_FOLDER/src/nodium-cli $CLI_BINARY
+ cp $UPDATE_FOLDER/src/nodiumd $DAEMON_BINARY
 }
 
 function configure_firewall()
@@ -181,7 +170,7 @@ function start_wallet()
     echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
     echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
-    echo -e "${BLUE}Congratulations, you've set up tour masternode!${NC}"
+    echo -e "${BLUE}Congratulations, you've updated your masternode!${NC}"
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
@@ -192,14 +181,11 @@ function start_wallet()
 function deploy()
 {
   checks
-  pre_install
   show_header
-  get_masternode_key
-  create_swap
   install_prerequisites
   clone_github
   build_project
-  create_conf_file
+  copy_binaries
   configure_firewall
   add_cron
   start_wallet
