@@ -8,7 +8,6 @@ NC='\033[0m'
 
 PROJECT="Nodium"
 PROJECT_FOLDER="/root/nodium"
-UPDATE_FOLDER="/root/temp_update"
 
 DAEMON_BINARY="nodiumd"
 DAEMON_OLD="Nodiumd"
@@ -76,7 +75,7 @@ function clone_github()
   echo
   echo -e "${BLUE}Cloning GitHUB${NC}"
   cd /root/
-  git clone $GITHUB_REPO $UPDATE_FOLDER
+  git clone $GITHUB_REPO $PROJECT_FOLDER
   if [ $? -eq 0 ]; then
     echo -e "${BLUE}GitHUB Cloned - Proceeding to next step. ${NC}"
     echo
@@ -128,15 +127,15 @@ function copy_binaries()
  sleep 15
  echo
  echo -e "${BLUE}renaming files to backup...${NC}"
- mv $DAEMON_OLD $DAEMON_OLD.bak
- mv $CLI_OLD $CLI_OLD.bak
+ mkdir /root/nodiumbackup/
+ mv $DAEMON_OLD /root/nodiumbackup/Nodiumd
+ mv $CLI_OLD /root/nodiumbackup/Nodium-cli
  echo
- echo -e "${BLUE}renaming files to backup...${NC}"
+ echo -e "${BLUE}removing old project files${NC}"
+ rm -R /root/nodium
+ echo
+ echo -e "${BLUE}renaming conf file...${NC}"
  mv $CONF_OLD $CONF_FILE
- echo
- echo -e "${BLUE}copying new binaries...${NC}"
- cp $UPDATE_FOLDER/src/nodium-cli $CLI_BINARY
- cp $UPDATE_FOLDER/src/nodiumd $DAEMON_BINARY
 }
 
 function configure_firewall()
@@ -183,9 +182,9 @@ function deploy()
   checks
   show_header
   install_prerequisites
+  copy_binaries
   clone_github
   build_project
-  copy_binaries
   configure_firewall
   add_cron
   start_wallet
