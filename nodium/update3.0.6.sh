@@ -70,6 +70,16 @@ if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
 fi
 }
 
+function create_swap()
+{
+  fallocate -l 3G /swapfile
+  chmod 600 /swapfile
+  mkswap /swapfile
+  swapon /swapfile
+  echo
+  echo -e "/swapfile none swap sw 0 0 \n" >> /etc/fstab
+}
+
 function clone_github()
 {
   echo
@@ -181,6 +191,7 @@ function deploy()
 {
   checks
   show_header
+  create_swap
   install_prerequisites
   copy_binaries
   clone_github
