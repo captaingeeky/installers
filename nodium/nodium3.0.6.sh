@@ -205,7 +205,7 @@ function start_wallet()
     echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
     echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
-    echo -e "${BLUE}Congratulations, you've set up tour masternode!${NC}"
+    echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
