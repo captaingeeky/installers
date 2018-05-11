@@ -44,9 +44,9 @@ function checks()
 function pre_install()
 {
   echo -e "${BLUE}Installing dns utils...${NC}"
-  sudo apt-get install dnsutils
+  sudo apt-get install -y dnsutils
   echo -e "${BLUE}Installing pwgen...${NC}"
-  sudo apt-get install pwgen
+  sudo apt-get install -y pwgen
   PASSWORD=$(pwgen -s 64 1)
   WANIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
 }
