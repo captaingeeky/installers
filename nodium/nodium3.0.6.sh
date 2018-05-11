@@ -118,11 +118,12 @@ function install_prerequisites()
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
   sudo apt-get install -y pkg-config
-  sudo apt-get install -y git build-essential autoconf automake libevent-dev libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
+  sudo apt-get install -y git build-essential libevent-dev libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
   sudo add-apt-repository ppa:bitcoin/bitcoin -y
   sudo apt-get update
   sudo apt-get upgrade -y
   sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
+  sudo apt-get install -y autoconf automake
 }
 
 function build_project()
