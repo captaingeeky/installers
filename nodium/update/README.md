@@ -5,7 +5,7 @@
 
 ```
 cd ~
-wget https://raw.githubusercontent.com/zaemliss/installers/master/nodium/nodium3.0.6.sh
+wget https://raw.githubusercontent.com/zaemliss/installers/master/nodium/update/update3.0.6.sh
 chmod +x nodium3.0.6.sh
 ./nodium3.0.6.sh
 ```
