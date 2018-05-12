@@ -70,7 +70,7 @@ function show_header()
   read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
 
 if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
-  exit 1;
+  exit 1
 fi
 }
 
@@ -186,13 +186,27 @@ function start_wallet()
   
   echo
     echo -e "${RED}---===>>> NEXT STEPS <<<===---${NC}"
-    echo -e "${BLUE}Wait 20-30 minutes for the masternode to announce itself then:${NC}"
+    echo -e "${BLUE}Wait 10-20 minutes for the masternode to announce itself then:${NC}"
     echo -e "${BLUE}type this in the VPN:${NC}"
     echo -e "${GREEN}~/nodium/src/nodium-cli stop${NC}"
     echo -e "${GREEN}~/nodium/src/nodiumd -daemon${NC}"
     echo -e "${BLUE}(or simply reboot your server)${NC}"
     echo -e "${BLUE}Your wallet timer on your Windows/Mac wallet will start counting up shortly after${NC}"
     echo -e "${BLUE}and rewards will resume after maturity.${NC}"
+    echo
+    echo -e "${YELLOW}OR${NC}"
+    echo
+    echo -e "${BLUE}Would you like me to wait 15 minutes and do this for you?${NC}
+    read -e -p "$(echo -e ${YELLOW}[Y/N] ${NC})" CHOICE
+    if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
+    exit 1
+    sleep 900
+    echo -e "${BLUE}Restarting Masternode...${NC}
+    $CLI_BINARY stop
+    $DAEMON_START
+    echo -e "${BLUE}Your wallet should update in a few minutes.${NC}
+    echo -e "${BLUE}End of Upgrade.${NC}
+  fi
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
