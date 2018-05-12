@@ -210,7 +210,6 @@ function start_wallet()
     echo -e "${BLUE}Your QT wallet should update in a few minutes.${NC}"
     $CLI_BINARY masternode status
     echo -e "${BLUE}End of Upgrade.${NC}"
-  fi
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
