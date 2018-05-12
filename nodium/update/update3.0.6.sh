@@ -201,6 +201,8 @@ function start_wallet()
     if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
       exit 1
     fi
+    echo -e "${BLUE}Waiting 15 minutes...${NC}"
+    echo
     sleep 900
     echo -e "${BLUE}Restarting Masternode...${NC}"
     $CLI_BINARY stop
