@@ -1,5 +1,12 @@
 # UPDATE Instructions (Updating your VPS from 2.3 to 3.0.6)
 
+## Note: This assumes that you've already updated your Windows/Mac wallet to the latest version here:
+
+https://github.com/nodiumproject/Wallets
+
+
+## If your Windows/Mac wallet is already upgraded, continue below:
+
 1. Log into your VPS
 2. in your SSH session, type:
 
