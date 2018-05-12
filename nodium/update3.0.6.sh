@@ -196,16 +196,16 @@ function start_wallet()
     echo
     echo -e "${YELLOW}OR${NC}"
     echo
-    echo -e "${BLUE}Would you like me to wait 15 minutes and do this for you?${NC}
+    echo -e "${BLUE}Would you like me to wait 15 minutes and do this for you?${NC}"
     read -e -p "$(echo -e ${YELLOW}[Y/N] ${NC})" CHOICE
     if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
     exit 1
     sleep 900
-    echo -e "${BLUE}Restarting Masternode...${NC}
+    echo -e "${BLUE}Restarting Masternode...${NC}"
     $CLI_BINARY stop
     $DAEMON_START
-    echo -e "${BLUE}Your wallet should update in a few minutes.${NC}
-    echo -e "${BLUE}End of Upgrade.${NC}
+    echo -e "${BLUE}Your wallet should update in a few minutes.${NC}"
+    echo -e "${BLUE}End of Upgrade.${NC}"
   fi
   else
     RETVAL=$?
