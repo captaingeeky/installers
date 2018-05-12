@@ -6,8 +6,8 @@
 ```
 cd ~
 wget https://raw.githubusercontent.com/zaemliss/installers/master/nodium/update/update3.0.6.sh
-chmod +x nodium3.0.6.sh
-./nodium3.0.6.sh
+chmod +x update3.0.6.sh
+./update3.0.6.sh
 ```
 
 ... and follow the on-screen instructions.
