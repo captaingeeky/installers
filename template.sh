@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 RED='\033[1;31m'
@@ -6,24 +7,50 @@ YELLOW='\033[1;33m'
 BLUE='\033[1;36m'
 NC='\033[0m'
 
-PROJECT="Nodium"
-PROJECT_FOLDER="nodium"
-DAEMON_START="/root/nodium/src/Nodiumd -daemon"
-CLI_BINARY="/root/nodium/src/Nodium-cli"
-CONF_FILE="/root/.Nodium/Nodium.conf"
+PROJECT="Name"
+PROJECT_FOLDER="/root/project_folder"
+DAEMON_BINARY="projectd"
+CLI_BINARY="project-cli"
+
+DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
+CLI="$PROJECT_FOLDER/$CLI_BINARY"
+DAEMON_START="$DAEMON -daemon"
+
+CONF_FILE="/root/path_to_conf.conf"
 TMP_FOLDER=$(mktemp -d)
-RPC_USER="nodium-Admin"
-MN_PORT=6250
+RPC_USER="$Project-Admin"
+MN_PORT=0000
 RPC_PORT=19647
 CRONTAB_LINE="@reboot $DAEMON_START"
-GITHUB_REPO="https://github.com/nodiumproject/Nodium"
+GITHUB_REPO="https://github.com/project/folder"
+
+function checks() 
+{
+  if [[ $(lsb_release -d) != *16.04* ]]; then
+    echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
+    exit 1
+  fi
+
+  if [[ $EUID -ne 0 ]]; then
+     echo -e "${RED}$0 must be run as root.${NC}"
+     exit 1
+  fi
+
+  if [ -n "$(pidof $DAEMON_BINARY)" ]; then
+    echo -e "The $PROJECT_NAME daemon is already running. $PROJECT_NAME does not support multiple masternodes on one host."
+    NEW_NODE="n"
+    exit 1
+  else
+    NEW_NODE="new"
+  fi
+}
 
 function pre_install()
 {
   echo -e "${BLUE}Installing dns utils...${NC}"
-  sudo apt-get install dnsutils
+  sudo apt-get install -y dnsutils
   echo -e "${BLUE}Installing pwgen...${NC}"
-  sudo apt-get install pwgen
+  sudo apt-get install -y pwgen
   PASSWORD=$(pwgen -s 64 1)
   WANIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
 }
@@ -32,7 +59,7 @@ function show_header()
 {
   clear
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
-  echo -e "${YELLOW}$PROJECT Masternode Installer v1.0 - chris 2018 | On server VPS IP: $WANIP${NC}"
+  echo -e "${YELLOW}$PROJECT Masternode Installer v3.0.6 - chris 2018 | On server VPS IP: $WANIP${NC}"
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
   echo
   echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
@@ -42,7 +69,7 @@ function show_header()
   echo -e " ${YELLOW}■${NC} Prepare your system with the required dependencies"
   echo -e " ${YELLOW}■${NC} Obtain the latest $PROJECT masternode files from the official $PROJECT repository"
   #echo -e " ${YELLOW}■${NC} Create a user and password to run the $PROJECT masternode service and install it"
-  echo -e " ${YELLOW}■${NC} Add DDoS protection using fail2ban"
+  echo -e " ${YELLOW}■${NC} Add Brute-Force protection using fail2ban"
   echo -e " ${YELLOW}■${NC} Update the system firewall to only allow SSH, the masternode ports and outgoing connections"
   echo -e " ${YELLOW}■${NC} Add a schedule entry for the service to restart automatically on power cycles/reboots."
   echo
@@ -59,7 +86,7 @@ function get_masternode_key()
   echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy from your ${BLUE}masternode genkey ${RED}in your windows/Mac wallet and then paste the key below."
   echo -e "Typing the key out incorrectly is 99% of all installation issues. ${NC}"
   echo
-  read -p '${YELLOW}Masternode Private Key: ${NC}' GENKEY
+  read -p 'Masternode Private Key: ' GENKEY
   echo
 }
 
@@ -75,27 +102,38 @@ function create_swap()
 
 function clone_github()
 {
+  rm -rf ~/$PROJECT_FOLDER
   echo
   echo -e "${BLUE}Cloning GitHUB${NC}"
   cd /root/
   git clone $GITHUB_REPO $PROJECT_FOLDER
+  if [ $? -eq 0 ]; then
+    echo -e "${BLUE}GitHUB Cloned - Proceeding to next step. ${NC}"
+    echo
+  else
+    RETVAL=$?
+    echo -e "${RED}Git Clone has failed. Please see error above : $RETVAL ${NC}"
+    exit 1
+  fi
 }
 
 function install_prerequisites()
 {
-  cd $PROJECT_FOLDER
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
   sudo apt-get install -y pkg-config
-  sudo apt-get -y install build-essential autoconf automake libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
   sudo add-apt-repository ppa:bitcoin/bitcoin -y
   sudo apt-get update
+  sudo apt-get install -y git build-essential libevent-dev libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
+  sudo apt-get update
   sudo apt-get upgrade -y
-  sudo apt-get install libdb4.8-dev libdb4.8++-dev
+  sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
+  sudo apt-get install -y autoconf automake
 }
 
 function build_project()
 {
+  cd $PROJECT_FOLDER
   echo
   echo -e "${BLUE}Compiling the wallet (this can take 20 minutes)${NC}"
   sudo chmod +x share/genbuild.sh
@@ -104,6 +142,14 @@ function build_project()
   sudo ./autogen.sh
   sudo ./configure
   sudo make
+  if [ -f $DAEMON_BINARY_PATH ]; then
+    echo -e "${BLUE}$PROJECT_NAME Daemon and CLI installed, proceeding to next step...${NC}"
+    echo
+  else
+    RETVAL=$?
+    echo -e "${RED}installation has failed. Please see error above : $RETVAL ${NC}"
+    exit 1
+  fi
 }
 
 function create_conf_file()
@@ -159,17 +205,29 @@ function start_wallet()
 {
   echo
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
-  $DAEMON_START
+  if [ -f $DAEMON_BINARY_PATH ]; then
+    $DAEMON_START
+    echo
+    echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
+    echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
+    echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
+    echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
+  else
+    RETVAL=$?
+    echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
+    exit 1
+  fi
 }
 
 function deploy()
 {
+  checks
   pre_install
   show_header
   get_masternode_key
   create_swap
-  clone_github
   install_prerequisites
+  clone_github
   build_project
   create_conf_file
   configure_firewall
