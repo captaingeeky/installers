@@ -148,7 +148,9 @@ function copy_binaries()
   wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/zixx-cli
   chmod +x zixx{d,-cli}
   if [ -f $DAEMON_BINARY_PATH ]; then
+    echo -e "${BLUE}Starting daemon ...${NC}"
     $DAEMON_START
+    sleep 15
   else
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
     exit 1
@@ -157,15 +159,14 @@ function copy_binaries()
 
 function create_conf_file()
 {
-  echo -e "${YELLOW}Generating masternode key for your conf file...${NC}: " 
-  echo -e "${BLUE}Starting daemon ...${NC}"
-  sleep 30
+  mkdir $DATADIR
+  sleep 2
   echo
   GENKEY=$($CLI masternode genkey)
   echo
-  echo -e "${BLUE}Starting daemon to create conf file${NC}"
-  echo -e "${YELLOW}Ignore any errors you see below. This will take 30 seconds.${NC}"
-  sleep 30
+  echo -e "${BLUE}Creating conf file conf file${NC}"
+  echo -e "${YELLOW}Ignore any errors you see below.${NC}"
+  sleep 3
   $CLI_BINARY getmininginfo
   $CLI_BINARY stop
   echo
