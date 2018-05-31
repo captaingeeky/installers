@@ -51,7 +51,7 @@ function check_existing()
     exit 1;
   fi
   
-  DIR_NUM=$((DIR_COUNT+1))
+  DIR_NUM=$DIR_COUNT+1
 }
 
 function pre_install()
@@ -249,6 +249,7 @@ function cleanup()
   
   cd $HOME
   rm inst*.sh
+  rm install
   rm -R db-4.8*
 }
 
