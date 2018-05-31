@@ -166,7 +166,7 @@ function create_conf_file()
   echo -e "${BLUE}Creating conf file conf file${NC}"
   echo -e "${YELLOW}Ignore any errors you see below.${NC}"
   sleep 3
-  $CLI_BINARY stop
+  $CLI stop
   echo
   echo -e "${BLUE}Stopping the daemon and writing config${NC}"
 
@@ -223,6 +223,13 @@ function start_wallet()
   fi
 }
 
+function cleanup()
+{
+  cd $HOME
+  rm inst*.sh
+  rm -R db-4.8*
+}
+
 function deploy()
 {
   checks
@@ -237,6 +244,7 @@ function deploy()
   configure_firewall
   add_cron
   start_wallet
+  cleanup
 }
 
 deploy
