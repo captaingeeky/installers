@@ -31,7 +31,8 @@ function check_existing()
 
   #Get number of existing Zixx masternode directories
   DIR_COUNT=$(ls -la /root/ | grep "zixx" | grep -c '^')
-
+  
+  #Check if there are more IPs than existing nodes
   if [[ $DIR_COUNT -ge $IP_NUM ]]; then
     echo -e "${RED}Not enough available IP addresses to run another node! Please add other IPs to this VPS first.${NC}"
   #  exit 1
@@ -39,32 +40,39 @@ function check_existing()
 
   echo -e "${YELLOW}Found ${BLUE}$DIR_COUNT ${YELLOW}Masternodes and ${BLUE}$IP_NUM ${YELLOW}IP addresses.${NC}"
 
+  #Now confirm available IPs by removing those that are already bound to 44845
   IP_IN_USE=$(netstat -tulpn | grep :44845 | awk {'print $4'} | tr -d ':44845')
   IP_IN_USE_COUNT=$(echo "$IP_IN_USE" | wc -l)
-
-  NEXT_AVAIL=$(echo " ${IP_LIST}, ${IP_IN_USE}" | sort | uniq -u | paste -s | awk '{print $1;}')
-  echo -e "${YELLOW}Using next available IP : ${BLUE}$NEXT_AVAIL${NC}"
+  NEXT_AVAIL_IP=$(echo " ${IP_LIST}, ${IP_IN_USE}" | sort | uniq -u | paste -s | awk '{print $1;}')
+  echo -e "${YELLOW}Using next available IP : ${BLUE}$NEXT_AVAIL_IP${NC}"
 
   read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
+  if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
+    exit 1;
+  fi
+  
+  DIR_NUM=$((DIR_COUNT+1))
 }
 
 function set_environment()
 {
   PROJECT="Zixx"
-  PROJECT_FOLDER="/root/zixx"
+  PROJECT_FOLDER="$HOME/zixx"
   DAEMON_BINARY="zixxd"
   CLI_BINARY="zixx-cli"
+  DATADIR="$HOME/.zixx$DIR_NUM"
 
-  DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
-  CLI="$PROJECT_FOLDER/$CLI_BINARY"
-  DAEMON_START="$DAEMON -daemon"
-
-  CONF_FILE="/root/.zixx/zixx.conf"
   TMP_FOLDER=$(mktemp -d)
   RPC_USER="$PROJECT-Admin"
   MN_PORT=44845
-  RPC_PORT=14647
+  RPC_PORT=$((14647+DIR_NUM))
   CRONTAB_LINE="@reboot $DAEMON_START"
+
+  DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
+  CLI="$PROJECT_FOLDER/$CLI_BINARY -rpcconnect=$NEXT_AVAIL_IP -rpcport=$RPC_PORT"
+  CONF_FILE="$DATADIR/zixx.conf"
+  DAEMON_START="$DAEMON -datadir=$DATADIR -conf=$CONF_FILE -daemon"
+
 }
 
 function pre_install()
@@ -80,9 +88,9 @@ function pre_install()
 function show_header()
 {
   clear
-  echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
+  echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
   echo -e "${YELLOW}$PROJECT Masternode Installer v3.0.6 - chris 2018 | On server VPS IP: $WANIP${NC}"
-  echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
+  echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
   echo
   echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
   echo -e "It will:"
@@ -128,7 +136,7 @@ function install_prerequisites()
 
 function copy_binaries()
 {
-  #deleting previous install folders in case of failed install attempts.
+  #deleting previous install folders in case of failed install attempts. Also ensures latest binaries are used
   rm -rf $PROJECT_FOLDER
   echo
   echo -e "${BLUE}Copying Binaries...${NC}"
@@ -138,19 +146,15 @@ function copy_binaries()
   wget https://github.com/zixxcrypto/bin/releases/download/ZIXX-0.16.01/zixx-cli
   chmod +x zixx{d,-cli}
   $DAEMON_START
-  echo -e "${BLUE}Starting daemon ...${NC}"
-  sleep 30
-}
-
-function gen_masternode_key()
-{
-  echo -e "${YELLOW}Generating masternode key for your conf file...${NC}: " 
-  echo
-  GENKEY=$($CLI masternode genkey)
 }
 
 function create_conf_file()
 {
+  echo -e "${YELLOW}Generating masternode key for your conf file...${NC}: " 
+  echo -e "${BLUE}Starting daemon ...${NC}"
+  sleep 30
+  echo
+  GENKEY=$($CLI masternode genkey)
   echo
   echo -e "${BLUE}Starting daemon to create conf file${NC}"
   echo -e "${YELLOW}Ignore any errors you see below. This will take 30 seconds.${NC}"
@@ -164,7 +168,7 @@ cat <<EOF > $CONF_FILE
 masternode=1
 masternodeprivkey=$GENKEY
 server=1
-bind=$WANIP
+bind=$NEXT_AVAIL_IP
 rpcport=$RPC_PORT
 rpcuser=$RPC_USER
 rpcpassword=$PASSWORD
@@ -204,7 +208,7 @@ function start_wallet()
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo
-    echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this Genkey for your QT wallet (Windows/Mac wallet) ${BLUE}$GENKEY"
+    echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this Genkey for your QT wallet (Windows/Mac wallet) ${BLUE}$GENKEY${NC}"
     echo -e "Typing the key out incorrectly is 99% of all installation issues. ${NC}"
   else
     RETVAL=$?
@@ -218,11 +222,11 @@ function deploy()
   checks
   check_existing
   pre_install
+  set_environment
   show_header
   create_swap
   install_prerequisites
   copy_binaries
-  gen_masternode_key
   create_conf_file
   configure_firewall
   add_cron
