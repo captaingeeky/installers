@@ -7,42 +7,64 @@ YELLOW='\033[1;33m'
 BLUE='\033[1;36m'
 NC='\033[0m'
 
-PROJECT="Zixx"
-PROJECT_FOLDER="/root/zixx"
-DAEMON_BINARY="zixxd"
-CLI_BINARY="zixx-cli"
-
-DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
-CLI="$PROJECT_FOLDER/$CLI_BINARY"
-DAEMON_START="$DAEMON -daemon"
-
-CONF_FILE="/root/.zixx/zixx.conf"
-TMP_FOLDER=$(mktemp -d)
-RPC_USER="$PROJECT-Admin"
-MN_PORT=0000
-RPC_PORT=14647
-CRONTAB_LINE="@reboot $DAEMON_START"
-GITHUB_REPO="https://github.com/project/folder"
-
 function checks() 
 {
-  if [[ $(lsb_release -d) != *16.04* ]]; then
-    echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
-    exit 1
+  if [[ ($(lsb_release -d) != *16.04*) ]]; then
+    if [[ ($(lsb_release -d) != *17.04*) ]]; then
+      echo -e "${RED}You are not running Ubuntu 16.04 or 17.04. Installation is cancelled.${NC}"
+      exit 1
+    fi
   fi
 
   if [[ $EUID -ne 0 ]]; then
      echo -e "${RED}$0 must be run as root.${NC}"
      exit 1
   fi
+}
 
-  if [ -n "$(pidof $DAEMON_BINARY)" ]; then
-    echo -e "The $PROJECT_NAME daemon is already running. $PROJECT_NAME does not support multiple masternodes on one host."
-    NEW_NODE="n"
-    exit 1
-  else
-    NEW_NODE="new"
+function check_existing()
+{
+  
+  #Get list and count of IPs
+  IP_LIST=$(ifconfig | grep "inet addr:" | awk {'print $2'} | grep -v "127.0.0.1" | tr -d 'inet addr:')
+  IP_NUM=$(echo "$IP_LIST" | wc -l)
+
+  #Get number of existing Zixx masternode directories
+  DIR_COUNT=$(ls -la /root/ | grep "zixx" | grep -c '^')
+
+  if [[ $DIR_COUNT -ge $IP_NUM ]]; then
+    echo -e "${RED}Not enough available IP addresses to run another node! Please add other IPs to this VPS first.${NC}"
+  #  exit 1
   fi
+
+  echo -e "${YELLOW}Found ${BLUE}$DIR_COUNT ${YELLOW}Masternodes and ${BLUE}$IP_NUM ${YELLOW}IP addresses.${NC}"
+
+  IP_IN_USE=$(netstat -tulpn | grep :44845 | awk {'print $4'} | tr -d ':44845')
+  IP_IN_USE_COUNT=$(echo "$IP_IN_USE" | wc -l)
+
+  NEXT_AVAIL=$(echo " ${IP_LIST}, ${IP_IN_USE}" | sort | uniq -u | paste -s | awk '{print $1;}')
+  echo -e "${YELLOW}Using next available IP : ${BLUE}$NEXT_AVAIL${NC}"
+
+  read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
+}
+
+function set_environment()
+{
+  PROJECT="Zixx"
+  PROJECT_FOLDER="/root/zixx"
+  DAEMON_BINARY="zixxd"
+  CLI_BINARY="zixx-cli"
+
+  DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
+  CLI="$PROJECT_FOLDER/$CLI_BINARY"
+  DAEMON_START="$DAEMON -daemon"
+
+  CONF_FILE="/root/.zixx/zixx.conf"
+  TMP_FOLDER=$(mktemp -d)
+  RPC_USER="$PROJECT-Admin"
+  MN_PORT=44845
+  RPC_PORT=14647
+  CRONTAB_LINE="@reboot $DAEMON_START"
 }
 
 function pre_install()
@@ -194,12 +216,13 @@ function start_wallet()
 function deploy()
 {
   checks
+  check_existing
   pre_install
   show_header
   create_swap
   install_prerequisites
   copy_binaries
-  get_masternode_key
+  gen_masternode_key
   create_conf_file
   configure_firewall
   add_cron
