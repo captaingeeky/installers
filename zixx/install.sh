@@ -228,25 +228,25 @@ function start_wallet()
 
 function cleanup()
 {
-  echo -e "==================================="
-  echo -e "VERSION = $VERSION"
-  echo -e "PROJECT = $PROJECT"
-  echo -e "PROJECT_FOLDER = $PROJECT_FOLDER"
-  echo -e "DAEMON_BINARY = $DAEMON_BINARY"
-  echo -e "CLI_BINARY = $CLI_BINARY"
-  echo -e "DATADIR = $DATADIR"
+#  echo -e "==================================="
+#  echo -e "VERSION = $VERSION"
+#  echo -e "PROJECT = $PROJECT"
+#  echo -e "PROJECT_FOLDER = $PROJECT_FOLDER"
+#  echo -e "DAEMON_BINARY = $DAEMON_BINARY"
+#  echo -e "CLI_BINARY = $CLI_BINARY"
+#  echo -e "DATADIR = $DATADIR"
 
-  echo -e "TMP_FOLDER = $TMP_FOLDER"
-  echo -e "RPC_USER = $RPC_USER"
-  echo -e "MN_PORT = $MN_PORT"
-  echo -e "RPC_PORT = $RPC_PORT"
-  echo -e "CRONTAB_LINE = $CRONTAB_LINE"
+#  echo -e "TMP_FOLDER = $TMP_FOLDER"
+#  echo -e "RPC_USER = $RPC_USER"
+#  echo -e "MN_PORT = $MN_PORT"
+#  echo -e "RPC_PORT = $RPC_PORT"
+#  echo -e "CRONTAB_LINE = $CRONTAB_LINE"
 
-  echo -e "DAEMON = $DAEMON"
-  echo -e "CLI = $CLI"
-  echo -e "CONF_FILE = $CONF_FILE"
-  echo -e "DAEMON_START = $DAEMON_START"
-  echo -e "==================================="
+#  echo -e "DAEMON = $DAEMON"
+#  echo -e "CLI = $CLI"
+#  echo -e "CONF_FILE = $CONF_FILE"
+#  echo -e "DAEMON_START = $DAEMON_START"
+#  echo -e "==================================="
   
   cd $HOME
   rm inst*.sh
