@@ -7,20 +7,20 @@ YELLOW='\033[1;33m'
 BLUE='\033[1;36m'
 NC='\033[0m'
 
-PROJECT="Name"
-PROJECT_FOLDER="/root/project_folder"
-DAEMON_BINARY="projectd"
-CLI_BINARY="project-cli"
+PROJECT="Zixx"
+PROJECT_FOLDER="/root/zixx"
+DAEMON_BINARY="zixxd"
+CLI_BINARY="zixx-cli"
 
 DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
 CLI="$PROJECT_FOLDER/$CLI_BINARY"
 DAEMON_START="$DAEMON -daemon"
 
-CONF_FILE="/root/path_to_conf.conf"
+CONF_FILE="/root/.zixx/zixx.conf"
 TMP_FOLDER=$(mktemp -d)
-RPC_USER="$Project-Admin"
+RPC_USER="$PROJECT-Admin"
 MN_PORT=0000
-RPC_PORT=19647
+RPC_PORT=14647
 CRONTAB_LINE="@reboot $DAEMON_START"
 GITHUB_REPO="https://github.com/project/folder"
 
@@ -68,7 +68,6 @@ function show_header()
   echo -e " ${YELLOW}■${NC} Create a swap file"
   echo -e " ${YELLOW}■${NC} Prepare your system with the required dependencies"
   echo -e " ${YELLOW}■${NC} Obtain the latest $PROJECT masternode files from the official $PROJECT repository"
-  #echo -e " ${YELLOW}■${NC} Create a user and password to run the $PROJECT masternode service and install it"
   echo -e " ${YELLOW}■${NC} Add Brute-Force protection using fail2ban"
   echo -e " ${YELLOW}■${NC} Update the system firewall to only allow SSH, the masternode ports and outgoing connections"
   echo -e " ${YELLOW}■${NC} Add a schedule entry for the service to restart automatically on power cycles/reboots."
@@ -78,16 +77,6 @@ function show_header()
 if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
   exit 1;
 fi
-}
-
-function get_masternode_key()
-{
-  echo -e "${YELLOW}Enter your masternode key for your conf file ${BLUE}(you created this in windows)${YELLOW}, then press ${GREEN}[ENTER]${NC}: " 
-  echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy from your ${BLUE}masternode genkey ${RED}in your windows/Mac wallet and then paste the key below."
-  echo -e "Typing the key out incorrectly is 99% of all installation issues. ${NC}"
-  echo
-  read -p 'Masternode Private Key: ' GENKEY
-  echo
 }
 
 function create_swap()
@@ -100,56 +89,42 @@ function create_swap()
   echo -e "/swapfile none swap sw 0 0 \n" >> /etc/fstab
 }
 
-function clone_github()
-{
-  rm -rf ~/$PROJECT_FOLDER
-  echo
-  echo -e "${BLUE}Cloning GitHUB${NC}"
-  cd /root/
-  git clone $GITHUB_REPO $PROJECT_FOLDER
-  if [ $? -eq 0 ]; then
-    echo -e "${BLUE}GitHUB Cloned - Proceeding to next step. ${NC}"
-    echo
-  else
-    RETVAL=$?
-    echo -e "${RED}Git Clone has failed. Please see error above : $RETVAL ${NC}"
-    exit 1
-  fi
-}
-
 function install_prerequisites()
 {
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
-  sudo apt-get install -y pkg-config
-  sudo add-apt-repository ppa:bitcoin/bitcoin -y
-  sudo apt-get update
-  sudo apt-get install -y git build-essential libevent-dev libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
-  sudo apt-get update
-  sudo apt-get upgrade -y
-  sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
-  sudo apt-get install -y autoconf automake
+  sudo apt update
+  sudo apt install -y build-essential htop libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip
+  sudo wget http://download.oracle.com/berkeley-db/db-4.8.30.zip
+  sudo unzip db-4.8.30.zip
+  sudo cd db-4.8.30
+  sudo cd build_unix/
+  sudo ../dist/configure --prefix=/usr/ --enable-cxx
+  sudo make
+  sudo make install
 }
 
-function build_project()
+function copy_binaries()
 {
-  cd $PROJECT_FOLDER
+  #deleting previous install folders in case of failed install attempts.
+  rm -rf $PROJECT_FOLDER
   echo
-  echo -e "${BLUE}Compiling the wallet (this can take 20 minutes)${NC}"
-  sudo chmod +x share/genbuild.sh
-  sudo chmod +x autogen.sh
-  sudo chmod 755 src/leveldb/build_detect_platform
-  sudo ./autogen.sh
-  sudo ./configure
-  sudo make
-  if [ -f $DAEMON_BINARY_PATH ]; then
-    echo -e "${BLUE}$PROJECT_NAME Daemon and CLI installed, proceeding to next step...${NC}"
-    echo
-  else
-    RETVAL=$?
-    echo -e "${RED}installation has failed. Please see error above : $RETVAL ${NC}"
-    exit 1
-  fi
+  echo -e "${BLUE}Copying Binaries...${NC}"
+  mkdir $PROJECT_FOLDER
+  cd $PROJECT_FOLDER
+  wget https://github.com/zixxcrypto/bin/releases/download/ZIXX-0.16.01/zixxd
+  wget https://github.com/zixxcrypto/bin/releases/download/ZIXX-0.16.01/zixx-cli
+  chmod +x zixx{d,-cli}
+  $DAEMON_START
+  echo -e "${BLUE}Starting daemon ...${NC}"
+  sleep 30
+}
+
+function gen_masternode_key()
+{
+  echo -e "${YELLOW}Generating masternode key for your conf file...${NC}: " 
+  echo
+  GENKEY=$($CLI masternode genkey)
 }
 
 function create_conf_file()
@@ -157,7 +132,6 @@ function create_conf_file()
   echo
   echo -e "${BLUE}Starting daemon to create conf file${NC}"
   echo -e "${YELLOW}Ignore any errors you see below. This will take 30 seconds.${NC}"
-  $DAEMON_START
   sleep 30
   $CLI_BINARY getmininginfo
   $CLI_BINARY stop
@@ -165,18 +139,13 @@ function create_conf_file()
   echo -e "${BLUE}Stopping the daemon and writing config${NC}"
 
 cat <<EOF > $CONF_FILE
+masternode=1
+masternodeprivkey=$GENKEY
+server=1
+bind=$WANIP
+rpcport=$RPC_PORT
 rpcuser=$RPC_USER
 rpcpassword=$PASSWORD
-listen=1
-server=1
-daemon=1
-logtimestamps=1
-maxconnections=256
-masternode=1
-externalip=$WANIP
-bind=$WANIP
-masternodeaddr=$WANIP:$MN_PORT
-masternodeprivkey=$GENKEY
 EOF
 }
 
@@ -212,6 +181,9 @@ function start_wallet()
     echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
+    echo
+    echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this Genkey for your QT wallet (Windows/Mac wallet) ${BLUE}$GENKEY"
+    echo -e "Typing the key out incorrectly is 99% of all installation issues. ${NC}"
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
@@ -224,11 +196,10 @@ function deploy()
   checks
   pre_install
   show_header
-  get_masternode_key
   create_swap
   install_prerequisites
-  clone_github
-  build_project
+  copy_binaries
+  get_masternode_key
   create_conf_file
   configure_firewall
   add_cron
