@@ -143,10 +143,16 @@ function copy_binaries()
   echo -e "${BLUE}Copying Binaries...${NC}"
   mkdir $PROJECT_FOLDER
   cd $PROJECT_FOLDER
-  wget https://github.com/zixxcrypto/bin/releases/download/ZIXX-0.16.01/zixxd
-  wget https://github.com/zixxcrypto/bin/releases/download/ZIXX-0.16.01/zixx-cli
+  
+  wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/zixxd
+  wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/zixx-cli
   chmod +x zixx{d,-cli}
-  $DAEMON_START
+  if [ -f $DAEMON_BINARY_PATH ]; then
+    $DAEMON_START
+  else
+    echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
+    exit 1
+  fi
 }
 
 function create_conf_file()
