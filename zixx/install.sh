@@ -1,6 +1,12 @@
 
 #!/bin/bash
 
+VERSION="1.0.0"
+PROJECT="Zixx"
+PROJECT_FOLDER="$HOME/zixx"
+DAEMON_BINARY="zixxd"
+CLI_BINARY="zixx-cli"
+  
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
@@ -66,11 +72,6 @@ function pre_install()
 
 function set_environment()
 {
-  VERSION="1.0.0"
-  PROJECT="Zixx"
-  PROJECT_FOLDER="$HOME/zixx"
-  DAEMON_BINARY="zixxd"
-  CLI_BINARY="zixx-cli"
   DATADIR="$HOME/.zixx$DIR_NUM"
 
   TMP_FOLDER=$(mktemp -d)
