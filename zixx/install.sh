@@ -30,7 +30,7 @@ function check_existing()
   IP_NUM=$(echo "$IP_LIST" | wc -l)
 
   #Get number of existing Zixx masternode directories
-  DIR_COUNT=$(ls -la /root/ | grep "zixx" | grep -c '^')
+  DIR_COUNT=$(ls -la /root/ | grep ".zixx" | grep -c '^')
   
   #Check if there are more IPs than existing nodes
   if [[ $DIR_COUNT -ge $IP_NUM ]]; then
@@ -38,7 +38,7 @@ function check_existing()
   #  exit 1
   fi
 
-  echo -e "${YELLOW}Found ${BLUE}$DIR_COUNT ${YELLOW}Masternodes and ${BLUE}$IP_NUM ${YELLOW}IP addresses.${NC}"
+  echo -e "${YELLOW}Found ${BLUE}$DIR_COUNT ${YELLOW}$PROJECT Masternodes and ${BLUE}$IP_NUM ${YELLOW}IP addresses.${NC}"
 
   #Now confirm available IPs by removing those that are already bound to 44845
   IP_IN_USE=$(netstat -tulpn | grep :44845 | awk {'print $4'} | tr -d ':44845')
@@ -215,6 +215,8 @@ function start_wallet()
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo
     echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this Genkey for your QT wallet (Windows/Mac wallet) ${BLUE}$GENKEY${NC}"
+    echo -e "${BLUE}If you are using Putty, just select the text. It will automatically go to your clipboard.${NC}"
+    echo -e "${BLUE}If you are using SSH, Select it and either CTRL-C${NC}"
     echo -e "Typing the key out incorrectly is 99% of all installation issues. ${NC}"
   else
     RETVAL=$?
