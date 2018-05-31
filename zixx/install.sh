@@ -74,7 +74,7 @@ function set_environment()
   DATADIR="$HOME/.zixx$DIR_NUM"
 
   TMP_FOLDER=$(mktemp -d)
-  RPC_USER="$PROJECTAdmin"
+  RPC_USER="$PROJECT-Admin"
   MN_PORT=44845
   RPC_PORT=$((14647+DIR_NUM))
 
