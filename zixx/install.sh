@@ -74,15 +74,15 @@ function set_environment()
   DATADIR="$HOME/.zixx$DIR_NUM"
 
   TMP_FOLDER=$(mktemp -d)
-  RPC_USER="$PROJECT-Admin"
+  RPC_USER="$PROJECTAdmin"
   MN_PORT=44845
   RPC_PORT=$((14647+DIR_NUM))
-  CRONTAB_LINE="@reboot $DAEMON_START"
 
   DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
-  CLI="$PROJECT_FOLDER/$CLI_BINARY -rpcconnect=$NEXT_AVAIL_IP -rpcport=$RPC_PORT"
   CONF_FILE="$DATADIR/zixx.conf"
+  CLI="$PROJECT_FOLDER/$CLI_BINARY -conf=$CONF_FILE -datadir=$DATADIR"
   DAEMON_START="$DAEMON -datadir=$DATADIR -conf=$CONF_FILE -daemon"
+  CRONTAB_LINE="@reboot $DAEMON_START"
 }
 
 function show_header()
@@ -146,11 +146,11 @@ function copy_binaries()
   wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/zixxd
   wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/zixx-cli
   chmod +x zixx{d,-cli}
-  if [ -f $DAEMON_BINARY_PATH ]; then
+  if [ -f $DAEMON ]; then
     mkdir $DATADIR
     echo -e "${BLUE}Starting daemon ...${NC}"
-    $DAEMON_START
-    sleep 15
+    $PROJECT_FOLDER/$DAEMON_BINARY -daemon
+    sleep 5
   else
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
     exit 1
@@ -161,15 +161,15 @@ function create_conf_file()
 {
   sleep 2
   echo
-  GENKEY=$($CLI masternode genkey)
+  GENKEY=$($PROJECT_FOLDER/$CLI_BINARY masternode genkey)
   echo
   echo -e "${BLUE}Creating conf file conf file${NC}"
   echo -e "${YELLOW}Ignore any errors you see below.${NC}"
   sleep 3
-  $CLI stop
   echo
   echo -e "${BLUE}Stopping the daemon and writing config${NC}"
-
+  $PROJECT_FOLDER/$CLI_BINARY stop
+  
 cat <<EOF > $CONF_FILE
 masternode=1
 masternodeprivkey=$GENKEY
@@ -206,7 +206,7 @@ function start_wallet()
 {
   echo
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
-  if [ -f $DAEMON_BINARY_PATH ]; then
+  if [ -f $DAEMON ]; then
     $DAEMON_START
     echo
     echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
