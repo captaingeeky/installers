@@ -56,6 +56,7 @@ function check_existing()
 
 function set_environment()
 {
+  VERSION="1.0.0"
   PROJECT="Zixx"
   PROJECT_FOLDER="$HOME/zixx"
   DAEMON_BINARY="zixxd"
@@ -89,7 +90,7 @@ function show_header()
 {
   clear
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
-  echo -e "${YELLOW}$PROJECT Masternode Installer v3.0.6 - chris 2018 | On server VPS IP: $NEXT_AVAIL_IP${NC}"
+  echo -e "${YELLOW}$PROJECT Masternode Installer v$VERSION - chris 2018 | On server VPS IP: $NEXT_AVAIL_IP${NC}"
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
   echo
   echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
