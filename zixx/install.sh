@@ -54,6 +54,16 @@ function check_existing()
   DIR_NUM=$((DIR_COUNT+1))
 }
 
+function pre_install()
+{
+  echo -e "${BLUE}Installing dns utils...${NC}"
+  sudo apt-get install -y dnsutils
+  echo -e "${BLUE}Installing pwgen...${NC}"
+  sudo apt-get install -y pwgen
+  PASSWORD=$(pwgen -s 64 1)
+  WANIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
+}
+
 function set_environment()
 {
   VERSION="1.0.0"
@@ -70,20 +80,9 @@ function set_environment()
   CRONTAB_LINE="@reboot $DAEMON_START"
 
   DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
-  CLI="$PROJECT_FOLDER/$CLI_BINARY -rpcconnect=$NEXT_AVAIL_IP -rpcport=$RPC_PORT"
+  CLI="$PROJECT_FOLDER/$CLI_BINARY -rpcconnect=$NEXT_AVAIL_IP -rpcport=$RPC_PORT -rpcuser=$RPC_USER -rpcpassword=$PASSWORD"
   CONF_FILE="$DATADIR/zixx.conf"
   DAEMON_START="$DAEMON -datadir=$DATADIR -conf=$CONF_FILE -daemon"
-
-}
-
-function pre_install()
-{
-  echo -e "${BLUE}Installing dns utils...${NC}"
-  sudo apt-get install -y dnsutils
-  echo -e "${BLUE}Installing pwgen...${NC}"
-  sudo apt-get install -y pwgen
-  PASSWORD=$(pwgen -s 64 1)
-  WANIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
 }
 
 function show_header()
