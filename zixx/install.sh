@@ -44,7 +44,7 @@ function check_existing()
   #  exit 1
   fi
 
-  echo -e "${YELLOW}Found ${BLUE}$DIR_COUNT ${YELLOW}$PROJECT Masternodes and ${BLUE}$IP_NUM ${YELLOW}IP addresses.${NC}"
+  echo -e "${YELLOW}Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
 
   #Now confirm available IPs by removing those that are already bound to 44845
   IP_IN_USE=$(netstat -tulpn | grep :44845 | awk {'print $4'} | tr -d ':44845')
