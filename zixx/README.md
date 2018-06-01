@@ -1,4 +1,4 @@
-#Instructions
+# Instructions
 (to be replaced by official ones, this is just for testing)
 
 enter the following in a command console using putty or ssh on your VPS:
