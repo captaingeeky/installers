@@ -109,15 +109,12 @@ function show_header()
   echo -e " ${YELLOW}■${NC} Update the system firewall to only allow SSH, the masternode ports and outgoing connections"
   echo -e " ${YELLOW}■${NC} Add a schedule entry for the service to restart automatically on power cycles/reboots."
   echo
-  read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
-
-if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
-  exit 1;
-fi
 }
 
 function create_swap()
 {
+  echo
+  echo -e "${BLUE}Creating Swap... (ignore errors, this might not be supported)${NC}"
   fallocate -l 3G /swapfile
   chmod 600 /swapfile
   mkswap /swapfile
@@ -149,12 +146,14 @@ function copy_binaries()
   echo -e "${BLUE}Copying Binaries...${NC}"
   mkdir $PROJECT_FOLDER
   cd $PROJECT_FOLDER
+  
   echo
   echo -e "${BLUE}Getting latest files...${NC}"
-  LATEST_D="`wget -qO- https://api.zixx.org/download/linux/zixxd`"
-  LATEST_CLI="`wget -qO- https://api.zixx.org/download/linux/zixx-cli`"
+  LATEST_D=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixxd)
+  LATEST_CLI=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixx-cli)
   wget $LATEST_D
   wget $LATEST_CLI
+  
   chmod +x zixx{d,-cli}
   if [ -f $DAEMON ]; then
     mkdir $DATADIR
@@ -267,10 +266,10 @@ function cleanup()
 function deploy()
 {
   checks
+  show_header
   check_existing
   pre_install
   set_environment
-  show_header
   create_swap
   install_prerequisites
   copy_binaries
