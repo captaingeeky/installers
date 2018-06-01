@@ -67,12 +67,10 @@ function check_existing()
 
 function pre_install()
 {
-  echo -e "${BLUE}Installing dns utils...${NC}"
-  sudo apt-get install -y dnsutils
   echo -e "${BLUE}Installing pwgen...${NC}"
   sudo apt-get install -y pwgen
   PASSWORD=$(pwgen -s 64 1)
-  WANIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
+  WANIP=$(curl -s4 icanhazip.com)
 }
 
 function set_environment()
