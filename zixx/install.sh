@@ -30,7 +30,10 @@ function checks()
 
 function check_existing()
 {
-  
+  clear
+  echo
+  echo -e "${BLUE}Checking for existing nodes and available IPs...${NC}"
+  echo
   #Get list and count of IPs
   IP_LIST=$(ifconfig | grep "inet addr:" | awk {'print $2'} | grep -v "127.0.0.1" | tr -d 'inet addr:')
   IP_NUM=$(echo "$IP_LIST" | wc -l)
