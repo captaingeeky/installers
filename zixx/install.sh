@@ -153,7 +153,7 @@ function copy_binaries()
     mkdir $DATADIR
     echo -e "${BLUE}Starting daemon ...${NC}"
     $PROJECT_FOLDER/$DAEMON_BINARY -daemon
-    sleep 5
+    sleep 2
   else
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
     exit 1
@@ -168,7 +168,7 @@ function create_conf_file()
   echo
   echo -e "${BLUE}Creating conf file conf file${NC}"
   echo -e "${YELLOW}Ignore any errors you see below.${NC}"
-  sleep 3
+  sleep 2
   echo
   echo -e "${BLUE}Stopping the daemon and writing config${NC}"
   $PROJECT_FOLDER/$CLI_BINARY stop
