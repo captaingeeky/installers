@@ -30,7 +30,6 @@ function checks()
 
 function check_existing()
 {
-  clear
   echo
   echo -e "${BLUE}Checking for existing nodes and available IPs...${NC}"
   echo
