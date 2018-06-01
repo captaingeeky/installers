@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.0.0"
+VERSION="1.1.21"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -220,7 +220,8 @@ function start_wallet()
     echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this Genkey for your QT wallet (Windows/Mac wallet) ${BLUE}$GENKEY${NC}"
     echo -e "${BLUE}If you are using Putty, just select the text. It will automatically go to your clipboard.${NC}"
     echo -e "${BLUE}If you are using SSH, Select it and either CTRL-C${NC}"
-    echo -e "Typing the key out incorrectly is 99% of all installation issues. ${NC}"
+    echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
+    echo
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
