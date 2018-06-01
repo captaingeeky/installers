@@ -49,7 +49,7 @@ function check_existing()
   #Now confirm available IPs by removing those that are already bound to 44845
   IP_IN_USE=$(netstat -tulpn | grep :44845 | awk {'print $4'} | tr -d ':44845')
   IP_IN_USE_COUNT=$(echo "$IP_IN_USE" | wc -l)
-  NEXT_AVAIL_IP=comm -23 <(echo "$IP_LIST" | sort) <(echo "$IP_IN_USE" | sort)
+  NEXT_AVAIL_IP=$(comm -23 <(echo "$IP_LIST" | sort) <(echo "$IP_IN_USE" | sort))
   #$(echo " ${IP_LIST}, ${IP_IN_USE}" | sort | uniq -u | paste -s | awk '{print $1;}')
   echo -e "${YELLOW}Using next available IP : ${BLUE}$NEXT_AVAIL_IP${NC}"
 
