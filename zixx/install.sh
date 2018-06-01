@@ -41,7 +41,7 @@ function check_existing()
   #Check if there are more IPs than existing nodes
   if [[ $DIR_COUNT -ge $IP_NUM ]]; then
     echo -e "${RED}Not enough available IP addresses to run another node! Please add other IPs to this VPS first.${NC}"
-  #  exit 1
+    exit 1
   fi
 
   echo -e "${YELLOW}Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
