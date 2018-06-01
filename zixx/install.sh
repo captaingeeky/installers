@@ -149,9 +149,12 @@ function copy_binaries()
   echo -e "${BLUE}Copying Binaries...${NC}"
   mkdir $PROJECT_FOLDER
   cd $PROJECT_FOLDER
-  
-  wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/zixxd
-  wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/zixx-cli
+  echo
+  echo -e "${BLUE}Getting latest files...${NC}"
+  LATEST_D="`wget -qO- https://api.zixx.org/download/linux/zixxd`"
+  LATEST_CLI="`wget -qO- https://api.zixx.org/download/linux/zixx-cli`"
+  wget $LATEST_D
+  wget $LATEST_CLI
   chmod +x zixx{d,-cli}
   if [ -f $DAEMON ]; then
     mkdir $DATADIR
