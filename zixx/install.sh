@@ -36,7 +36,7 @@ function check_existing()
   IP_NUM=$(echo "$IP_LIST" | wc -l)
 
   #Get number of existing Zixx masternode directories
-  DIR_COUNT=$(ls -la /root/ | grep ".zixx" | grep -c '^')
+  DIR_COUNT=$(ls -la /root/ | grep "\.zixx" | grep -c '^')
   
   #Check if there are more IPs than existing nodes
   if [[ $DIR_COUNT -ge $IP_NUM ]]; then
