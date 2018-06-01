@@ -57,7 +57,9 @@ function check_existing()
     exit 1;
   fi
   
-  DIR_NUM=$DIR_COUNT+1
+  if [[ $DIR_COUNT -gt 0 ]]; then
+    DIR_NUM=$((DIR_COUNT+1))
+  fi
 }
 
 function pre_install()
