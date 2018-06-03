@@ -126,7 +126,14 @@ function install_prerequisites()
 {
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
+  #addid this for libdbcxx
   sudo apt update
+  sudo apt-get install build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev
+  sudo add-apt-repository -y ppa:bitcoin/bitcoin
+  sudo apt update
+  sudo apt install -y libdb4.8-dev libdb4.8++-dev
+  #end libdbcxx section
+  
   sudo apt install -y build-essential htop libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip
   sudo wget http://download.oracle.com/berkeley-db/db-4.8.30.zip
   sudo unzip db-4.8.30.zip
