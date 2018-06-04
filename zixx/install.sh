@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.42"
+VERSION="1.1.44"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -28,6 +28,7 @@ function checks()
   fi
   
   if [ -f /root/zixx/zixx-cli ]; then
+    IS_INSTALLED=true
     echo -e "${YELLOW}$PROJECT Client found! ${BLUE}Checking version...${NC}"
     INSTALLED_VERSION=$(/root/zixx/zixx-cli --version | tr - ' ' | awk {'print $5'})
     LATEST_D=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixxd)
@@ -129,7 +130,7 @@ function create_swap()
 
 function install_prerequisites()
 {
-  if [ "$IS_CURRENT" = true ]; then
+  if [ "$IS_CURRENT" = true ] && [ "$IS_INSTALLED" = true ]; then
       echo -e "${BLUE} Skipping pre-requisites..."
   else
     echo
