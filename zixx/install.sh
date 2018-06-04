@@ -180,8 +180,8 @@ cat <<EOF > '/usr/local/bin/z.sh'
 /root/zixx/zixx-cli -datadir=/root/.$1 -conf=/root/.$1/zixx.conf $2 $3 $4
 EOF
   chmod +x /usr/local/bin/z.sh
-  echo "alias z='z.sh'" >> /root/.bashrc
-  . ~/.bashrc
+  echo "alias z='/usr/local/bin/z.sh'" >> /root/.bashrc
+  . /root/.bashrc
   
   fi
   if [ -f $DAEMON ]; then
