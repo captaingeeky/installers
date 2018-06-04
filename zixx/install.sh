@@ -135,7 +135,7 @@ function create_swap()
 
 function install_prerequisites()
 {
-  if [ IS_CURRENT ]; then
+  if [ "IS_CURRENT" ]; then
       exit 1;
   fi
   echo
