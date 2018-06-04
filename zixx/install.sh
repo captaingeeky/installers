@@ -198,7 +198,7 @@ function create_conf_file()
   echo
   GENKEY=$($PROJECT_FOLDER/$CLI_BINARY masternode genkey)
   echo
-  echo -e "${BLUE}Creating conf file conf file${NC}"
+  echo -e "${BLUE}Creating conf file...${NC}"
   echo -e "${YELLOW}Ignore any errors you see below. (15 seconds)${NC}"
   sleep 15
   echo
