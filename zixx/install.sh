@@ -76,14 +76,6 @@ function check_existing()
   fi
 }
 
-function pre_install()
-{
-  echo -e "${BLUE}Installing pwgen...${NC}"
-  sudo apt-get install -y pwgen
-  PASSWORD=$(pwgen -s 64 1)
-  WANIP=$(curl -s4 icanhazip.com)
-}
-
 function set_environment()
 {
   DATADIR="$HOME/.zixx$DIR_NUM"
@@ -142,7 +134,7 @@ function install_prerequisites()
     echo -e "${BLUE}Installing Pre-requisites${NC}"
     #addid this for libdbcxx
     sudo apt update
-    sudo apt install -y build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev
+    sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev
     sudo add-apt-repository -y ppa:bitcoin/bitcoin
     sudo apt update
     sudo apt install -y libdb4.8-dev libdb4.8++-dev
@@ -196,6 +188,7 @@ function copy_binaries()
 function create_conf_file()
 {
   echo
+  PASSWORD=$(pwgen -s 64 1)
   GENKEY=$($PROJECT_FOLDER/$CLI_BINARY masternode genkey)
   echo
   echo -e "${BLUE}Creating conf file...${NC}"
@@ -293,7 +286,6 @@ function deploy()
   checks
   show_header
   check_existing
-  pre_install
   set_environment
   create_swap
   install_prerequisites
