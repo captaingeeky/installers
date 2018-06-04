@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.41"
+VERSION="1.1.42"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -135,7 +135,7 @@ function create_swap()
 
 function install_prerequisites()
 {
-  if [ "IS_CURRENT" ]; then
+  if [ "$IS_CURRENT" = true ]; then
       echo -e "${BLUE} Skipping pre-requisites..."
   else
     echo
@@ -162,7 +162,7 @@ function install_prerequisites()
 function copy_binaries()
 {
   #check if version is current before copying binaries
-  if [ "IS_CURRENT" ]; then
+  if [ "$IS_CURRENT" = true ]; then
       echo -e "${BLUE} Skipping binaries..."
   else
   
