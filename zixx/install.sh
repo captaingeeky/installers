@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.35"
+VERSION="1.1.37"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -135,6 +135,9 @@ function create_swap()
 
 function install_prerequisites()
 {
+  if [ IS_CURRENT ]; then
+      exit 1;
+  fi
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
   #addid this for libdbcxx
@@ -281,8 +284,6 @@ function cleanup()
 #  echo -e "==================================="
   
   cd $HOME
-  rm inst*.sh
-  rm -R db-4.8*
 }
 
 function deploy()
