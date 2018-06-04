@@ -175,16 +175,15 @@ function copy_binaries()
     wget $LATEST_D
     wget $LATEST_CLI
     chmod +x zixx{d,-cli}
-    
-    if [ -f $DAEMON ]; then
+  fi
+  if [ -f $DAEMON ]; then
       mkdir $DATADIR
       echo -e "${BLUE}Starting daemon ...(30 seconds)${NC}"
-      $PROJECT_FOLDER/$DAEMON_BINARY -daemon
+      $DAEMON_START
       sleep 30
     else
       echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
       exit 1;
-    fi
   fi
 }
 
@@ -192,14 +191,14 @@ function create_conf_file()
 {
   echo
   PASSWORD=$(pwgen -s 64 1)
-  GENKEY=$($PROJECT_FOLDER/$CLI_BINARY masternode genkey)
+  GENKEY=$($CLI masternode genkey)
   echo
   echo -e "${BLUE}Creating conf file...${NC}"
   echo -e "${YELLOW}Ignore any errors you see below. (15 seconds)${NC}"
   sleep 15
   echo
   echo -e "${BLUE}Stopping the daemon and writing config (15 seconds)${NC}"
-  $PROJECT_FOLDER/$CLI_BINARY stop
+  $CLI stop
   sleep 16
   
 cat <<EOF > $CONF_FILE
