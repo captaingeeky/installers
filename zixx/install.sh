@@ -180,9 +180,6 @@ cat <<EOF > '/usr/local/bin/z.sh'
 /root/zixx/zixx-cli -datadir=/root/.$1 -conf=/root/.$1/zixx.conf $2 $3 $4
 EOF
   chmod +x /usr/local/bin/z.sh
-  echo "alias z='/usr/local/bin/z.sh'" >> /root/.bashrc
-  . /root/.bashrc
-  
   fi
   if [ -f $DAEMON ]; then
       mkdir $DATADIR
@@ -259,8 +256,8 @@ function start_wallet()
     echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
-    echo -e "${BLUE}Type ${YELLOW}z <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
-    echo -e "${BLUE}Ex: ${GREEN}z zixx2 masternode status ${NC}"
+    echo -e "${BLUE}Type ${YELLOW}z.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
+    echo -e "${BLUE}Ex: ${GREEN}z.sh zixx2 masternode status ${NC}"
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
