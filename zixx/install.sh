@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.37"
+VERSION="1.1.39"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -182,9 +182,9 @@ function copy_binaries()
   chmod +x zixx{d,-cli}
   if [ -f $DAEMON ]; then
     mkdir $DATADIR
-    echo -e "${BLUE}Starting daemon ...${NC}"
+    echo -e "${BLUE}Starting daemon ...(30 seconds)${NC}"
     $PROJECT_FOLDER/$DAEMON_BINARY -daemon
-    sleep 2
+    sleep 30
   else
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
     exit 1
@@ -193,16 +193,16 @@ function copy_binaries()
 
 function create_conf_file()
 {
-  sleep 2
   echo
   GENKEY=$($PROJECT_FOLDER/$CLI_BINARY masternode genkey)
   echo
   echo -e "${BLUE}Creating conf file conf file${NC}"
-  echo -e "${YELLOW}Ignore any errors you see below.${NC}"
-  sleep 2
+  echo -e "${YELLOW}Ignore any errors you see below. (15 seconds)${NC}"
+  sleep 15
   echo
-  echo -e "${BLUE}Stopping the daemon and writing config${NC}"
+  echo -e "${BLUE}Stopping the daemon and writing config (15 seconds)${NC}"
   $PROJECT_FOLDER/$CLI_BINARY stop
+  sleep 16
   
 cat <<EOF > $CONF_FILE
 masternode=1
