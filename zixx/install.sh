@@ -177,7 +177,7 @@ function copy_binaries()
     chmod +x zixx{d,-cli}
 cat <<EOF > '/usr/local/bin/z.sh'
 #!/bin/bash
-/root/zixx/zixx-cli -datadir=/root/.$1 -conf=/root/.$1/zixx.conf $2 $3 $4
+/root/zixx/zixx-cli -datadir=/root/.\$1 -conf=/root/.\$1/zixx.conf \$2 \$3 \$4
 EOF
   chmod +x /usr/local/bin/z.sh
   fi
