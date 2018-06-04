@@ -32,8 +32,8 @@ function checks()
     INSTALLED_VERSION=$(/root/zixx/zixx-cli --version | tr - ' ' | awk {'print $5'})
     LATEST_D=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixxd)
     CURRENT_VERSION="$(echo $LATEST_D | tr / ' ' | awk {'print $7'})"
-    if [ $INSTALLED_VERSION ] && [ $INSTALLED_VERSION -eq $CURRENT_VERSION ]; then
-      echo -e "${BLUE}Current version up to date. Using existing."
+    if [ "$INSTALLED_VERSION" ] && [ "$INSTALLED_VERSION" == "$CURRENT_VERSION" ]; then
+      echo -e "${BLUE}Current version up to date. Using existing.${NC}"
       IS_CURRENT=True
     fi
   fi
