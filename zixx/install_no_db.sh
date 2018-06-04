@@ -259,8 +259,6 @@ function cleanup()
   
   cd $HOME
   rm inst*.sh
-  rm install
-  rm -R db-4.8*
 }
 
 function deploy()
