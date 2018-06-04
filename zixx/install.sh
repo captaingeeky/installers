@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.39"
+VERSION="1.1.40"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -136,7 +136,8 @@ function create_swap()
 function install_prerequisites()
 {
   if [ "IS_CURRENT" ]; then
-      exit 1;
+      echo -e "${BLUE} skipping pre-requisites..."
+      exit;
   fi
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
