@@ -111,6 +111,8 @@ function show_header()
   echo -e " ${YELLOW}■${NC} Update the system firewall to only allow SSH, the masternode ports and outgoing connections"
   echo -e " ${YELLOW}■${NC} Add a schedule entry for the service to restart automatically on power cycles/reboots."
   echo
+  echo -e " ${RED}WARNING!!! ${BLUE}If you are already running one or more $PROJECT Masternode(s) on this machine, make sure they are running before executing this script!!! ${NC}"
+  echo
 }
 
 function create_swap()
