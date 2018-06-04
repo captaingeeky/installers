@@ -137,8 +137,8 @@ function install_prerequisites()
   sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip
   sudo wget http://download.oracle.com/berkeley-db/db-4.8.30.zip
   sudo unzip db-4.8.30.zip
-  sudo cd db-4.8.30
-  sudo cd build_unix/
+  cd db-4.8.30
+  cd build_unix/
   sudo ../dist/configure --prefix=/usr/ --enable-cxx
   sudo make
   sudo make install
