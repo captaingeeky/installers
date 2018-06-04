@@ -210,6 +210,7 @@ function configure_firewall()
   sudo ufw limit ssh/tcp
   sudo ufw allow $MN_PORT/tcp
   sudo ufw logging on
+  echo "y" | sudo ufw enable
 }
 
 function add_cron()
