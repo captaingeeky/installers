@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.40"
+VERSION="1.1.41"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -136,59 +136,60 @@ function create_swap()
 function install_prerequisites()
 {
   if [ "IS_CURRENT" ]; then
-      echo -e "${BLUE} skipping pre-requisites..."
-      exit;
-  fi
-  echo
-  echo -e "${BLUE}Installing Pre-requisites${NC}"
-  #addid this for libdbcxx
-  sudo apt update
-  sudo apt install -y build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev
-  sudo add-apt-repository -y ppa:bitcoin/bitcoin
-  sudo apt update
-  sudo apt install -y libdb4.8-dev libdb4.8++-dev
-  #end libdbcxx section
+      echo -e "${BLUE} Skipping pre-requisites..."
+  else
+    echo
+    echo -e "${BLUE}Installing Pre-requisites${NC}"
+    #addid this for libdbcxx
+    sudo apt update
+    sudo apt install -y build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev
+    sudo add-apt-repository -y ppa:bitcoin/bitcoin
+    sudo apt update
+    sudo apt install -y libdb4.8-dev libdb4.8++-dev
+    #end libdbcxx section
   
-  sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip
-  sudo wget http://download.oracle.com/berkeley-db/db-4.8.30.zip
-  sudo unzip db-4.8.30.zip
-  cd db-4.8.30
-  cd build_unix/
-  sudo ../dist/configure --prefix=/usr/ --enable-cxx
-  sudo make
-  sudo make install
+    sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip
+    sudo wget http://download.oracle.com/berkeley-db/db-4.8.30.zip
+    sudo unzip db-4.8.30.zip
+    cd db-4.8.30
+    cd build_unix/
+    sudo ../dist/configure --prefix=/usr/ --enable-cxx
+    sudo make
+    sudo make install
+  fi
 }
 
 function copy_binaries()
 {
   #check if version is current before copying binaries
-  if [ IS_CURRENT ]; then
-      exit 1;
-  fi
-  
-  #deleting previous install folders in case of failed install attempts. Also ensures latest binaries are used
-  rm -rf $PROJECT_FOLDER
-  echo
-  echo -e "${BLUE}Copying Binaries...${NC}"
-  mkdir $PROJECT_FOLDER
-  cd $PROJECT_FOLDER
-  
-  echo
-  echo -e "${BLUE}Getting latest files...${NC}"
-  LATEST_D=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixxd)
-  LATEST_CLI=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixx-cli)
-  wget $LATEST_D
-  wget $LATEST_CLI
-  
-  chmod +x zixx{d,-cli}
-  if [ -f $DAEMON ]; then
-    mkdir $DATADIR
-    echo -e "${BLUE}Starting daemon ...(30 seconds)${NC}"
-    $PROJECT_FOLDER/$DAEMON_BINARY -daemon
-    sleep 30
+  if [ "IS_CURRENT" ]; then
+      echo -e "${BLUE} Skipping binaries..."
   else
-    echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
-    exit 1
+  
+    #deleting previous install folders in case of failed install attempts. Also ensures latest binaries are used
+    rm -rf $PROJECT_FOLDER
+    echo
+    echo -e "${BLUE}Copying Binaries...${NC}"
+    mkdir $PROJECT_FOLDER
+    cd $PROJECT_FOLDER
+  
+    echo
+    echo -e "${BLUE}Getting latest files...${NC}"
+    LATEST_D=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixxd)
+    LATEST_CLI=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixx-cli)
+    wget $LATEST_D
+    wget $LATEST_CLI
+    chmod +x zixx{d,-cli}
+    
+    if [ -f $DAEMON ]; then
+      mkdir $DATADIR
+      echo -e "${BLUE}Starting daemon ...(30 seconds)${NC}"
+      $PROJECT_FOLDER/$DAEMON_BINARY -daemon
+      sleep 30
+    else
+      echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
+      exit 1;
+    fi
   fi
 }
 
