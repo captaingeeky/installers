@@ -34,7 +34,8 @@ function check_existing()
   echo -e "${BLUE}Checking for existing nodes and available IPs...${NC}"
   echo
   #Get list and count of IPs
-  IP_LIST=$(ifconfig | grep "inet addr:" | awk {'print $2'} | grep -v "127.0.0.1" | tr -d 'inet addr:')
+  grep -E 'foo|bar'
+  IP_LIST=$(ifconfig | grep "inet addr:" | awk {'print $2'} | grep -vE '127.0.0|192.168|172.16|10.0.0' | tr -d 'inet addr:')
   IP_NUM=$(echo "$IP_LIST" | wc -l)
 
   #Get number of existing Zixx masternode directories
