@@ -175,10 +175,12 @@ function copy_binaries()
     wget $LATEST_D
     wget $LATEST_CLI
     chmod +x zixx{d,-cli}
-cat <<EOF > '/usr/local/bin/z.sh'
-#!/bin/bash
-/root/zixx/zixx-cli -datadir=/root/.\$1 -conf=/root/.\$1/zixx.conf \$2 \$3 \$4
-EOF
+    if [ ! -f '/usr/local/bin/z.sh' ]; then
+      wget -O /usr/local/bin/z.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh
+      chmod +x /usr/local/bin/z.sh
+      echo "alias z='/usr/local/bin/z.sh'" >> /root/.bashrc
+      . /root/.bashrc
+    fi
   chmod +x /usr/local/bin/z.sh
   echo "alias z='/usr/local/bin/z.sh'" >> /root/.bashrc
   . /root/.bashrc
@@ -258,8 +260,8 @@ function start_wallet()
     echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
-    echo -e "${BLUE}Type ${YELLOW}z.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
-    echo -e "${BLUE}Ex: ${GREEN}z.sh zixx2 masternode status ${NC}"
+    echo -e "${BLUE}Type ${YELLOW}z <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
+    echo -e "${BLUE}Ex: ${GREEN}z zixx2 masternode status ${NC}"
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
