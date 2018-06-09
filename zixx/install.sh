@@ -179,9 +179,6 @@ function copy_binaries()
       echo "alias z='/usr/local/bin/z.sh'" >> /root/.bashrc
       . /root/.bashrc
     fi
-  chmod +x /usr/local/bin/z.sh
-  echo "alias z='/usr/local/bin/z.sh'" >> /root/.bashrc
-  . /root/.bashrc
   fi
   if [ -f $DAEMON ]; then
       mkdir $DATADIR
