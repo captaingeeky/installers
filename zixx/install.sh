@@ -256,11 +256,11 @@ function start_wallet()
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
     read -n 1 -s -r -p "Press any key to continue to syncronisation steps"
-    watch -g zixx/zixx-cli mnsync status
+    watch -g $CLI mnsync status
     echo -e "${YELLOW}Please right click on your new node in your QT wallet and Start Alias.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
-    watch -g zixx/zixx-cli masternode status
+    watch -g $CLI masternode status
     echo
     echo -e "${YELLOW}Masternode install complete ${NC}"
     echo
@@ -276,26 +276,6 @@ function start_wallet()
 
 function cleanup()
 {
-#  echo -e "==================================="
-#  echo -e "VERSION = $VERSION"
-#  echo -e "PROJECT = $PROJECT"
-#  echo -e "PROJECT_FOLDER = $PROJECT_FOLDER"
-#  echo -e "DAEMON_BINARY = $DAEMON_BINARY"
-#  echo -e "CLI_BINARY = $CLI_BINARY"
-#  echo -e "DATADIR = $DATADIR"
-
-#  echo -e "TMP_FOLDER = $TMP_FOLDER"
-#  echo -e "RPC_USER = $RPC_USER"
-#  echo -e "MN_PORT = $MN_PORT"
-#  echo -e "RPC_PORT = $RPC_PORT"
-#  echo -e "CRONTAB_LINE = $CRONTAB_LINE"
-
-#  echo -e "DAEMON = $DAEMON"
-#  echo -e "CLI = $CLI"
-#  echo -e "CONF_FILE = $CONF_FILE"
-#  echo -e "DAEMON_START = $DAEMON_START"
-#  echo -e "==================================="
-  
   cd $HOME
   
   if [ "$IS_CURRENT" = true ] && [ "$IS_INSTALLED" = true ]; then
