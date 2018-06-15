@@ -243,19 +243,13 @@ function start_wallet()
   echo
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
   if [ -f $DAEMON ]; then
-    $DAEMON_START
     echo
     echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
     echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
-    echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
-    echo
-    echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this Genkey for your QT wallet (Windows/Mac wallet) ${BLUE}$GENKEY${NC}"
-    echo -e "${BLUE}If you are using Putty, just select the text. It will automatically go to your clipboard.${NC}"
-    echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
-    echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
     read -n 1 -s -r -p "Press any key to continue to syncronisation steps"
+    $DAEMON_START
     watch -g $CLI mnsync status
     watch -g $CLI mnsync status
     watch -g $CLI mnsync status
@@ -263,8 +257,12 @@ function start_wallet()
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
     watch -g $CLI masternode status
+    echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo
-    echo -e "${YELLOW}Masternode install complete ${NC}"
+    echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this Genkey for your QT wallet (Windows/Mac wallet) ${BLUE}$GENKEY${NC}"
+    echo -e "${BLUE}If you are using Putty, just select the text. It will automatically go to your clipboard.${NC}"
+    echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
+    echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
     echo -e "${BLUE}Type ${YELLOW}z <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
     echo -e "${BLUE}Ex: ${GREEN}z zixx2 masternode status ${NC}"
