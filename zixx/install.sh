@@ -176,8 +176,8 @@ function copy_binaries()
     if [ ! -f '/usr/local/bin/z.sh' ]; then
       wget -O /usr/local/bin/z.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh
       chmod +x /usr/local/bin/z.sh
-      echo "alias z='/usr/local/bin/z.sh'" >> /root/.bashrc
-      . /root/.bashrc
+      echo "alias z='/usr/local/bin/z.sh'" >> ~/.bashrc
+      . ~/.bashrc
     fi
   fi
   if [ -f $DAEMON ]; then
