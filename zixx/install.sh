@@ -250,6 +250,8 @@ function start_wallet()
     echo
     read -n 1 -s -r -p "Press any key to continue to syncronisation steps"
     $DAEMON_START
+    echo -e "${BLUE}Starting Synchronization...${NC}"
+    sleep 10
     watch -g $CLI mnsync status
     watch -g $CLI mnsync status
     watch -g $CLI mnsync status
