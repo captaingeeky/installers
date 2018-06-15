@@ -249,6 +249,7 @@ function start_wallet()
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
     echo
     read -n 1 -s -r -p "Press any key to continue to syncronisation steps"
+    echo
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
     sleep 10
