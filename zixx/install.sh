@@ -255,8 +255,18 @@ function start_wallet()
     echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
+    read -n 1 -s -r -p "Press any key to continue to syncronisation steps"
+    watch -g zixx/zixx-cli mnsync status
+    echo -e "${YELLOW}Please right click on your new node in your QT wallet and Start Alias.${NC}"
+    echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
+    read -n 1 -s -r -p "Press any key to continue"
+    watch -g zixx/zixx-cli masternode status
+    echo
+    echo -e "${YELLOW}Masternode install complete ${NC}"
+    echo
     echo -e "${BLUE}Type ${YELLOW}z <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
     echo -e "${BLUE}Ex: ${GREEN}z zixx2 masternode status ${NC}"
+    
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
