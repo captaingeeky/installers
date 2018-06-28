@@ -2,10 +2,10 @@
 #!/bin/bash
 
 VERSION="1.1.51"
-PROJECT="Zixx"
-PROJECT_FOLDER="$HOME/zixx"
-DAEMON_BINARY="zixxd"
-CLI_BINARY="zixx-cli"
+PROJECT="GanjaCoin"
+PROJECT_FOLDER="$HOME/ganja"
+DAEMON_BINARY="ganjacoind"
+CLI_BINARY="ganjacoind"
   
 RED='\033[1;31m'
 GREEN='\033[1;32m'
@@ -25,12 +25,11 @@ function checks()
      exit 1
   fi
   
-  if [ -f /root/zixx/zixx-cli ]; then
+  if [ -f /root/ganja/ganjacoind ]; then
     IS_INSTALLED=true
-    echo -e "${YELLOW}$PROJECT Client found! ${BLUE}Checking version...${NC}"
-    INSTALLED_VERSION=$(/root/zixx/zixx-cli --version | tr - ' ' | awk {'print $5'})
-    LATEST_D=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixx-cli)
-    CURRENT_VERSION="$(echo $LATEST_D | tr / ' ' | awk {'print $7'})"
+    echo -e "${YELLOW}$PROJECT Client found! ${NC}"
+    INSTALLED_VERSION=$(/root/ganja/ganjacoind getinfo | grep '"version"' | tr -d '",' | awk {'print $3'})
+    
     if [ "$INSTALLED_VERSION" ] && [ "$INSTALLED_VERSION" == "$CURRENT_VERSION" ]; then
       echo -e "${BLUE}Current version up to date. Using existing.${NC}"
       IS_CURRENT=True
