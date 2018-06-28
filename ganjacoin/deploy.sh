@@ -13,7 +13,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[1;36m'
 NC='\033[0m'
 
-function checks() 
+function checks()
 {
   if [[ ($(lsb_release -d) != *16.04*) ]] && [[ ($(lsb_release -d) != *17.04*) ]]; then
       echo -e "${RED}You are not running Ubuntu 16.04 or 17.04. Installation is cancelled.${NC}"
@@ -24,7 +24,7 @@ function checks()
      echo -e "${RED}$0 must be run as root.${NC}"
      exit 1
   fi
-  
+
   if [ -f /root/ganja/ganjacoind ]; then
     IS_INSTALLED=true
     echo -e "${YELLOW}$PROJECT Client found! ${NC}"
@@ -33,9 +33,9 @@ function checks()
     echo -e "${BLUE}Current iunstalled version: $INSTALLED_VERSION${NC}"
     read -e -p "$(echo -e ${YELLOW}Is this correct? [Y/N] ${NC})" CHOICE
     if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
-      INSTALLED_VERSION = 0
+      INSTALLED_VERSION=0
     fi
-    if [ "$INSTALLED_VERSION" ne 0 ]; then
+    if [ ! $INSTALLED_VERSION = 0 ]; then
       echo -e "${BLUE}Current version up to date. Using existing.${NC}"
       IS_CURRENT=True
     fi
@@ -52,7 +52,7 @@ function check_existing()
   IP_NUM=$(echo "$IP_LIST" | wc -l)
 
   #Get number of existing MRJA masternode directories
-  DIR_COUNT=$(ls -la /root/ | grep "\.GanjaCoin" | grep -c '^')
+  DIR_COUNT=$(ls -la /root/ | grep "\.Ganjaproject" | grep -c '^')
   
   #Check if there are more IPs than existing nodes
   if [[ $DIR_COUNT -ge $IP_NUM ]]; then
@@ -81,7 +81,7 @@ function check_existing()
 
 function set_environment()
 {
-  DATADIR="$HOME/.GanjaCoin$DIR_NUM"
+  DATADIR="$HOME/.Ganjaproject2$DIR_NUM"
 
   TMP_FOLDER=$(mktemp -d)
   RPC_USER="$PROJECT-Admin"
@@ -131,10 +131,12 @@ echo -e "${YELLOW}$PROJECT Masternode Installer v$VERSION - chris 2018"
 echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
 echo
 echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
-echo -e "It will:"
+echo -e "${BLUE}It will take you through the entire process along with the setting up of your QT wallet (Windows/Mac Wallet)."
+echo -e "${BLUE}Please read each question carefully before continuing to the next step."
+echo -e "This script will:"
 echo
-echo -e " ${YELLOW}■${NC} Create a swap file"
-echo -e " ${YELLOW}■${NC} Prepare your system with the required dependencies"
+echo -e " ${YELLOW}■${NC} Help you prepare your Hot Wallet"
+echo -e " ${YELLOW}■${NC} Prepare your VPS system with the required dependencies"
 echo -e " ${YELLOW}■${NC} Obtain the latest $PROJECT masternode files from the official $PROJECT repository"
 echo -e " ${YELLOW}■${NC} Automatically generate the Masternode Genkey (and display at the end)"
 echo -e " ${YELLOW}■${NC} Automatically generate the .conf file"
@@ -150,7 +152,7 @@ echo
 function create_swap()
 {
   echo
-  echo -e "${BLUE}Creating Swap... (ignore errors, this might not be supported)${NC}"
+  echo -e "${BLUE}Creating Swap... (ignore errors, this might not be supported or previously installed.)${NC}"
   fallocate -l 3G /swapfile
   chmod 600 /swapfile
   mkswap /swapfile
@@ -166,22 +168,13 @@ function install_prerequisites()
   else
     echo
     echo -e "${BLUE}Installing Pre-requisites${NC}"
-    #addid this for libdbcxx
+    #pre-reqs for running the daemon file
     sudo apt update
-    sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev
+    sudo apt install -y pwgen libwww-perl build-essential libtool pkg-config libssl-dev libgmp3-dev libevent-dev bsdmainutils libdb++-dev libminiupnpc-dev libboost-all-dev libqrencode-dev
     sudo add-apt-repository -y ppa:bitcoin/bitcoin
     sudo apt update
     sudo apt install -y libdb4.8-dev libdb4.8++-dev
-    #end libdbcxx section
-  
-    sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip
-    sudo wget http://download.oracle.com/berkeley-db/db-4.8.30.zip
-    sudo unzip db-4.8.30.zip
-    cd db-4.8.30
-    cd build_unix/
-    sudo ../dist/configure --prefix=/usr/ --enable-cxx
-    sudo make
-    sudo make install
+    #end pre-reqs section
   fi
 }
 
@@ -249,11 +242,11 @@ rpcpassword=$PASSWORD
 EOF
 }
 
-function configure_firewall()
+function secure_server()
 {
   echo
   echo -e "${BLUE}setting up firewall...${NC}"
-  sudo apt-get install -y ufw
+  sudo apt-get install -y ufw fail2ban
   sudo apt-get update -y
   
   #configure ufw firewall
@@ -331,7 +324,7 @@ function deploy()
   install_prerequisites
   copy_binaries
   create_conf_file
-  configure_firewall
+  secure_server
   add_cron
   start_wallet
   cleanup
