@@ -193,18 +193,15 @@ function copy_binaries()
     cd $PROJECT_FOLDER
   
     echo
-    echo -e "${BLUE}Getting latest files...${NC}"
-    LATEST_D=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixxd)
-    LATEST_CLI=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixx-cli)
-    wget $LATEST_D
-    wget $LATEST_CLI
-    chmod +x zixx{d,-cli}
-    if [ ! -f '/usr/local/bin/z.sh' ]; then
-      wget -O /usr/local/bin/z.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh
-      chmod +x /usr/local/bin/z.sh
-      echo "alias z='/usr/local/bin/z.sh'" >> ~/.bashrc
-      . ~/.bashrc
-    fi
+    wget https://www.ganjacoinpro.com/downloads/ganjacoindv1.0.0.7.tar.gz
+    chmod +x $CLI_BINARY
+    #Aliased shjortcut for masternode commands
+    #if [ ! -f '/usr/local/bin/g.sh' ]; then
+    #  wget -O /usr/local/bin/g.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh
+    #  chmod +x /usr/local/bin/g.sh
+    #  echo "alias g='/usr/local/bin/g.sh'" >> ~/.bashrc
+    #  . ~/.bashrc
+    #fi
   fi
   if [ -f $DAEMON ]; then
       mkdir $DATADIR
@@ -215,6 +212,21 @@ function copy_binaries()
       echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
       exit 1;
   fi
+}
+
+function prepare_QT()
+{
+  clear
+  echo
+  echo -e "${YELLOW}QT Wallet Preparation : (you need your Windows or Mac wallet open for this step!)${NC}"
+  echo
+  echo -e "${BLUE} Step 1. Create a new wallet receiving address. To do this, simply go to the ${GREEN}Receive ${BLUE}tab on the left and"
+  echo -e " click on the ${GREEN}New Address${BLUE} button below. A popup window will ask for a label. Write something in to properly"
+  echo -e " identify your masternode such as a name and it's number. For example, if this is your first, you could use: ${NC}"
+  echo -e " ${GREEN}MN01 ${BLUE}as an alias. Write it in the label field and click ok.${NC}"
+  echo
+  read -e -p "$(echo -e ${YELLOW} Once this is done, please type in the label you chose here and press enter [case sensitive]: ${NC})" MN_ALIAS
+  
 }
 
 function create_conf_file()
@@ -232,13 +244,25 @@ function create_conf_file()
   sleep 16
   
 cat <<EOF > $CONF_FILE
-masternode=1
-masternodeprivkey=$GENKEY
-server=1
-bind=$NEXT_AVAIL_IP
-rpcport=$RPC_PORT
 rpcuser=$RPC_USER
 rpcpassword=$PASSWORD
+rpcallowip=localhost
+$RPC_PORT
+port=12419
+externalip=$NEXT_AVAIL_IP
+server=1
+listen=1
+daemon=1
+logtimestamps=1
+txindex=$TX_INDEX
+maxconnections=500
+mnconflock=0
+masternode=1
+masternodeaddr=$NEXT_AVAIL_IP:12419
+masternodeprivkey=$GENKEY
+stake=0
+staking=0
+seednode=138.197.44.71
 EOF
 }
 
