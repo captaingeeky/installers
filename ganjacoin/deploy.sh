@@ -29,8 +29,13 @@ function checks()
     IS_INSTALLED=true
     echo -e "${YELLOW}$PROJECT Client found! ${NC}"
     INSTALLED_VERSION=$(/root/ganja/ganjacoind getinfo | grep '"version"' | tr -d '",' | awk {'print $3'})
-    
-    if [ "$INSTALLED_VERSION" ] && [ "$INSTALLED_VERSION" == "$CURRENT_VERSION" ]; then
+    echo
+    echo -e "${BLUE}Current iunstalled version: $INSTALLED_VERSION${NC}"
+    read -e -p "$(echo -e ${YELLOW}Is this correct? [Y/N] ${NC})" CHOICE
+    if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
+      INSTALLED_VERSION = 0
+    fi
+    if [ "$INSTALLED_VERSION" ne 0 ]; then
       echo -e "${BLUE}Current version up to date. Using existing.${NC}"
       IS_CURRENT=True
     fi
@@ -42,12 +47,12 @@ function check_existing()
   echo
   echo -e "${BLUE}Checking for existing nodes and available IPs...${NC}"
   echo
-  #Get list and count of IPs
+  #Get list and count of IPs excluding local networks
   IP_LIST=$(ifconfig | grep "inet addr:" | awk {'print $2'} | grep -vE '127.0.0|192.168|172.16|10.0.0' | tr -d 'inet addr:')
   IP_NUM=$(echo "$IP_LIST" | wc -l)
 
-  #Get number of existing Zixx masternode directories
-  DIR_COUNT=$(ls -la /root/ | grep "\.zixx" | grep -c '^')
+  #Get number of existing MRJA masternode directories
+  DIR_COUNT=$(ls -la /root/ | grep "\.GanjaCoin" | grep -c '^')
   
   #Check if there are more IPs than existing nodes
   if [[ $DIR_COUNT -ge $IP_NUM ]]; then
@@ -57,8 +62,8 @@ function check_existing()
 
   echo -e "${YELLOW}Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
 
-  #Now confirm available IPs by removing those that are already bound to 44845
-  IP_IN_USE=$(netstat -tulpn | grep :44845 | awk {'print $4'} | tr -d ':44845')
+  #Now confirm available IPs by removing those that are already bound to 12419
+  IP_IN_USE=$(netstat -tulpn | grep :12419 | awk {'print $4'} | tr -d ':12419')
   IP_IN_USE_COUNT=$(echo "$IP_IN_USE" | wc -l)
   FREE_IPS=$(comm -23 <(echo "$IP_LIST" | sort) <(echo "$IP_IN_USE" | sort))
   NEXT_AVAIL_IP=$(echo $FREE_IPS | awk {'print $1'})
@@ -76,15 +81,15 @@ function check_existing()
 
 function set_environment()
 {
-  DATADIR="$HOME/.zixx$DIR_NUM"
+  DATADIR="$HOME/.GanjaCoin$DIR_NUM"
 
   TMP_FOLDER=$(mktemp -d)
   RPC_USER="$PROJECT-Admin"
-  MN_PORT=44845
-  RPC_PORT=$((14647+DIR_NUM))
+  MN_PORT=12419
+  RPC_PORT=$((14420+DIR_NUM))
 
   DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
-  CONF_FILE="$DATADIR/zixx.conf"
+  CONF_FILE="$DATADIR/Ganjaproject.conf"
   CLI="$PROJECT_FOLDER/$CLI_BINARY -conf=$CONF_FILE -datadir=$DATADIR"
   DAEMON_START="$DAEMON -datadir=$DATADIR -conf=$CONF_FILE -daemon"
   CRONTAB_LINE="@reboot $DAEMON_START"
@@ -92,25 +97,54 @@ function set_environment()
 
 function show_header()
 {
-  clear
-  echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
-  echo -e "${YELLOW}$PROJECT Masternode Installer v$VERSION - chris 2018"
-  echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
-  echo
-  echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
-  echo -e "It will:"
-  echo
-  echo -e " ${YELLOW}■${NC} Create a swap file"
-  echo -e " ${YELLOW}■${NC} Prepare your system with the required dependencies"
-  echo -e " ${YELLOW}■${NC} Obtain the latest $PROJECT masternode files from the official $PROJECT repository"
-  echo -e " ${YELLOW}■${NC} Automatically generate the Masternode Genkey (and display at the end)"
-  echo -e " ${YELLOW}■${NC} Automatically generate the .conf file"
-  echo -e " ${YELLOW}■${NC} Add Brute-Force protection using fail2ban"
-  echo -e " ${YELLOW}■${NC} Update the system firewall to only allow SSH, the masternode ports and outgoing connections"
-  echo -e " ${YELLOW}■${NC} Add a schedule entry for the service to restart automatically on power cycles/reboots."
-  echo
-  echo -e " ${RED}WARNING!!! ${BLUE}If you are already running one or more $PROJECT Masternode(s) on this machine, make sure they are running before executing this script!!! ${NC}"
-  echo
+clear
+echo -e "${GREEN}                      ,(%%%%%%%%%%%%%(,                    "
+echo -e "                 .#%%/.        /.     ./#%#,               "
+echo -e "              /%%*             %,          /%%/            "
+echo -e "           .#%,               *%,             /%#.         "
+echo -e "         ,%#.                /%%.,              .#%,       "
+echo -e "        ##.                 *%%%*.,               ,%#      "
+echo -e "      *%*                  /#%%%,   .               (%*    "
+echo -e "     /%.                   *%%%% .,,                 ,%/   "
+echo -e "    /%                    .%%%%%....,                 ,%/  "
+echo -e "   /%  /.                 #%%%%%..,*.                  ,%/ "
+echo -e "  .%*   (##/*             (%%%%%.. ../                  /%."
+echo -e "  (#     *%##%###,.       /%%%%%  .,.              ..    %("
+echo -e "  %/      /%###%#%#%#     (%%%%%. , .       . . ..       #%"
+echo -e " .%,        ,#%%%##%%%%%#. #%%%%..,.   *  . .,.          /%"
+echo -e "  %*         .(%%%%%%%%%%%/(%%##(/*,. ..  ..  ,          (%"
+echo -e "  %(           .(%%%%%%%%%#.  .**.  / . ,.. .            ##"
+echo -e "  /%             .#%%%%%%#  (%%% . (.. ,   ..           ,%/"
+echo -e "   %(              .(%%%%(  %%%#.....(..  ..            #% "
+echo -e "   .%*          ./(%##%%%%. .%%%*,(. *...(, ,          /%. "
+echo -e "    .%*   ,/(###(##%%%%%%%%%/.    .//,,*.. .   . .    (%.  "
+echo -e "     .%(     *#####%%%%%%%%%%%%( .... *,  .. ..      #%.   "
+echo -e "       ##.         ..   /%%%%%//  *. ,/  ...       ,%#     "
+echo -e "        *%(           .%%%%%(  *    /..*,        .#%,      "
+echo -e "          /%#        .%%%%/    .     ....,     .#%/        "
+echo -e "               *%%(,                     ,#%%*             "
+echo -e "                   /%%%(*,        .,/#%%%/                 "
+echo -e "                        ,(%%%%%%%%%(,                      ${NC}"
+sleep 4
+echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
+echo -e "${YELLOW}$PROJECT Masternode Installer v$VERSION - chris 2018"
+echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
+echo
+echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
+echo -e "It will:"
+echo
+echo -e " ${YELLOW}■${NC} Create a swap file"
+echo -e " ${YELLOW}■${NC} Prepare your system with the required dependencies"
+echo -e " ${YELLOW}■${NC} Obtain the latest $PROJECT masternode files from the official $PROJECT repository"
+echo -e " ${YELLOW}■${NC} Automatically generate the Masternode Genkey (and display at the end)"
+echo -e " ${YELLOW}■${NC} Automatically generate the .conf file"
+echo -e " ${YELLOW}■${NC} Add Brute-Force protection using fail2ban"
+echo -e " ${YELLOW}■${NC} Update the system firewall to only allow SSH, the masternode ports and outgoing connections"
+echo -e " ${YELLOW}■${NC} Add a schedule entry for the service to restart automatically on power cycles/reboots."
+echo
+echo -e " ${RED}WARNING!!! ${RED}If you are already running one or more $PROJECT Masternode(s) on this machine, make sure they are running before executing this script!!! ${NC}"
+echo -e " ${RED}If you do not, the script will improperly detect running nodes and possibly overwrite existing $PROJECT configurations! ${NC}"
+echo
 }
 
 function create_swap()
