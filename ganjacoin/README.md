@@ -4,15 +4,23 @@
 
 1.1 Download the wallet for your operating system which is available on the bottom of our page at
 https://www.ganjacoinpro.com/ <br />
+
 1.2 Launch the wallet and allow it to synchronize <br />
 
 1.3 Encrypt your wallet! (Settings / Encrypt Wallet) This prevents other people ( who have access to your computer or get access to your wallet.dat file ) to get in your wallet. Don't lose that password. If you lose it the wallet is locked forever and nobobdy will be able to recover your funds.
+
 1.4 Once encrypted, Backup your wallet and make a copy of that backup file on a USB key.
+
 1.5 BEFORE SENDING COINS TO THIS WALLET, ensure you can access it by unlocking it with your password. 
+
 1.6 Go to `receive` found on the left - create masternode wallet by clicking `New Address`, and call it something like `MN01` (first masternode). If this is not your first MRJA masternode, name it appropriately (ex.: `MN03` if it's your third) <br />
+
 1.7 Send EXACTLY 30,000 coins to the wallet address you've just created by right-clicking on that new address and clicking on `Copy Address` then going to the send tab and pasting that address in the `Pay To` field. Make sure that it's exactly 30000 - no more, no less.<br />
+
 1.8. Go to `Help / Debug Window / Console ` and type `masternode outputs` <br />
+
 1.9. Now you should see a transaction hash and the output id, keep them for later. <br />
+
 1.10. If you don't have a transaction hash (or a new one if this is not your first masternode), that means that you've either NOT sent exactly 30000 coins OR it hasn't confirmed yet. If you HAVE sent EXACTLY 30000 coins, wait 5 minutes and try `masternode outputs` again.
 
 # 2. Set up the Masternode on a Linux VPS
@@ -36,10 +44,12 @@ Depending upon which operating system you are using. Download the following soft
 Next:
 
 2.2.1 Load the SSH terminal<br />
+
 2.2.2 Copy your IP from the VPS - And for windows Putty simply put in the IP and press enter. For Mac/Linux, use the command: 
 ```
 ssh root@(yourserveripaddress)
 ```
+
 2.2.3 It will connect to the server. Enter your user (root) and VPS password:<br />
 ```
 Username: root
@@ -52,6 +62,7 @@ Password: (vultr password)
 ```
 wget https://github.com/legends420/GanjaCoin/installer/deploy.sh && chmod +x deploy.sh && ./deploy.sh
 ```
+
 ## 3.2 Press `ENTER` Then Simply follow the on-screen instructions.
 
 # 4. Questions?
