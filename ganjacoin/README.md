@@ -36,7 +36,10 @@ Depending upon which operating system you are using. Download the following soft
 Next:
 
 2.2.1 Load the SSH terminal<br />
-2.2.2 Copy your IP from the VPS - And for windows Putty simply put in the IP and press enter. For Mac, use the command: ssh root@(yourserveripaddress)<br />
+2.2.2 Copy your IP from the VPS - And for windows Putty simply put in the IP and press enter. For Mac, use the command: 
+```
+ssh root@(yourserveripaddress)
+```
 2.2.3 It will login to server. Follow the commands below, typing one by one, each line, followed by pressing enter<br />
 2.2.4 Username: root<br />
 2.2.5 Password: (vultr password)<br />
