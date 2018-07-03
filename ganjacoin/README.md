@@ -40,16 +40,19 @@ Next:
 ```
 ssh root@(yourserveripaddress)
 ```
-2.2.3 It will login to server. Follow the commands below, typing one by one, each line, followed by pressing enter<br />
-2.2.4 Username: root<br />
-2.2.5 Password: (vultr password)<br />
+2.2.3 It will connect to the server. Enter your user (root) and VPS password:<br />
+```
+Username: root
+Password: (vultr password)
+```
 
 # 3. Installing the Masternode on the VPS
-Copy the following text and paste it at the terminal prompt:
+
+## 3.1 Copy the following text and paste it at the terminal prompt:
 ```
 wget https://github.com/legends420/GanjaCoin/installer/deploy.sh && chmod +x deploy.sh && ./deploy.sh
 ```
-Press `ENTER` Then Simply follow the on-screen instructions.
+## 3.2 Press `ENTER` Then Simply follow the on-screen instructions.
 
 # 4. Questions?
 
