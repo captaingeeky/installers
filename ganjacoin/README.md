@@ -23,9 +23,9 @@ https://www.ganjacoinpro.com/ <br />
 
 1.10. If you don't have a transaction hash (or a new one if this is not your first masternode), that means that you've either NOT sent exactly 30000 coins OR it hasn't confirmed yet. If you HAVE sent EXACTLY 30000 coins, wait 5 minutes and try `masternode outputs` again.
 
-# 2. Set up the Masternode on a Linux VPS
+## 2. Set up the Masternode on a Linux VPS
 
-## 2.1 Choose your VPS
+2.1 Choose your VPS
 
 VPS server required: We recommend the following specifications:
 - www.vultr.com
@@ -34,7 +34,7 @@ VPS server required: We recommend the following specifications:
 - Ubuntu 16.04.x64
 - Server (Name anything you want, i.e matrix)
 
-## 2.2 Start an SSH session
+2.2 Start an SSH session
 
 Depending upon which operating system you are using. Download the following software:
 
@@ -58,12 +58,12 @@ Password: (vultr password)
 
 # 3. Installing the Masternode on the VPS
 
-## 3.1 Copy the following text and paste it at the terminal prompt:
+3.1 Copy the following text and paste it at the terminal prompt:
 ```
 wget https://github.com/legends420/GanjaCoin/installer/deploy.sh && chmod +x deploy.sh && ./deploy.sh
 ```
 
-## 3.2 Press `ENTER` Then Simply follow the on-screen instructions.
+3.2 Press `ENTER` Then Simply follow the on-screen instructions.
 
 # 4. Questions?
 
