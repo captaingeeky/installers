@@ -9,11 +9,11 @@ https://www.ganjacoinpro.com/ <br />
 1.3 Encrypt your wallet! (Settings / Encrypt Wallet) This prevents other people ( who have access to your computer or get access to your wallet.dat file ) to get in your wallet. Don't lose that password. If you lose it the wallet is locked forever and nobobdy will be able to recover your funds.
 1.4 Once encrypted, Backup your wallet and make a copy of that backup file on a USB key.
 1.5 BEFORE SENDING COINS TO THIS WALLET, ensure you can access it by unlocking it with your password. 
-1.6 Go to `receive` found on the left - create masternode wallet by clicking `New Address`, and call it something like `MN01` (first masternode) <br />
-1.7 Send EXACTLY 30,000 coins to the `MN01` wallet address by right-clicking on that new address you just created and clicking on `Copy Address` then going to the send tab and pasting that address in the `Pay To` field. Make sure that it's exactly 30000 - no more, no less.<br />
+1.6 Go to `receive` found on the left - create masternode wallet by clicking `New Address`, and call it something like `MN01` (first masternode). If this is not your first MRJA masternode, name it appropriately (ex.: `MN03` if it's your third) <br />
+1.7 Send EXACTLY 30,000 coins to the wallet address you've just created by right-clicking on that new address and clicking on `Copy Address` then going to the send tab and pasting that address in the `Pay To` field. Make sure that it's exactly 30000 - no more, no less.<br />
 1.8. Go to `Help / Debug Window / Console ` and type `masternode outputs` <br />
-1.9: Now you should see a transaction hash and the output id, keep them for later. <br />
-1.10 IF YOU DON'T HAVE A TRANSACTION HASH, that means that you've either NOT sent exactly 30000 coins OR it hasn't confirmed yet. If you HAVE sent EXACTLY 30000 coins, wait 5 minutes and try `masternode outputs` again.
+1.9. Now you should see a transaction hash and the output id, keep them for later. <br />
+1.10. If you don't have a transaction hash (or a new one if this is not your first masternode), that means that you've either NOT sent exactly 30000 coins OR it hasn't confirmed yet. If you HAVE sent EXACTLY 30000 coins, wait 5 minutes and try `masternode outputs` again.
 
 # 2. Set up the Masternode on a Linux VPS
 
