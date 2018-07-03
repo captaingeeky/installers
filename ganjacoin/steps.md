@@ -21,3 +21,14 @@
   l) show success message OR error message if times out as well as possible fixes. Tell user to run `./deploy.sh sync` once issue is fixed to skip install and go straight to sync.</br>
   
   
+    
+NOTES:
+MASTERNODE_NOT_PROCESSED: 0 
+MASTERNODE_IS_CAPABLE: 1 
+MASTERNODE_NOT_CAPABLE: 2 
+MASTERNODE_STOPPED: 3
+MASTERNODE_INPUT_TOO_NEW: 4
+MASTERNODE_PORT_NOT_OPEN: 6
+MASTERNODE_PORT_OPEN: 7
+MASTERNODE_SYNC_IN_PROCESS: 8
+MASTERNODE_REMOTELY_ENABLED: 9
