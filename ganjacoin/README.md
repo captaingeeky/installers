@@ -36,7 +36,7 @@ Depending upon which operating system you are using. Download the following soft
 Next:
 
 2.2.1 Load the SSH terminal<br />
-2.2.2 Copy your IP from the VPS - And for windows Putty simply put in the IP and press enter. For Mac, use the command: 
+2.2.2 Copy your IP from the VPS - And for windows Putty simply put in the IP and press enter. For Mac/Linux, use the command: 
 ```
 ssh root@(yourserveripaddress)
 ```
@@ -44,6 +44,13 @@ ssh root@(yourserveripaddress)
 2.2.4 Username: root<br />
 2.2.5 Password: (vultr password)<br />
 
-# 8. Questions?
+# 3. Installing the Masternode on the VPS
+Copy the following text and paste it at the terminal prompt:
+```
+wget https://github.com/legends420/GanjaCoin/installer/deploy.sh && chmod +x deploy.sh && ./deploy.sh
+```
+Press `ENTER` Then Simply follow the on-screen instructions.
+
+# 4. Questions?
 
 If you have a problem or a question you can find us in the #support channel on our Discord. 
