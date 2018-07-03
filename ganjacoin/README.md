@@ -11,9 +11,9 @@ https://www.ganjacoinpro.com/ <br />
 1.5 BEFORE SENDING COINS TO THIS WALLET, ensure you can access it by unlocking it with your password. 
 1.6 Go to `receive` found on the left - create masternode wallet by clicking `New Address`, and call it something like `MN01` (first masternode) <br />
 1.7 Send EXACTLY 30,000 coins to the `MN01` wallet address by right-clicking on that new address you just created and clicking on `Copy Address` then going to the send tab and pasting that address in the `Pay To` field. Make sure that it's exactly 30000 - no more, no less.<br />
-1.8. Go back to `debug console` - Type `masternode outputs` <br />
+1.8. Go to `Help / Debug Window / Console ` and type `masternode outputs` <br />
 1.9: Now you should see a transaction hash and the output id, keep them for later. <br />
-
+1.10 IF YOU DON'T HAVE A TRANSACTION HASH, that means that you've either NOT sent exactly 30000 coins OR it hasn't confirmed yet. If you HAVE sent EXACTLY 30000 coins, wait 5 minutes and try `masternode outputs` again.
 
 # 2. Set up the Masternode on a Linux VPS
 
