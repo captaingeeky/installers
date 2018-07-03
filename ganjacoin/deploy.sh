@@ -5,7 +5,6 @@ VERSION="1.1.51"
 PROJECT="GanjaCoin"
 PROJECT_FOLDER="$HOME/ganja"
 DAEMON_BINARY="ganjacoind"
-CLI_BINARY="ganjacoind"
   
 RED='\033[1;31m'
 GREEN='\033[1;32m'
@@ -25,19 +24,22 @@ function checks()
      exit 1
   fi
 
-  if [ -f /root/ganja/ganjacoind ]; then
+  if [ -f /root/.Ganjaproject2 ]; then
     IS_INSTALLED=true
-    echo -e "${YELLOW}$PROJECT Client found! ${NC}"
-    INSTALLED_VERSION=$(/root/ganja/ganjacoind getinfo | grep '"version"' | tr -d '",' | awk {'print $3'})
-    echo
-    echo -e "${BLUE}Current iunstalled version: $INSTALLED_VERSION${NC}"
-    read -e -p "$(echo -e ${YELLOW}Is this correct? [Y/N] ${NC})" CHOICE
+    echo -e "${YELLOW}$PROJECT Previously installed! ${NC}"
+      
+    read -e -p "$(echo -e ${YELLOW}Delete the current version and continue? [Y/N] ${NC})" CHOICE
     if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
-      INSTALLED_VERSION=0
-    fi
-    if [ ! $INSTALLED_VERSION = 0 ]; then
-      echo -e "${BLUE}Current version up to date. Using existing.${NC}"
-      IS_CURRENT=True
+      echo
+      echo -e "${RED} Installation aborted by user.${NC}"
+      exit 1
+    else
+      echo
+      echo -e "${BLUE}Deleting existing files...${NC}"
+      rm -R /root/.Ganjaproject2 > /dev/null 2>&1
+      rm -R /root/coins/GanjaCoin > /dev/null 2>&1
+      rm -R /root/ganja > /dev/null 2>&1
+      sleep 2
     fi
   fi
 }
