@@ -16,7 +16,7 @@
   j) write new conf file with generated values (and user input ones)</br>
   k) start daemon and loop until block synced</br>
   j) loop until status 2</br>
-  l) prompt user to start alias in wallet</br>
+  l) prompt user to edit conf file, restart wallet and then start alias in wallet</br>
   k) loop until status 9 showing status description each stage. Times out after 30 minutes</br>
   l) show success message OR error message if times out as well as possible fixes. Tell user to run `./deploy.sh sync` once issue is fixed to skip install and go straight to sync.</br>
   
