@@ -172,7 +172,7 @@ function install_prerequisites()
     echo -e "${BLUE}Installing Pre-requisites${NC}"
     #pre-reqs for running the daemon file
     sudo apt update
-    sudo apt install -y pwgen libwww-perl build-essential libtool pkg-config libssl-dev libgmp3-dev libevent-dev bsdmainutils libdb++-dev libminiupnpc-dev libboost-all-dev libqrencode-dev
+    sudo apt install -y pwgen build-essential pkg-config libevent-dev libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev
     sudo add-apt-repository -y ppa:bitcoin/bitcoin
     sudo apt update
     sudo apt install -y libdb4.8-dev libdb4.8++-dev
