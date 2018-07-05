@@ -195,7 +195,7 @@ function copy_binaries()
     cd $PROJECT_FOLDER
   
     echo
-    wget https://www.ganjacoinpro.com/downloads/ganjacoindv1.0.0.7.tar.gz
+    wget https://www.ganjacoinpro.com/downloads/ganjacoind.tar.gz
     chmod +x $CLI_BINARY
     #Aliased shjortcut for masternode commands
     #if [ ! -f '/usr/local/bin/g.sh' ]; then
