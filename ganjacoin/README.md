@@ -23,7 +23,7 @@ https://www.ganjacoinpro.com/ <br />
 
 1.8. Go to `Help / Debug Window / Console ` and type `masternode outputs` <br />
 
-1.9. Now you should see a transaction hash and the output id, keep them for later. <br />
+1.9. Now you should see a transaction hash and the output id, keep them for later. (Copy them to a notepad or text editor) <br />
 ![Image Encrypt](https://github.com/zaemliss/installers/blob/master/ganjacoin/images/txhash.png) </br>
 
 1.10. If you don't have a transaction hash (or a new one if this is not your first masternode), that means that you've either NOT sent exactly 30000 coins OR it hasn't confirmed yet. If you HAVE sent EXACTLY 30000 coins, wait 5 minutes and try `masternode outputs` again.
