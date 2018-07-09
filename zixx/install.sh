@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.51"
+VERSION="1.1.53"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -177,7 +177,6 @@ function copy_binaries()
       wget -O /usr/local/bin/z.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh
       chmod +x /usr/local/bin/z.sh
       echo "alias z='/usr/local/bin/z.sh'" >> ~/.bashrc
-      . ~/.bashrc
     fi
   fi
   if [ -f $DAEMON ]; then
@@ -189,6 +188,8 @@ function copy_binaries()
       echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
       exit 1;
   fi
+  sleep 3
+  . ~/.bashrc
 }
 
 function create_conf_file()
