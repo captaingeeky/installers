@@ -21,7 +21,13 @@ https://www.ganjacoinpro.com/ <br />
 1.8. Go to `Help / Debug Window / Console ` and type `masternode outputs` <br />
 
 1.9. Now you should see a transaction hash and the output id, keep them for later. <br />
-
+```
+11:56:52 masternode outputs
+11:56:52￼
+{
+    "187514e80d0d7a5c93121231bcedfe123be12a6cafe4622338a7d150f18" : "0",
+}
+```
 1.10. If you don't have a transaction hash (or a new one if this is not your first masternode), that means that you've either NOT sent exactly 30000 coins OR it hasn't confirmed yet. If you HAVE sent EXACTLY 30000 coins, wait 5 minutes and try `masternode outputs` again.
 
 ## 2. Set up the Masternode on a Linux VPS
