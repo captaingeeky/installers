@@ -61,6 +61,7 @@ ssh root@(yourserveripaddress)
 Username: root
 Password: (vultr password)
 ```
+** Note that if you copy (control-c) and paste (right-click) into a putty session, there is NO FEEDBACK. That means you won't see the characters being typed or pasted in. So, if you do happen to copy and paste your password in there, just right-click and press [enter]</br>
 
 # 3. Installing the Masternode on the VPS
 
