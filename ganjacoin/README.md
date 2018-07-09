@@ -38,6 +38,7 @@ VPS server required: We recommend the following specifications:
 - Choose any location close to you for optimal connectivity to your server
 - Ubuntu 16.04.x64
 - Server (Name anything you want, i.e matrix)
+![Image Encrypt](https://github.com/zaemliss/installers/blob/master/ganjacoin/images/vultr.png) </br>
 
 2.2 Start an SSH session
 
