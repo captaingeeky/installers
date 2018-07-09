@@ -6,6 +6,7 @@
 https://www.ganjacoinpro.com/ <br />
 
 1.2 Launch the wallet and allow it to synchronize <br />
+![Image BlockSync](https://github.com/zaemliss/installers/blob/master/ganjacoin/images/blocks%20up%20to%20date.png)
 
 1.3 Encrypt your wallet! (Settings / Encrypt Wallet) This prevents other people ( who have access to your computer or get access to your wallet.dat file ) to get in your wallet. Don't lose that password. If you lose it the wallet is locked forever and nobobdy will be able to recover your funds.
 
