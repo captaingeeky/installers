@@ -69,8 +69,10 @@ function check_existing()
   echo $IP_LIST
   echo
   read -e -p "$(echo -e ${BLUE}Please enter the IP address you wish to use: ${NC})" NEXT_AVAIL_IP
-  
-  read -e -p "$(echo -e ${YELLOW}Using ${BLUE} $NEXT_AVAIL_IP ${YELLOW} Continue with installation? [Y/N] ${NC})" CHOICE
+  echo
+  echo -e "${YELLOW}Using ${BLUE} $NEXT_AVAIL_IP${NC}"
+  echo
+  read -e -p "Continue with installation? [Y/N] : " CHOICE
   if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
     exit 1;
   fi
