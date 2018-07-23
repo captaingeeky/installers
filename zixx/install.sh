@@ -59,17 +59,22 @@ function check_existing()
   echo -e "${YELLOW}Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
 
   #Now confirm available IPs by removing those that are already bound to 44845
-  IP_IN_USE=$(netstat -tulpn | grep :44845 | awk {'print $4'} | tr -d ':44845')
-  IP_IN_USE_COUNT=$(echo "$IP_IN_USE" | wc -l)
-  FREE_IPS=$(comm -23 <(echo "$IP_LIST" | sort) <(echo "$IP_IN_USE" | sort))
-  NEXT_AVAIL_IP=$(echo $FREE_IPS | awk {'print $1'})
-  echo -e "${YELLOW}Using next available IP : ${BLUE}$NEXT_AVAIL_IP${NC}"
-
-  read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
+  IP_IN_USE=$(netstat -tulpn | grep :44845 | awk {'print $4'})
+  
+  echo -e "${RED}IMPORTANT - ${YELLOW} please make sure you don't select an IP that is already in use! ${RED}- IMPORTANT${NC}"
+  echo -e "${BLUE}IP List using port 44845 (Active Zixx nodes):{NC}"
+  echo $IP_IN_USE
+  echo
+  echo -e "${GREEN}List of all IPs on this machine${NC}"
+  echo $IP_LIST
+  echo
+  read -e -p "$(echo -e ${BLUE}Please enter the IP address you wish to use: ${NC})" NEXT_AVAIL_IP
+  
+  read -e -p "$(echo -e ${YELLOW}Using ${BLUE} $NEXT_AVAIL_IP ${YELLOW} Continue with installation? [Y/N] ${NC})" CHOICE
   if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
     exit 1;
   fi
-  
+
   if [[ $DIR_COUNT -gt 0 ]]; then
     DIR_NUM=$((DIR_COUNT+1))
   fi
