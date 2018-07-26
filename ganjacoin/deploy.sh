@@ -365,17 +365,19 @@ function start_wallet()
     echo -e "${BLUE} Starting Masternode Synchronization...${NC}"
     echo -e "${GREEN} When it says ${YELLOW}MASTERNODE Waiting for remote activation!${NC}"
     echo -e "${GREEN} Go to your Masternode Tab in your QT Wallet, Click on your new Masternode and click on Start."
-
-MNSTAT[0]="MASTERNODE_NOT_PROCESSED"
-MNSTAT[1]="MASTERNODE_IS_CAPABLE"
-MNSTAT[2]="MASTERNODE Waiting for remote activation!"
-MNSTAT[3]="MASTERNODE_STOPPED"
-MNSTAT[4]="MASTERNODE_INPUT_TOO_NEW"
-MNSTAT[6]="MASTERNODE_PORT_NOT_OPEN"
-MNSTAT[7]="MASTERNODE_PORT_OPEN"
-MNSTAT[8]="MASTERNODE_SYNC_IN_PROCESS"
-MNSTAT[9]="MASTERNODE_REMOTELY_ENABLED"
-MNSTATUS=0
+    echo
+    echo
+    
+    MNSTAT[0]="MASTERNODE_NOT_PROCESSED"
+    MNSTAT[1]="MASTERNODE_IS_CAPABLE"
+    MNSTAT[2]="MASTERNODE Waiting for remote activation!"
+    MNSTAT[3]="MASTERNODE_STOPPED"
+    MNSTAT[4]="MASTERNODE_INPUT_TOO_NEW"
+    MNSTAT[6]="MASTERNODE_PORT_NOT_OPEN"
+    MNSTAT[7]="MASTERNODE_PORT_OPEN"
+    MNSTAT[8]="MASTERNODE_SYNC_IN_PROCESS"
+    MNSTAT[9]="MASTERNODE_REMOTELY_ENABLED"
+    MNSTATUS=0
 
     while [ $MNSTATUS -ne 9 ]; do
       MNSTATUS=$($DAEMON masternode status | grep status | awk {'print $3'} | tr -d ',')
