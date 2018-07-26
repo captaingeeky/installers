@@ -212,6 +212,8 @@ EOF
 
 function prepare_QT()
 {
+  echo -e "This is a text guide complementing the instructions with pictures on the GitHUB!"
+  echo 'https://github.com/zaemliss/installers/tree/master/ganjacoin'
   echo
   echo -e "${YELLOW} QT Wallet Preparation : (you need your Windows or Mac wallet open for this step!)${NC}"
   echo
