@@ -64,7 +64,7 @@ function check_existing()
 
   echo -e "${YELLOW}Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
 
-  NEXT_AVAIL_IP=$(curl -4 icanhazip.com)
+  NEXT_AVAIL_IP=$(curl -s4 icanhazip.com)
   echo -e "${YELLOW}Using next available IP : ${BLUE}$NEXT_AVAIL_IP${NC}"
 
   read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
