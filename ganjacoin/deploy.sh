@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.51"
+VERSION="1.0.52"
 PROJECT="GanjaCoin"
 PROJECT_FOLDER="$HOME/ganja"
 BINARY="ganjacoind"
