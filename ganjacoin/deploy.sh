@@ -4,7 +4,7 @@
 VERSION="1.1.51"
 PROJECT="GanjaCoin"
 PROJECT_FOLDER="$HOME/ganja"
-DAEMON_BINARY="ganjacoind"
+BINARY="ganjacoind"
   
 RED='\033[1;31m'
 GREEN='\033[1;32m'
@@ -64,11 +64,7 @@ function check_existing()
 
   echo -e "${YELLOW}Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
 
-  #Now confirm available IPs by removing those that are already bound to 12419
-  IP_IN_USE=$(netstat -tulpn | grep :12419 | awk {'print $4'} | tr -d ':12419')
-  IP_IN_USE_COUNT=$(echo "$IP_IN_USE" | wc -l)
-  FREE_IPS=$(comm -23 <(echo "$IP_LIST" | sort) <(echo "$IP_IN_USE" | sort))
-  NEXT_AVAIL_IP=$(echo $FREE_IPS | awk {'print $1'})
+  NEXT_AVAIL_IP=$(curl -4 icanhazip.com)
   echo -e "${YELLOW}Using next available IP : ${BLUE}$NEXT_AVAIL_IP${NC}"
 
   read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
@@ -76,9 +72,6 @@ function check_existing()
     exit 1;
   fi
   
-  if [[ $DIR_COUNT -gt 0 ]]; then
-    DIR_NUM=$((DIR_COUNT+1))
-  fi
 }
 
 function set_environment()
@@ -88,12 +81,11 @@ function set_environment()
   TMP_FOLDER=$(mktemp -d)
   RPC_USER="$PROJECT-Admin"
   MN_PORT=12419
-  RPC_PORT=$((14420+DIR_NUM))
+  RPC_PORT=14420
 
-  DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
+  DAEMON="$PROJECT_FOLDER/$BINARY"
   CONF_FILE="$DATADIR/Ganjaproject.conf"
-  CLI="$PROJECT_FOLDER/$CLI_BINARY -conf=$CONF_FILE -datadir=$DATADIR"
-  DAEMON_START="$DAEMON -datadir=$DATADIR -conf=$CONF_FILE -daemon"
+  DAEMON_START="$DAEMON -daemon"
   CRONTAB_LINE="@reboot $DAEMON_START"
 }
 
@@ -165,9 +157,6 @@ function create_swap()
 
 function install_prerequisites()
 {
-  if [ "$IS_INSTALLED" = true ]; then
-      echo -e "${BLUE} Skipping pre-requisites..."
-  else
     echo
     echo -e "${BLUE}Installing Pre-requisites${NC}"
     #pre-reqs for running the daemon file
@@ -177,34 +166,21 @@ function install_prerequisites()
     sudo apt update
     sudo apt install -y libdb4.8-dev libdb4.8++-dev
     #end pre-reqs section
-  fi
 }
 
 function copy_binaries()
 {
-  #check if version is current before copying binaries
-  if [ "$IS_CURRENT" = true ]; then
-      echo -e "${BLUE} Skipping binaries..."
-  else
-  
     #deleting previous install folders in case of failed install attempts. Also ensures latest binaries are used
-    rm -rf $PROJECT_FOLDER
+    rm -rf $PROJECT_FOLDER > /dev/null 2>&1
     echo
     echo -e "${BLUE}Copying Binaries...${NC}"
-    mkdir $PROJECT_FOLDER
-    cd $PROJECT_FOLDER
+    mkdir $PROJECT_FOLDER > /dev/null 2>&1
+    cd $PROJECT_FOLDER > /dev/null 2>&1
   
     echo
-    wget https://www.ganjacoinpro.com/downloads/ganjacoind.tar.gz
-    chmod +x $CLI_BINARY
-    #Aliased shjortcut for masternode commands
-    #if [ ! -f '/usr/local/bin/g.sh' ]; then
-    #  wget -O /usr/local/bin/g.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh
-    #  chmod +x /usr/local/bin/g.sh
-    #  echo "alias g='/usr/local/bin/g.sh'" >> ~/.bashrc
-    #  . ~/.bashrc
-    #fi
-  fi
+    wget https://github.com/zaemliss/installers/raw/master/ganjacoin/ganjacoind > /dev/null 2>&1
+    chmod +x $CLI_BINARY > /dev/null 2>&1
+
   if [ -f $DAEMON ]; then
       mkdir $DATADIR
       echo -e "${BLUE}Starting daemon ...(30 seconds)${NC}"
@@ -242,7 +218,7 @@ function create_conf_file()
   sleep 15
   echo
   echo -e "${BLUE}Stopping the daemon and writing config (15 seconds)${NC}"
-  $CLI stop
+  $CLI stop > /dev/null 2>&1
   sleep 16
   
 cat <<EOF > $CONF_FILE
@@ -264,7 +240,20 @@ masternodeaddr=$NEXT_AVAIL_IP:12419
 masternodeprivkey=$GENKEY
 stake=0
 staking=0
-seednode=138.197.44.71
+addnode=8.9.5.253:12419
+addnode=13.64.151.62:12419
+addnode=162.243.168.95:12419
+addnode=85.25.116.80:12419
+addnode=104.238.183.8:12419
+addnode=45.76.253.220:12419
+addnode=104.207.144.192:12419
+addnode=108.61.215.107:12419
+addnode=84.200.101.85:12419
+addnode=207.246.117.154:12419
+addnode=78.159.150.22:12419
+addnode=107.175.32.173:12419
+addnode=66.42.64.200:12419
+addnode=216.172.33.74:12419 
 EOF
 }
 
@@ -272,16 +261,16 @@ function secure_server()
 {
   echo
   echo -e "${BLUE}setting up firewall...${NC}"
-  sudo apt-get install -y ufw fail2ban
-  sudo apt-get update -y
+  sudo apt-get install -y ufw fail2ban > /dev/null 2>&1
+  sudo apt-get update -y > /dev/null 2>&1
   
   #configure ufw firewall
-  sudo ufw default allow outgoing
-  sudo ufw default deny incoming
-  sudo ufw allow ssh/tcp
-  sudo ufw limit ssh/tcp
-  sudo ufw allow $MN_PORT/tcp
-  sudo ufw logging on
+  sudo ufw default allow outgoing > /dev/null 2>&1
+  sudo ufw default deny incoming > /dev/null 2>&1
+  sudo ufw allow ssh/tcp > /dev/null 2>&1
+  sudo ufw limit ssh/tcp > /dev/null 2>&1
+  sudo ufw allow $MN_PORT/tcp > /dev/null 2>&1
+  sudo ufw logging on > /dev/null 2>&1
   echo "y" | sudo ufw enable
 }
 
@@ -302,12 +291,22 @@ function start_wallet()
     echo
     read -n 1 -s -r -p "Press any key to continue to syncronisation steps"
     echo
-    $DAEMON_START
+    $DAEMON_START > /dev/null 2>&1
     echo -e "${BLUE}Starting Synchronization...${NC}"
     sleep 10
-    watch -g $CLI mnsync status
-    watch -g $CLI mnsync status
-    watch -g $CLI mnsync status
+    
+    BLOCKS=$($DAEMON getblockcount)
+    CURBLOCK=$($DAEMON  getinfo | grep blocks | awk {'print $3'} | tr -d ',')
+        
+    while [ $BLOCKS -ne $CURBLOCK ]; do
+      BLOCKS=$($DAEMON getblockcount)
+      CURBLOCK=$($DAEMON  getinfo | grep blocks | awk {'print $3'} | tr -d ',')
+      echo -e "${BLUE}syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ...${NC}"
+      sleep 10
+    done
+    
+    MNSTATUS=$($DAEMON masternode status | grep status | awk {'print $3'} | tr -d ',')
+    
     echo -e "${YELLOW}Please right click on your new node in your QT wallet and Start Alias.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
