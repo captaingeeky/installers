@@ -67,7 +67,7 @@ Password: (vultr password)
 
 3.1 Copy the following text and paste it at the terminal prompt:
 ```
-wget https://github.com/legends420/GanjaCoin/installer/deploy.sh && chmod +x deploy.sh && ./deploy.sh
+wget https://raw.githubusercontent.com/zaemliss/installers/master/ganjacoin/deploy.sh && chmod +x deploy.sh && ./deploy.sh
 ```
 
 3.2 Press `ENTER` Then Simply follow the on-screen instructions.
