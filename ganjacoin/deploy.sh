@@ -10,7 +10,7 @@ NC='\033[0m'
 function set_environment()
 {
   #Variable Declaration
-  VERSION="1.0.52"
+  VERSION="1.0.53"
   PROJECT="GanjaCoin"
   PROJECT_FOLDER="$HOME/ganja"
   BINARY="ganjacoind"
