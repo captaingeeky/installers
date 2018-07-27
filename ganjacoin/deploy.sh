@@ -356,7 +356,7 @@ function start_wallet()
     echo -e "${BLUE} Once in that file, copy and paste the following information on a new line:${NC}"
     echo
     echo
-    echo -e "$MN_ALIAS $GENKEY $TX_ID $TX_OUTPUT"
+    echo -e "$MN_ALIAS $NEXT_AVAIL_IP:12419 $GENKEY $TX_ID $TX_OUTPUT"
     echo
     echo
     echo -e "${BLUE} Next, save the file and close it. Now restart your QT (Windows or Mac) wallet${YELLOW}"
