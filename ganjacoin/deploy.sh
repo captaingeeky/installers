@@ -222,8 +222,8 @@ function prepare_QT()
   echo -e "${BLUE} Step 1. Create a new wallet receiving address. To do this, simply go to the" 
   echo -e " ${GREEN}Receive ${BLUE}tab on the left and click on the ${GREEN}New Address${BLUE} button below."
   echo -e " A popup window will ask for a label. Write something in to properly identify your "
-  echo -e " masternode such as a name and it's number. For example, if this is your first, you "
-  echo -e " could use ${GREEN}MN01 ${BLUE}as an alias. Write it in the label field and click ok."
+  echo -e " masternode such as a name and it's number. For example, if this is your first, "
+  echo -e " you could use ${GREEN}MN01 ${BLUE}as an alias. Write it in the label field and click ok."
   echo -e " Right-click on that new address and select COPY${NC}"
   echo -e " ${YELLOW} Once this is done, please type in the label you chose here and press enter${NC})"
   read -e -p " Masternode Alias [case sensitive] > : " MN_ALIAS
