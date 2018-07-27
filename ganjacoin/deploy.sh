@@ -219,33 +219,35 @@ function prepare_QT()
   echo
   echo -e "${YELLOW} QT Wallet Preparation : (you need your Windows or Mac wallet open for this step!)${NC}"
   echo
-  echo -e "${BLUE} Step 1. Create a new wallet receiving address. To do this, simply go to the ${GREEN}Receive ${BLUE}tab" 
-  echo -e " on the left and click on the ${GREEN}New Address${BLUE} button below. A popup window will ask for a label. "
-  echo -e " Write something in to properly identify your masternode such as a name and it's number. For example, if this"
-  echo -e " is your first, you could use ${GREEN}MN01 ${BLUE}as an alias. Write it in the label field and click ok. "
+  echo -e "${BLUE} Step 1. Create a new wallet receiving address. To do this, simply go to the" 
+  echo -e " ${GREEN}Receive ${BLUE}tab on the left and click on the ${GREEN}New Address${BLUE} button below."
+  echo -e " A popup window will ask for a label. Write something in to properly identify your "
+  echo -e " masternode such as a name and it's number. For example, if this is your first, you "
+  echo -e " could use ${GREEN}MN01 ${BLUE}as an alias. Write it in the label field and click ok."
   echo -e " Right-click on that new address and select COPY${NC}"
+  echo -e " ${YELLOW} Once this is done, please type in the label you chose here and press enter${NC})"
+  read -e -p " Masternode Alias [case sensitive] > : " MN_ALIAS
   echo
-  echo -e " ${YELLOW} Once this is done, please type in the label you chose here and press enter [case sensitive]${NC})"
-  read -e -p " > : " MN_ALIAS
   echo
-  echo
-  echo -e "${BLUE} Step 2. Send ${YELLOW}EXACTLY 30,000 ${BLUE}coins to the new address you created. To do this, simply"
-  echo -e " click on the ${GREEN}Send${BLUE} tab. In the Pay To field, enter the new masternode address by pasting the "
-  echo -e " one you copied in the previous step, then enter the quantity ${GREEN}30,000${BLUE} and press ${GREEN}SEND${NC}."
-  echo -e " ${GREEN}Enter your wallet password when prompted to confirm the transaction.${NC}"
+  echo -e "${BLUE} Step 2. Send ${YELLOW}EXACTLY 30,000 ${BLUE}coins to the new address you created."
+  echo -e " To do this, simply click on the ${GREEN}Send${BLUE} tab. In the Pay To field, enter "
+  echo -e " the new masternode address by pasting the one you copied in the previous step, then"
+  echo -e " enter the quantity ${GREEN}30,000${BLUE} and press ${GREEN}SEND${NC}. ${GREEN}Enter your "
+  echo -e " wallet password when prompted to confirm the transaction.${NC}"
   echo
 
-  echo -e "${BLUE} Step 3. Now we need the ${YELLOW}Transaction ID and Output${BLUE} of the transaction you just did. "
-  echo -e " For this, you simply click on ${GREEN}Help${BLUE} at the top of your wallet and click ${GREEN}Debug Window ${BLUE}." 
-  echo -e " On the popup window, click on ${GREEN}Console${BLUE}. In the little bar below, type ${GREEN}masternode outputs${BLUE}"
-  echo -e " and press ENTER. You should see something like:${NC}"
+  echo -e "${BLUE} Step 3. Now we need the ${YELLOW}Transaction ID and Output${BLUE} of the transaction"
+  echo -e " you just did. For this, you simply click on ${GREEN}Help${BLUE} at the top of your wallet and " 
+  echo -e " click ${GREEN}Debug Window ${BLUE}. On the popup window, click on ${GREEN}Console${BLUE}. "
+  echo -e " In the little bar below, type ${GREEN}masternode outputs${BLUE} and press ENTER."
+  echo -e " You should see something like:${NC}"
   echo "{"
   echo "  \"01dc01458060d7a5c937245b5eb72c06ab7c886caf36622338acd15906d45a\" : \"1\""
   echo "}"
   echo
-  echo -e "${BLUE} The first part is the ${YELLOW}Transaction ID${BLUE} whereas the second part is the ${YELLOW}Transaction Output.${BLUE}"
-  echo -e " If you can't see anything between the brackets it's because your transaction is still pending." 
-  echo -e " If it doesn't work right away, try again in few minutes."
+  echo -e "${BLUE} The first part is the ${YELLOW}Transaction ID${BLUE} whereas the second part is the"
+  echo -e " ${YELLOW}Transaction Output.${BLUE} If you can't see anything between the brackets it's because" 
+  echo -e " your transaction is still pending. If it doesn't work right away, try again in few minutes."
   echo -e " Once you have a result with the output command, please enter them here WITHOUT QUOTES:"
   read -e -p "$(echo -e ${YELLOW} Transaction ID: ${NC})" TX_ID
   read -e -p "$(echo -e ${YELLOW} TXOutput [0 or 1]: ${NC})" TX_OUTPUT
