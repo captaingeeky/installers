@@ -252,7 +252,8 @@ function prepare_QT()
   echo -e " try again in a few minutes."
   echo -e " Once you have a result with the output command, please enter them here"
   echo -e " [WITHOUT QUOTES:]"
-  read -e -p "$(echo -e ${YELLOW} Transaction ID: ${NC})" TX_ID
+  echo -e "${YELLOW} Transaction ID: ${NC}"
+  read -e -p "TXID: " TX_ID
   read -e -p "$(echo -e ${YELLOW} TXOutput [0 or 1]: ${NC})" TX_OUTPUT
   if [ TX_OUTPUT == 0 ]; then
      echo -e "${RED}ERROR! There must be a TX Output and a TX hash to continue."
