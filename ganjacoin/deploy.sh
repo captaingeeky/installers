@@ -1,80 +1,20 @@
 #!/bin/bash
 
-VERSION="1.0.52"
-PROJECT="GanjaCoin"
-PROJECT_FOLDER="$HOME/ganja"
-BINARY="ganjacoind"
-
+#Color Declarations
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[1;36m'
 NC='\033[0m'
 
-function checks()
-{
-  if [[ ($(lsb_release -d) != *16.04*) ]] && [[ ($(lsb_release -d) != *17.04*) ]]; then
-      echo -e "${RED}You are not running Ubuntu 16.04 or 17.04. Installation is cancelled.${NC}"
-      exit 1
-  fi
-
-  if [[ $EUID -ne 0 ]]; then
-     echo -e "${RED}$0 must be run as root.${NC}"
-     exit 1
-  fi
-
-  if [ -f /root/.Ganjaproject2 ]; then
-    IS_INSTALLED=true
-    echo -e "${YELLOW}$PROJECT Previously installed! ${NC}"
-
-    read -e -p "$(echo -e ${YELLOW}Delete the current version and continue? [Y/N] ${NC})" CHOICE
-    if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
-      echo
-      echo -e "${RED} Installation aborted by user.${NC}"
-      exit 1
-    else
-      echo
-      echo -e "${BLUE}Deleting existing files...${NC}"
-      rm -R /root/.Ganjaproject2 > /dev/null 2>&1
-      rm -R /root/coins/GanjaCoin > /dev/null 2>&1
-      rm -R /root/ganja > /dev/null 2>&1
-      sleep 2
-    fi
-  fi
-}
-
-function check_existing()
-{
-  echo
-  echo -e "${BLUE}Checking for existing nodes and available IPs...${NC}"
-  echo
-  #Get list and count of IPs excluding local networks
-  IP_LIST=$(ifconfig | grep "inet addr:" | awk {'print $2'} | grep -vE '127.0.0|192.168|172.16|10.0.0' | tr -d 'inet addr:')
-  IP_NUM=$(echo "$IP_LIST" | wc -l)
-
-  #Get number of existing MRJA masternode directories
-  DIR_COUNT=$(ls -la /root/ | grep "\.Ganjaproject" | grep -c '^')
-
-  #Check if there are more IPs than existing nodes
-  if [[ $DIR_COUNT -ge $IP_NUM ]]; then
-    echo -e "${RED}Not enough available IP addresses to run another node! Please add other IPs to this VPS first.${NC}"
-    exit 1
-  fi
-
-  echo -e "${YELLOW}Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
-
-  NEXT_AVAIL_IP=$(curl -s4 icanhazip.com)
-  echo -e "${YELLOW}Using next available IP : ${BLUE}$NEXT_AVAIL_IP${NC}"
-
-  read -e -p "$(echo -e ${YELLOW}Continue with installation? [Y/N] ${NC})" CHOICE
-  if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
-    exit 1;
-  fi
-
-}
-
 function set_environment()
 {
+  #Variable Declaration
+  VERSION="1.0.52"
+  PROJECT="GanjaCoin"
+  PROJECT_FOLDER="$HOME/ganja"
+  BINARY="ganjacoind"
+  NEXT_AVAIL_IP=$(curl -s4 icanhazip.com)
   DATADIR="$HOME/.Ganjaproject2"
 
   TMP_FOLDER=$(mktemp -d)
@@ -86,6 +26,68 @@ function set_environment()
   CONF_FILE="$DATADIR/Ganjaproject.conf"
   DAEMON_START="$DAEMON -daemon"
   CRONTAB_LINE="@reboot $DAEMON_START"
+}
+
+function checks()
+{
+  # Checks if running at least Ubuntu 16.04, as root and no other Ganjacoin Masternode exists
+  
+  if [[ ($(lsb_release -d) != *16.04*) ]] && [[ ($(lsb_release -d) != *17.04*) ]]; then
+      echo -e "${RED} You are not running Ubuntu 16.04 or 17.04. Installation is cancelled.${NC}"
+      exit 1
+  fi
+
+  if [[ $EUID -ne 0 ]]; then
+     echo -e "${RED}$ Must be run as root!${NC}"
+     exit 1
+  fi
+
+  if [ -f /root/.Ganjaproject2 ]; then
+    IS_INSTALLED=true
+    echo -e "${YELLOW} $PROJECT Previously installed! ${NC}"
+
+    read -e -p "$(echo -e ${YELLOW}Delete the current version and continue? [Y/N] ${NC})" CHOICE
+    if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
+      echo
+      echo -e "${RED} Installation aborted by user.${NC}"
+      exit 1
+    else
+      echo
+      echo -e "${BLUE} Deleting existing files...${NC}"
+      rm -R /root/.Ganjaproject2 > /dev/null 2>&1
+      rm -R /root/coins/GanjaCoin > /dev/null 2>&1
+      rm -R /root/ganja > /dev/null 2>&1
+      sleep 2
+    fi
+  fi
+}
+
+function check_existing()
+{
+  #Secondary check. Looks for installed projects versus available IPs
+  echo
+  echo -e "${BLUE} Checking for existing nodes and available IPs...${NC}"
+  echo
+  #Get list and count of IPs excluding local networks
+  IP_LIST=$(ifconfig | grep "inet addr:" | awk {'print $2'} | grep -vE '127.0.0|192.168|172.16|10.0.0' | tr -d 'inet addr:')
+  IP_NUM=$(echo "$IP_LIST" | wc -l)
+
+  #Get number of existing MRJA masternode directories
+  DIR_COUNT=$(ls -la /root/ | grep "\.Ganjaproject" | grep -c '^')
+
+  #Check if there are more IPs than existing nodes
+  if [[ $DIR_COUNT -ge $IP_NUM ]]; then
+    echo -e "${RED} Not enough available IP addresses to run another node! Please add other IPs to this VPS first.${NC}"
+    exit 1
+  fi
+  echo -e "${YELLOW} Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
+  echo -e "${YELLOW} Using next available IP : ${BLUE}$NEXT_AVAIL_IP${NC}"
+
+  read -e -p "$(echo -e ${YELLOW} Continue with installation? [Y/N] ${NC})" CHOICE
+  if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
+    exit 1;
+  fi
+
 }
 
 function show_header()
@@ -407,11 +409,11 @@ function cleanup()
 
 function deploy()
 {
+  set_environment
   checks
   show_header
   prepare_QT
   check_existing
-  set_environment
   create_swap
   install_prerequisites
   copy_binaries
