@@ -15,8 +15,8 @@ NC='\033[0m'
 
 function checks() 
 {
-  if [[ ($(lsb_release -d) != *16.04*) ]] && [[ ($(lsb_release -d) != *17.04*) ]]; then
-      echo -e "${RED}You are not running Ubuntu 16.04 or 17.04. Installation is cancelled.${NC}"
+  if [[ ($(lsb_release -d) != *16.04*) ]] && [[ ($(lsb_release -d) != *17.04*) ]] && [[ ($(lsb_release -d) != *18.04*) ]]; then
+      echo -e "${RED}You are not running Ubuntu 16.04, 17.04 or 18.04. Installation is cancelled.${NC}"
       exit 1
   fi
 
@@ -142,7 +142,7 @@ function install_prerequisites()
     echo -e "${BLUE}Installing Pre-requisites${NC}"
     #addid this for libdbcxx
     sudo apt update
-    sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev
+    sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5
     sudo add-apt-repository -y ppa:bitcoin/bitcoin
     sudo apt update
     sudo apt install -y libdb4.8-dev libdb4.8++-dev
