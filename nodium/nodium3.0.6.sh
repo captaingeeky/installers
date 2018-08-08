@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 RED='\033[1;31m'
@@ -17,8 +18,8 @@ TMP_FOLDER=$(mktemp -d)
 RPC_USER="nodium-Admin"
 MN_PORT=6250
 RPC_PORT=19647
-CRONTAB_LINE="@reboot $DAEMON_START"
-GITHUB_REPO="https://github.com/nodiumproject/zNodium"
+CRONTAB_LINE="@reboot sleep 60 && /root/nodium/src/nodiumd -daemon"
+BINARIES="https://github.com/nodiumproject/Wallets/raw/master/Linux-16.04x64%20zerocoin.zip"
 
 function checks() 
 {
@@ -96,29 +97,14 @@ function create_swap()
   echo -e "/swapfile none swap sw 0 0 \n" >> /etc/fstab
 }
 
-function clone_github()
-{
-  echo
-  echo -e "${BLUE}Cloning GitHUB${NC}"
-  cd /root/
-  git clone $GITHUB_REPO $PROJECT_FOLDER
-  if [ $? -eq 0 ]; then
-    echo -e "${BLUE}GitHUB Cloned - Proceeding to next step. ${NC}"
-    echo
-  else
-    RETVAL=$?
-    echo -e "${RED}Git Clone has failed. Please see error above : $RETVAL ${NC}"
-    exit 1
-  fi
-}
-
 function install_prerequisites()
 {
   echo
   echo -e "${BLUE}Installing Pre-requisites${NC}"
   sudo apt-get install -y pkg-config
-  sudo apt-get install -y git build-essential libevent-dev libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
   sudo add-apt-repository ppa:bitcoin/bitcoin -y
+  sudo apt-get update
+  sudo apt-get install -y git unzip build-essential pkg-config libevent-dev libtool libboost-all-dev libgmp-dev libssl-dev libcurl4-openssl-dev git
   sudo apt-get update
   sudo apt-get upgrade -y
   sudo apt-get install -y libdb4.8-dev libdb4.8++-dev libminiupnpc-dev
@@ -127,15 +113,14 @@ function install_prerequisites()
 
 function build_project()
 {
-  cd $PROJECT_FOLDER
-  echo
-  echo -e "${BLUE}Compiling the wallet (this can take 20 minutes)${NC}"
-  sudo chmod +x share/genbuild.sh
-  sudo chmod +x autogen.sh
-  sudo chmod 755 src/leveldb/build_detect_platform
-  sudo ./autogen.sh
-  sudo ./configure
-  sudo make
+  mkdir $PROJECT_FOLDER
+  mkdir $PROJECT_FOLDER/src
+  cd $PROJECT_FOLDER/src
+  wget $BINARIES
+  unzip Lin*.zip
+  rm *.zip
+  chmod +x *
+  
   if [ -f $DAEMON_BINARY_PATH ]; then
     echo -e "${BLUE}$PROJECT_NAME Daemon and CLI installed, proceeding to next step...${NC}"
     echo
@@ -221,7 +206,6 @@ function deploy()
   get_masternode_key
   create_swap
   install_prerequisites
-  clone_github
   build_project
   create_conf_file
   configure_firewall
