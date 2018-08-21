@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.9"
+VERSION="1.2.10"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -303,9 +303,11 @@ function start_wallet()
     
     MNSTATUS=$($CLI mnsync status | jq .IsSynced)
     while [ "$MNSTATUS" != "true" ]; do
-      MNSYNC=$($CLI mnsync status | jq .AssetName | tr -d '\"')
-      MNSTATUS=$($CLI mnsync status | jq .IsSynced)
-      echo -ne "${YELLOW} >Masternode Sync Stage : ${BLUE}$MNSYNC                \r"
+      GETSYNC=$($CLI mnsync status)
+      MNSYNC=$(echo $GETSYNC | jq .AssetName | tr -d '\"')
+      MNSTATUS=$(echo $GETSYNC | jq .IsSynced)
+      MNSTAGE=$(echo $GETSYNC | jq .Attempt)
+      echo -ne "${YELLOW} >Masternode Sync Stage [$MNSTAGE]: ${BLUE}$MNSYNC                \r"
     done
     echo
     echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
@@ -314,8 +316,9 @@ function start_wallet()
     
     MNSTATUS=$($CLI masternode status | jq .status)
     while [ "$MNSTATUS" != "Masternode successfully started" ]; do
-      MNSYNC=$($CLI mnsync status | jq .AssetName | tr -d '\"')
-      MNSTATUS=$($CLI masternode status | jq .status)
+      GETSYNC=$($CLI masternode status)
+      MNSYNC=$(echo $GETSYNC | jq .AssetName | tr -d '\"')
+      MNSTATUS=$(echo $GETSYNC | jq .status)
       echo -ne "${YELLOW} >Masternode Status : ${BLUE}$MNSYNC                \r"
     done
     
