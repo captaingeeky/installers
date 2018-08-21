@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.57"
+VERSION="1.1.58"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -141,20 +141,20 @@ function install_prerequisites()
     echo
     echo -e "${BLUE}Installing Pre-requisites${NC}"
     #addid this for libdbcxx
-    echo -e "${GREEN} >Progress: ${BLUE}|###-----------|${NC)\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|###-----------|\r"
     sudo apt update > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|#####---------|${NC)\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|#####---------|\r"
     sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5 > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|#######-------|${NC)\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|#######-------|\r"
     sudo add-apt-repository -y ppa:bitcoin/bitcoin > /dev/null 2>&1
     sudo apt update > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|##########----|${NC)\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|##########----|\r"
     sudo apt install -y jq libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|############--|${NC)\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|############--|${NC}\r"
     #end libdbcxx section
   
     sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|##############|${NC)\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|##############|${NC}\r"
   fi
 }
 
