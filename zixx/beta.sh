@@ -141,20 +141,20 @@ function install_prerequisites()
     echo
     echo -e "${BLUE}Installing Pre-requisites${NC}"
     #addid this for libdbcxx
-    echo -e "${GREEN} >Progress: ${BLUE}|###-----------|\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|###-----------|\r\r"
     sudo apt update > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|#####---------|\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|#####---------|\r\r"
     sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5 > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|#######-------|\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|#######-------|\r\r"
     sudo add-apt-repository -y ppa:bitcoin/bitcoin > /dev/null 2>&1
     sudo apt update > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|##########----|\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|##########----|\r\r"
     sudo apt install -y jq libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|############--|${NC}\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|############--|${NC}\r\r"
     #end libdbcxx section
   
     sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|##############|${NC}\r"
+    echo -e "${GREEN} >Progress: ${BLUE}|##############|${NC}"
   fi
 }
 
@@ -176,8 +176,9 @@ function copy_binaries()
     echo -e "${BLUE}Getting latest files...${NC}"
     LATEST_D=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixxd)
     LATEST_CLI=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixx-cli)
-    wget $LATEST_D
-    wget $LATEST_CLI
+    wget $LATEST_D > /dev/null 2>&1
+    wget $LATEST_CLI > /dev/null 2>&1
+    
     chmod +x zixx{d,-cli}
     if [ ! -f '/usr/local/bin/z.sh' ]; then
       wget -O /usr/local/bin/z.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh
