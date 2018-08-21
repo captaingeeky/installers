@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.59"
+VERSION="1.2.0"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -281,15 +281,15 @@ function start_wallet()
     MNSTATUS=$($CLI mnsync status | jq .IsSynced)
     while [ "$MNSTATUS" != "true" ]; do
       MNSYNC=$($CLI mnsync status | jq .AssetName | tr -d '\"')
-      echo -ne "${YELLOW} >Masternode Status : ${BLUE}$MNSYNC\r"
-      sleep 5
       MNSTATUS=$($CLI mnsync status | jq .IsSynced)
+      echo -ne "${YELLOW} >Masternode Status : ${BLUE}$MNSYNC                \r"
     done
     echo
-    echo -e "${YELLOW}Please right click on your new node in your QT wallet and Start Alias.${NC}"
+    echo -e "${YELLOW}After pressing any key to continue below, Please right click on your new node in your QT wallet and Start Alias.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
     watch -g $CLI masternode status
+    clear
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo
     echo -e "${BLUE}Type ${YELLOW}z.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
