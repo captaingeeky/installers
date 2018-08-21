@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.12"
+VERSION="1.2.13"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -318,7 +318,7 @@ function start_wallet()
     read -n 1 -s -r -p "Press any key to continue"
     echo
     MNSTATUS=$($CLI masternode status | jq .status)
-    echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation...."
+    echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation....${NC}"
     while [ "$MNSTATUS" != "Masternode successfully started" ]; do
       GETSYNC=$($CLI masternode status)
       MNSTATUS=$(echo $GETSYNC | jq .status)
@@ -331,7 +331,7 @@ function start_wallet()
     echo -e "${BLUE}Type ${YELLOW}z.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
     echo -e "${BLUE}Ex: ${GREEN}z.sh zixx2 masternode status ${NC}"
     echo
-    echo -e "for reference: ${GREEN}$MN_ALIAS $NEXT_AVAIL_IP:44845 $GENKEY $TX_ID $TX_OUT ${NC}"
+
     
   else
     RETVAL=$?
