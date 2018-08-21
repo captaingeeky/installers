@@ -305,7 +305,7 @@ function start_wallet()
 
 function cleanup()
 {
-  
+    echo -e "${YELLOW}finalizing...${NC}" 
 }
 
 function deploy()
