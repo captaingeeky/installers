@@ -311,6 +311,7 @@ function start_wallet()
       MNSTATUS=$(echo $GETSYNC | jq .IsSynced)
       MNSTAGE=$(echo $GETSYNC | jq .Attempt)
       echo -ne "${YELLOW} >Masternode Sync Stage [${GREEN}$MNSTAGE${YELLOW}]: ${BLUE}$MNSYNC                \r"
+      sleep 2
     done
     echo
     echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
@@ -320,8 +321,8 @@ function start_wallet()
     MNSTATUS=$($CLI masternode status | jq .status)
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation....${NC}"
     while [ "$MNSTATUS" != "Masternode successfully started" ]; do
-      GETSYNC=$($CLI masternode status)
-      MNSTATUS=$(echo $GETSYNC | jq .status)
+      MNSTATUS=$($CLI masternode status | jq .status)
+      sleep 2
     done
     echo
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Masternode Activated!"
