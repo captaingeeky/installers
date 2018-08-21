@@ -309,7 +309,7 @@ function cleanup()
   if [ "$IS_CURRENT" = true ] && [ "$IS_INSTALLED" = true ]; then
     echo -e "${BLUE} Finalizing..."
   else
-    rm -R db-4.8*
+    #rm -R db-4.8*
   fi
 }
 
