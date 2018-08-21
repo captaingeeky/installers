@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.10"
+VERSION="1.2.11"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -320,9 +320,8 @@ function start_wallet()
     MNSTATUS=$($CLI masternode status | jq .status)
     while [ "$MNSTATUS" != "Masternode successfully started" ]; do
       GETSYNC=$($CLI masternode status)
-      MNSYNC=$(echo $GETSYNC | jq .AssetName | tr -d '\"')
       MNSTATUS=$(echo $GETSYNC | jq .status)
-      echo -ne "${YELLOW} >Masternode Status : ${BLUE}$MNSYNC                \r"
+      echo -ne "${YELLOW} >Masternode Status : ${BLUE}$MNSTATUS                \r"
     done
     
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
