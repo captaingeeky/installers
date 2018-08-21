@@ -139,22 +139,23 @@ function install_prerequisites()
       echo -e "${BLUE} Skipping pre-requisites..."
   else
     echo
-    echo -e "${BLUE}Installing Pre-requisites${NC}"
+    echo -ne "${BLUE}Installing Pre-requisites${NC}"
     #addid this for libdbcxx
-    echo -e "${GREEN} >Progress: ${BLUE}|###-----------|\r\r"
+    echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
     sudo apt update > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|#####---------|\r\r"
+    echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
     sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5 > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|#######-------|\r\r"
+    echo -ne "${GREEN} >Progress: ${BLUE}[#######-------]\r"
     sudo add-apt-repository -y ppa:bitcoin/bitcoin > /dev/null 2>&1
     sudo apt update > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|##########----|\r\r"
+    echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
     sudo apt install -y jq libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|############--|${NC}\r\r"
+    echo -ne "${GREEN} >Progress: ${BLUE}[############--]${NC}\r"
     #end libdbcxx section
   
     sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip > /dev/null 2>&1
-    echo -e "${GREEN} >Progress: ${BLUE}|##############|${NC}"
+    echo -ne "${GREEN} >Progress: ${BLUE}[##############]${NC}"
+    echo
   fi
 }
 
@@ -228,8 +229,8 @@ function configure_firewall()
 {
   echo
   echo -e "${BLUE}setting up firewall...${NC}"
-  sudo apt-get install -y ufw
-  sudo apt-get update -y
+  sudo apt-get install -y ufw > /dev/null 2>&1
+  sudo apt-get update -y > /dev/null 2>&1
   
   #configure ufw firewall
   sudo ufw default allow outgoing
@@ -291,8 +292,8 @@ function start_wallet()
     watch -g $CLI masternode status
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo
-    echo -e "${BLUE}Type ${YELLOW}z <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
-    echo -e "${BLUE}Ex: ${GREEN}z zixx2 masternode status ${NC}"
+    echo -e "${BLUE}Type ${YELLOW}z.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
+    echo -e "${BLUE}Ex: ${GREEN}z.sh zixx2 masternode status ${NC}"
     
   else
     RETVAL=$?
