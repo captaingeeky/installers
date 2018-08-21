@@ -140,6 +140,7 @@ function install_prerequisites()
   else
     echo
     echo -ne "${BLUE}Installing Pre-requisites${NC}"
+    echo
     #addid this for libdbcxx
     echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
     sudo apt update > /dev/null 2>&1
@@ -304,13 +305,7 @@ function start_wallet()
 
 function cleanup()
 {
-  cd $HOME
   
-  if [ "$IS_CURRENT" = true ] && [ "$IS_INSTALLED" = true ]; then
-    echo -e "${BLUE} Finalizing..."
-  else
-    #rm -R db-4.8*
-  fi
 }
 
 function deploy()
