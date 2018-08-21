@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.3"
+VERSION="1.2.4"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -76,7 +76,23 @@ function check_existing()
   if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
     exit 1;
   fi
-
+  
+  #Get masternode.conf data to create new entry for QT wallet
+  echo
+  echo -e "${YELLOW}Masternode Transaction Information for masternode.conf in the QT Wallet${NC}"
+  echo -e "For this section, you will need the debug console of your QT wallet by going to ${GREEN}Tools ${NC}then ${GREEN}Debug Console.${NC}"
+  echo -e "When executing the command ${GREEN}masternode outputs${NC}, you will see the followinginformation:"
+  echo -e "{"
+  echo -e "  \"${RED}b672c35585500a0221e726de710a3de8caadb9624b60f3bdefbfc71e0a4e78ab${NC}\": \"${YELLOW}1${NC}\","
+  echo -e "}"
+  echo -e "The ${RED}first part${NC} is your TXid and the ${YELLOW}second part${NC} is your TXOutput"
+  echo
+  read -e -p "$(echo -e ${BLUE}Please enter the TXid for your new masternode \n(generated in the debug console via ${YELLOW}masternode outputs : ${NC}))" TX_ID
+  echo
+  read -e -p "$(echo -e ${BLUE}Please enter the TXOutput for that transaction \n(generated in the debug console via ${YELLOW}masternode outputs : ${NC}) [0/1])" TX_OUT
+  echo
+  read -e -p "$(echo -e ${BLUE}Please enter the Alias for your new masternode : ${NC})" MN_ALIAS
+  
   if [[ $DIR_COUNT -gt 0 ]]; then
     DIR_NUM=$((DIR_COUNT+1))
   fi
@@ -254,10 +270,14 @@ function start_wallet()
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
   if [ -f $DAEMON ]; then
     echo
-    echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this Genkey for your QT wallet (Windows/Mac wallet) ${BLUE}$GENKEY${NC}"
+    echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this masternode line for your QT wallet (Windows/Mac wallet):"
+    echo
+    echo -e "${GREEN}$MN_ALIAS $NEXT_AVAIL_IP:44845 $GENKEY $TX_ID $TX_OUT ${NC}"
+    echo
     echo -e "${BLUE}If you are using Putty, just select the text. It will automatically go to your clipboard.${NC}"
     echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
+    echo
     read -n 1 -s -r -p "Press any key to continue to syncronisation steps"
     echo
     echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
@@ -295,6 +315,8 @@ function start_wallet()
     echo
     echo -e "${BLUE}Type ${YELLOW}z.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
     echo -e "${BLUE}Ex: ${GREEN}z.sh zixx2 masternode status ${NC}"
+    echo
+    echo -e "for reference: ${GREEN}$MN_ALIAS $NEXT_AVAIL_IP:44845 $GENKEY $TX_ID $TX_OUT ${NC}"
     
   else
     RETVAL=$?
