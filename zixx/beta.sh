@@ -277,7 +277,7 @@ function start_wallet()
     echo -e "${BLUE}If you are using Putty, just select the text. It will automatically go to your clipboard.${NC}"
     echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
     echo
-    echo -e "Paste this in your masternode.conf file (accessed via ${GREEN}Tools ${NC}then ${GREEN}Open Masternode Configuration File${NC}"
+    echo -e "Paste this in your masternode.conf file (accessed via ${GREEN}Tools ${NC}then ${GREEN}Open Masternode Configuration File${NC})"
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
     read -n 1 -s -r -p "Save the masternode.conf file, restart the QT wallet and press any key to continue to syncronisation steps"
