@@ -81,7 +81,7 @@ function check_existing()
   echo
   echo -e "${YELLOW}Masternode Transaction Information for masternode.conf in the QT Wallet${NC}"
   echo -e "For this section, you will need the debug console of your QT wallet by going to ${GREEN}Tools ${NC}then ${GREEN}Debug Console.${NC}"
-  echo -e "When executing the command ${GREEN}masternode outputs${NC}, you will see the followinginformation:"
+  echo -e "When executing the command ${GREEN}masternode outputs${NC}, you will see the following information:"
   echo -e "{"
   echo -e "  \"${RED}b672c35585500a0221e726de710a3de8caadb9624b60f3bdefbfc71e0a4e78ab${NC}\": \"${YELLOW}1${NC}\","
   echo -e "}"
