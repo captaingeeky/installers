@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.4"
+VERSION="1.2.5"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -87,9 +87,9 @@ function check_existing()
   echo -e "}"
   echo -e "The ${RED}first part${NC} is your TXid and the ${YELLOW}second part${NC} is your TXOutput"
   echo
-  read -e -p "$(echo -e ${BLUE}Please enter the TXid for your new masternode \n(generated in the debug console via ${YELLOW}masternode outputs : ${NC}))" TX_ID
+  read -e -p "$(echo -e ${BLUE}Please enter the TXid for your new masternode \n generated in the debug console via ${YELLOW}masternode outputs : ${NC})" TX_ID
   echo
-  read -e -p "$(echo -e ${BLUE}Please enter the TXOutput for that transaction \n(generated in the debug console via ${YELLOW}masternode outputs : ${NC}) [0/1])" TX_OUT
+  read -e -p "$(echo -e ${BLUE}Please enter the TXOutput for that transaction \n generated in the debug console via ${YELLOW}masternode outputs [0/1] : ${NC})" TX_OUT
   echo
   read -e -p "$(echo -e ${BLUE}Please enter the Alias for your new masternode : ${NC})" MN_ALIAS
   
