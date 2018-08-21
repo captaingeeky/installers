@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.11"
+VERSION="1.2.12"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -316,15 +316,15 @@ function start_wallet()
     echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
-    
+    echo
     MNSTATUS=$($CLI masternode status | jq .status)
-    echo -ne "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation...."
+    echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation...."
     while [ "$MNSTATUS" != "Masternode successfully started" ]; do
       GETSYNC=$($CLI masternode status)
       MNSTATUS=$(echo $GETSYNC | jq .status)
     done
     echo
-    echo -ne "${YELLOW} >Masternode Status : ${BLUE}Masternode Activated!"
+    echo -e "${YELLOW} >Masternode Status : ${BLUE}Masternode Activated!"
     echo
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo
