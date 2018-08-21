@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.1"
+VERSION="1.2.3"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -258,12 +258,12 @@ function start_wallet()
     echo -e "${BLUE}If you are using Putty, just select the text. It will automatically go to your clipboard.${NC}"
     echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
+    read -n 1 -s -r -p "Press any key to continue to syncronisation steps"
     echo
     echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
-    echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
+    echo -e "${BLUE}Once Synchronized, you will be prompted to go back to your Windows/Mac wallet,${NC}"
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
     echo
-    read -n 1 -s -r -p "Press any key to continue to syncronisation steps"
     echo
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
