@@ -89,7 +89,7 @@ function check_existing()
   echo
   read -e -p "$(echo -e ${BLUE}Please enter the TXid for your new masternode \n generated in the debug console via ${YELLOW}masternode outputs : ${NC})" TX_ID
   echo
-  read -e -p "$(echo -e ${BLUE}Please enter the TXOutput for that transaction \n generated in the debug console via ${YELLOW}masternode outputs [0/1] : ${NC})" TX_OUT
+  read -e -p "$(echo -e ${BLUE}Please enter the TXOutput for that transaction \n generated in the debug console via ${YELLOW}masternode outputs ${NC}[0/1] :)" TX_OUT
   echo
   read -e -p "$(echo -e ${BLUE}Please enter the Alias for your new masternode : ${NC})" MN_ALIAS
   
