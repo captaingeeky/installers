@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.6"
+VERSION="1.2.8"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -308,7 +308,7 @@ function start_wallet()
       echo -ne "${YELLOW} >Masternode Status : ${BLUE}$MNSYNC                \r"
     done
     echo
-    echo -e "${YELLOW}After pressing any key to continue below, Please right click on your new node in your QT wallet and Start Alias.${NC}"
+    echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
     watch -g $CLI masternode status
