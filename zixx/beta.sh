@@ -272,13 +272,19 @@ function start_wallet()
     echo -ne "${YELLOW}Current Block: ${GREEN}$BLOCKS${NC}\n\n"
     while [[ $CURBLOCK -lt $BLOCKS ]]; do
       CURBLOCK=$(z.sh zixx getinfo | grep blocks | awk {'print $2'} | tr -d ',')
-      echo -ne "${BLUE} syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
+      echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
       sleep 2
     done
-
-    watch -g $CLI mnsync status
-    watch -g $CLI mnsync status
-    watch -g $CLI mnsync status
+    echo
+    
+    MNSTATUS=$($CLI mnsync status | jq .IsSynced)
+    while [ "$MNSTATUS" -ne "true" ]; do
+      MNSYNC=$($CLI mnsync status | jq .AssetName | tr -d '\"')
+      echo -ne "${YELLOW} >Masternode Status : ${BLUE}$MNSYNC\r"
+      sleep 5
+      MNSTATUS=$($CLI mnsync status | jq .IsSynced)
+    done
+    echo
     echo -e "${YELLOW}Please right click on your new node in your QT wallet and Start Alias.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
