@@ -278,9 +278,12 @@ function start_wallet()
     echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
     echo
     echo -e "Paste this in your masternode.conf file (accessed via ${GREEN}Tools ${NC}then ${GREEN}Open Masternode Configuration File${NC})"
+    echo
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
-    read -n 1 -s -r -p "Save the masternode.conf file, restart the QT wallet and press any key to continue to syncronisation steps"
+    echo -e "${GREEN}Save the masternode.conf file, restart the QT wallet and press any key to continue to syncronisation steps.${NC}"
+    read -n 1 -s -r -p " "
+    echo
     echo
     echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
     echo -e "${BLUE}Once Synchronized, you will be prompted to go back to your Windows/Mac wallet,${NC}"
@@ -307,7 +310,7 @@ function start_wallet()
       MNSYNC=$(echo $GETSYNC | jq .AssetName | tr -d '\"')
       MNSTATUS=$(echo $GETSYNC | jq .IsSynced)
       MNSTAGE=$(echo $GETSYNC | jq .Attempt)
-      echo -ne "${YELLOW} >Masternode Sync Stage [$MNSTAGE]: ${BLUE}$MNSYNC                \r"
+      echo -ne "${YELLOW} >Masternode Sync Stage [${GREEN}$MNSTAGE${YELLOW}]: ${BLUE}$MNSYNC                \r"
     done
     echo
     echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
