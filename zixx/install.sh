@@ -145,7 +145,7 @@ function install_prerequisites()
     sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5
     sudo add-apt-repository -y ppa:bitcoin/bitcoin
     sudo apt update
-    sudo apt install -y libdb4.8-dev libdb4.8++-dev
+    sudo apt install -y jq libdb4.8-dev libdb4.8++-dev
     #end libdbcxx section
   
     sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip
@@ -266,6 +266,9 @@ function start_wallet()
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
     sleep 10
+    #https://api.zixx.org/extended/summary
+    CUR_BLOCK=$(curl -q4 https://api.zixx.org/extended/summary | jq .data.status.blockcount)
+
     watch -g $CLI mnsync status
     watch -g $CLI mnsync status
     watch -g $CLI mnsync status
