@@ -125,12 +125,12 @@ function create_swap()
 {
   echo
   echo -e "${BLUE}Creating Swap... (ignore errors, this might not be supported)${NC}"
-  fallocate -l 3G /swapfile
-  chmod 600 /swapfile
-  mkswap /swapfile
-  swapon /swapfile
+  fallocate -l 3G /swapfile > /dev/null 2>&1
+  chmod 600 /swapfile > /dev/null 2>&1
+  mkswap /swapfile > /dev/null 2>&1
+  swapon /swapfile > /dev/null 2>&1
   echo
-  echo -e "/swapfile none swap sw 0 0 \n" >> /etc/fstab
+  echo -e "/swapfile none swap sw 0 0 \n" >> /etc/fstab > /dev/null 2>&1
 }
 
 function install_prerequisites()
@@ -141,21 +141,20 @@ function install_prerequisites()
     echo
     echo -e "${BLUE}Installing Pre-requisites${NC}"
     #addid this for libdbcxx
-    sudo apt update
-    sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5
-    sudo add-apt-repository -y ppa:bitcoin/bitcoin
-    sudo apt update
-    sudo apt install -y jq libdb4.8-dev libdb4.8++-dev
+    echo -e "${GREEN} >Progress: ${BLUE}|###-----------|${NC)\r"
+    sudo apt update > /dev/null 2>&1
+    echo -e "${GREEN} >Progress: ${BLUE}|#####---------|${NC)\r"
+    sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5 > /dev/null 2>&1
+    echo -e "${GREEN} >Progress: ${BLUE}|#######-------|${NC)\r"
+    sudo add-apt-repository -y ppa:bitcoin/bitcoin > /dev/null 2>&1
+    sudo apt update > /dev/null 2>&1
+    echo -e "${GREEN} >Progress: ${BLUE}|##########----|${NC)\r"
+    sudo apt install -y jq libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
+    echo -e "${GREEN} >Progress: ${BLUE}|############--|${NC)\r"
     #end libdbcxx section
   
-    sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip
-    #sudo wget http://download.oracle.com/berkeley-db/db-4.8.30.zip
-    #sudo unzip db-4.8.30.zip
-    #cd db-4.8.30
-    #cd build_unix/
-    #sudo ../dist/configure --prefix=/usr/ --enable-cxx
-    #sudo make
-    #sudo make install
+    sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip > /dev/null 2>&1
+    echo -e "${GREEN} >Progress: ${BLUE}|##############|${NC)\r"
   fi
 }
 
