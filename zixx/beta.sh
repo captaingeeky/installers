@@ -278,7 +278,7 @@ function start_wallet()
     echo
     
     MNSTATUS=$($CLI mnsync status | jq .IsSynced)
-    while [ "$MNSTATUS" -ne "true" ]; do
+    while [ "$MNSTATUS" != "true" ]; do
       MNSYNC=$($CLI mnsync status | jq .AssetName | tr -d '\"')
       echo -ne "${YELLOW} >Masternode Status : ${BLUE}$MNSYNC\r"
       sleep 5
