@@ -318,12 +318,14 @@ function start_wallet()
     read -n 1 -s -r -p "Press any key to continue"
     
     MNSTATUS=$($CLI masternode status | jq .status)
+    echo -ne "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation...."
     while [ "$MNSTATUS" != "Masternode successfully started" ]; do
       GETSYNC=$($CLI masternode status)
       MNSTATUS=$(echo $GETSYNC | jq .status)
-      echo -ne "${YELLOW} >Masternode Status : ${BLUE}$MNSTATUS                \r"
     done
-    
+    echo
+    echo -ne "${YELLOW} >Masternode Status : ${BLUE}Masternode Activated!"
+    echo
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo
     echo -e "${BLUE}Type ${YELLOW}z.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
