@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.1.53"
+VERSION="1.2.13"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -76,7 +76,23 @@ function check_existing()
   if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
     exit 1;
   fi
-
+  
+  #Get masternode.conf data to create new entry for QT wallet
+  echo
+  echo -e "${YELLOW}Masternode Transaction Information for masternode.conf in the QT Wallet${NC}"
+  echo -e "For this section, you will need the debug console of your QT wallet by going to ${GREEN}Tools ${NC}then ${GREEN}Debug Console.${NC}"
+  echo -e "When executing the command ${GREEN}masternode outputs${NC}, you will see the following information:"
+  echo -e "{"
+  echo -e "  \"${RED}b672c35585500a0221e726de710a3de8caadb9624b60f3bdefbfc71e0a4e78ab${NC}\": \"${YELLOW}1${NC}\","
+  echo -e "}"
+  echo -e "The ${RED}first part${NC} is your TXid and the ${YELLOW}second part${NC} is your TXOutput"
+  echo
+  read -e -p "$(echo -e ${BLUE}Please enter the TXid for your new masternode \n generated in the debug console via ${YELLOW}masternode outputs : ${NC})" TX_ID
+  echo
+  read -e -p "$(echo -e ${BLUE}Please enter the TXOutput for that transaction \n generated in the debug console via ${YELLOW}masternode outputs ${NC}[0/1] :)" TX_OUT
+  echo
+  read -e -p "$(echo -e ${BLUE}Please enter the Alias for your new masternode : ${NC})" MN_ALIAS
+  
   if [[ $DIR_COUNT -gt 0 ]]; then
     DIR_NUM=$((DIR_COUNT+1))
   fi
@@ -125,12 +141,12 @@ function create_swap()
 {
   echo
   echo -e "${BLUE}Creating Swap... (ignore errors, this might not be supported)${NC}"
-  fallocate -l 3G /swapfile
-  chmod 600 /swapfile
-  mkswap /swapfile
-  swapon /swapfile
+  fallocate -l 3G /swapfile > /dev/null 2>&1
+  chmod 600 /swapfile > /dev/null 2>&1
+  mkswap /swapfile > /dev/null 2>&1
+  swapon /swapfile > /dev/null 2>&1
   echo
-  echo -e "/swapfile none swap sw 0 0 \n" >> /etc/fstab
+  echo -e "/swapfile none swap sw 0 0 \n" >> /etc/fstab > /dev/null 2>&1
 }
 
 function install_prerequisites()
@@ -139,23 +155,24 @@ function install_prerequisites()
       echo -e "${BLUE} Skipping pre-requisites..."
   else
     echo
-    echo -e "${BLUE}Installing Pre-requisites${NC}"
+    echo -ne "${BLUE}Installing Pre-requisites${NC}"
+    echo
     #addid this for libdbcxx
-    sudo apt update
-    sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5
-    sudo add-apt-repository -y ppa:bitcoin/bitcoin
-    sudo apt update
-    sudo apt install -y jq libdb4.8-dev libdb4.8++-dev
+    echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
+    sudo apt update > /dev/null 2>&1
+    echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
+    sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5 > /dev/null 2>&1
+    echo -ne "${GREEN} >Progress: ${BLUE}[#######-------]\r"
+    sudo add-apt-repository -y ppa:bitcoin/bitcoin > /dev/null 2>&1
+    sudo apt update > /dev/null 2>&1
+    echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
+    sudo apt install -y jq libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
+    echo -ne "${GREEN} >Progress: ${BLUE}[############--]${NC}\r"
     #end libdbcxx section
   
-    sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip
-    sudo wget http://download.oracle.com/berkeley-db/db-4.8.30.zip
-    sudo unzip db-4.8.30.zip
-    cd db-4.8.30
-    cd build_unix/
-    sudo ../dist/configure --prefix=/usr/ --enable-cxx
-    sudo make
-    sudo make install
+    sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip > /dev/null 2>&1
+    echo -ne "${GREEN} >Progress: ${BLUE}[##############]${NC}"
+    echo
   fi
 }
 
@@ -177,8 +194,9 @@ function copy_binaries()
     echo -e "${BLUE}Getting latest files...${NC}"
     LATEST_D=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixxd)
     LATEST_CLI=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixx-cli)
-    wget $LATEST_D
-    wget $LATEST_CLI
+    wget $LATEST_D > /dev/null 2>&1
+    wget $LATEST_CLI > /dev/null 2>&1
+    
     chmod +x zixx{d,-cli}
     if [ ! -f '/usr/local/bin/z.sh' ]; then
       wget -O /usr/local/bin/z.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh
@@ -228,8 +246,8 @@ function configure_firewall()
 {
   echo
   echo -e "${BLUE}setting up firewall...${NC}"
-  sudo apt-get install -y ufw
-  sudo apt-get update -y
+  sudo apt-get install -y ufw > /dev/null 2>&1
+  sudo apt-get update -y > /dev/null 2>&1
   
   #configure ufw firewall
   sudo ufw default allow outgoing
@@ -252,16 +270,25 @@ function start_wallet()
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
   if [ -f $DAEMON ]; then
     echo
-    echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this Genkey for your QT wallet (Windows/Mac wallet) ${BLUE}$GENKEY${NC}"
+    echo -e "${RED}Make ${YELLOW}SURE ${RED}you copy this masternode line for your QT wallet (Windows/Mac wallet):"
+    echo
+    echo -e "${GREEN}$MN_ALIAS $NEXT_AVAIL_IP:44845 $GENKEY $TX_ID $TX_OUT ${NC}"
+    echo
     echo -e "${BLUE}If you are using Putty, just select the text. It will automatically go to your clipboard.${NC}"
     echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
+    echo
+    echo -e "Paste this in your masternode.conf file (accessed via ${GREEN}Tools ${NC}then ${GREEN}Open Masternode Configuration File${NC})"
+    echo
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
+    echo -e "${GREEN}Save the masternode.conf file, restart the QT wallet and press any key to continue to syncronisation steps.${NC}"
+    read -n 1 -s -r -p " "
+    echo
+    echo
     echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
-    echo -e "${BLUE}Once Synchronized, go back to your Windows/Mac wallet,${NC}"
+    echo -e "${BLUE}Once Synchronized, you will be prompted to go back to your Windows/Mac wallet,${NC}"
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
     echo
-    read -n 1 -s -r -p "Press any key to continue to syncronisation steps"
     echo
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
@@ -272,21 +299,40 @@ function start_wallet()
     echo -ne "${YELLOW}Current Block: ${GREEN}$BLOCKS${NC}\n\n"
     while [[ $CURBLOCK -lt $BLOCKS ]]; do
       CURBLOCK=$(z.sh zixx getinfo | grep blocks | awk {'print $2'} | tr -d ',')
-      echo -ne "${BLUE} syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
+      echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
       sleep 2
     done
-
-    watch -g $CLI mnsync status
-    watch -g $CLI mnsync status
-    watch -g $CLI mnsync status
-    echo -e "${YELLOW}Please right click on your new node in your QT wallet and Start Alias.${NC}"
+    echo
+    
+    MNSTATUS=$($CLI mnsync status | jq .IsSynced)
+    while [ "$MNSTATUS" != "true" ]; do
+      GETSYNC=$($CLI mnsync status)
+      MNSYNC=$(echo $GETSYNC | jq .AssetName | tr -d '\"')
+      MNSTATUS=$(echo $GETSYNC | jq .IsSynced)
+      MNSTAGE=$(echo $GETSYNC | jq .Attempt)
+      echo -ne "${YELLOW} >Masternode Sync Stage [${GREEN}$MNSTAGE${YELLOW}]: ${BLUE}$MNSYNC                \r"
+      sleep 2
+    done
+    echo
+    echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
-    watch -g $CLI masternode status
+    echo
+    MNSTATUS=$($CLI masternode status | jq .status)
+    echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation....${NC}"
+    while [ "$MNSTATUS" != "Masternode successfully started" ]; do
+      MNSTATUS=$($CLI masternode status | jq .status)
+      sleep 2
+    done
+    echo
+    echo -e "${YELLOW} >Masternode Status : ${BLUE}Masternode Activated!"
+    echo
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo
-    echo -e "${BLUE}Type ${YELLOW}z <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
-    echo -e "${BLUE}Ex: ${GREEN}z zixx2 masternode status ${NC}"
+    echo -e "${BLUE}Type ${YELLOW}z.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
+    echo -e "${BLUE}Ex: ${GREEN}z.sh zixx2 masternode status ${NC}"
+    echo
+
     
   else
     RETVAL=$?
@@ -297,13 +343,7 @@ function start_wallet()
 
 function cleanup()
 {
-  cd $HOME
-  
-  if [ "$IS_CURRENT" = true ] && [ "$IS_INSTALLED" = true ]; then
-    echo -e "${BLUE} Finalizing..."
-  else
-    rm -R db-4.8*
-  fi
+    echo -e "${YELLOW}finalizing...${NC}" 
 }
 
 function deploy()
