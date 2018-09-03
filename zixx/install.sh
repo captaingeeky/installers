@@ -309,7 +309,7 @@ function start_wallet()
     while [ "$MNSTATUS" != "true" ]; do
       GETSYNC=$($CLI mnsync status)
       MNSYNC=$(echo $GETSYNC | jq .AssetName | tr -d '\"')
-      MNSTATUS=$(echo $GETSYNC | jq .IsSynced)
+      MNSTATUS=$($CLI mnsync status | jq .IsSynced)
       MNSTAGE=$(echo $GETSYNC | jq .Attempt)
       echo -ne "${YELLOW} >Masternode Sync Stage [${GREEN}$MNSTAGE${YELLOW}]: ${BLUE}$MNSYNC                \r"
       sleep 2
@@ -321,7 +321,7 @@ function start_wallet()
     echo
     MNSTATUS=$($CLI masternode status | jq .status)
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation....${NC}"
-    while [ "$MNSTATUS" != "Masternode successfully started" ]; do
+    while [ "$MNSTATUS" != "\"Masternode successfully started\"" ]; do
       MNSTATUS=$($CLI masternode status | jq .status)
       sleep 2
     done
