@@ -295,11 +295,11 @@ function start_wallet()
     echo -e "${BLUE}Starting Synchronization...${NC}"
     sleep 10
     BLOCKS=$(curl -s https://api.zixx.org/extended/summary | jq .data.status.blockcount)
-    CURBLOCK=$(z.sh zixx getinfo | grep "blocks" | awk {'print $2'} | tr -d ',')
+    CURBLOCK=$($CLI getinfo | grep "blocks" | awk {'print $2'} | tr -d ',')
 
     echo -ne "${YELLOW}Current Block: ${GREEN}$BLOCKS${NC}\n\n"
     while [[ $CURBLOCK -lt $BLOCKS ]]; do
-      CURBLOCK=$(z.sh zixx getinfo | grep blocks | awk {'print $2'} | tr -d ',')
+      CURBLOCK=$($CLI getinfo | grep blocks | awk {'print $2'} | tr -d ',')
       echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
       sleep 2
     done
