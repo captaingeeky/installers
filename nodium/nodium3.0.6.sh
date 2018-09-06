@@ -7,6 +7,9 @@ YELLOW='\033[1;33m'
 BLUE='\033[1;36m'
 NC='\033[0m'
 
+printf '\e[48;5;0m'
+clear
+
 PROJECT="Nodium"
 PROJECT_FOLDER="/root/nodium"
 DAEMON_BINARY="nodiumd"
