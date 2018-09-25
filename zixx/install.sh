@@ -344,6 +344,8 @@ function start_wallet()
     CURBLOCK=$($CLI getinfo | grep "blocks" | awk {'print $2'} | tr -d ',')
 
     echo -ne "${YELLOW}Current Block: ${GREEN}$BLOCKS${NC}\n\n"
+    CURBLOCK=$($CLI getinfo | grep blocks | awk {'print $2'} | tr -d ',')
+    echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
     while [[ $CURBLOCK -lt $BLOCKS ]]; do
       CURBLOCK=$($CLI getinfo | grep blocks | awk {'print $2'} | tr -d ',')
       echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
