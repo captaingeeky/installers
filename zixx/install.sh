@@ -163,6 +163,7 @@ function install_prerequisites()
     echo
     #addid this for libdbcxx
     echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
+    sudo apt install -y software-properties-common > /dev/null 2>&1
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
     sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5 > /dev/null 2>&1
