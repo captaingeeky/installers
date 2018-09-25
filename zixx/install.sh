@@ -166,7 +166,7 @@ function install_prerequisites()
     sudo apt install -y software-properties-common curl > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
-       echo "${RED}Install of ${YELLOW}software-properties-common ${RED}and {$YELLOW}curl ${RED}failed! ${NC}"
+       echo -e "${RED}Install of ${YELLOW}software-properties-common ${RED}and {$YELLOW}curl ${RED}failed! ${NC}"
        exit 1;
     fi
     sudo apt update > /dev/null 2>&1
@@ -174,14 +174,14 @@ function install_prerequisites()
     sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5 > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
-       echo "${RED}Install of ${YELLOW}libmini, build-essential ${RED}and {$YELLOW}libevent ${RED}failed! ${NC}"
+       echo -e "${RED}Install of ${YELLOW}libmini, build-essential ${RED}and {$YELLOW}libevent ${RED}failed! ${NC}"
        exit 1;
     fi
     echo -ne "${GREEN} >Progress: ${BLUE}[#######-------]\r"
     sudo add-apt-repository -y ppa:bitcoin/bitcoin > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
-       echo "${RED}Adding ${YELLOW}BITCOIN PPA ${RED}failed! ${NC}"
+       echo -e "${RED}Adding ${YELLOW}BITCOIN PPA ${RED}failed! ${NC}"
        exit 1;
     fi
     sudo apt update > /dev/null 2>&1
@@ -189,7 +189,7 @@ function install_prerequisites()
     sudo apt install -y jq libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
-       echo "${RED}Install of ${YELLOW}livdb4.8 libraries ${RED}failed! ${NC}"
+       echo -e "${RED}Install of ${YELLOW}livdb4.8 libraries ${RED}failed! ${NC}"
        exit 1;
     fi
     echo -ne "${GREEN} >Progress: ${BLUE}[############--]${NC}\r"
@@ -198,7 +198,7 @@ function install_prerequisites()
     sudo apt install -y libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
-       echo "${RED}Install of ${YELLOW}libboost ${RED}and {$YELLOW}extra files ${RED}failed! ${NC}"
+       echo -e "${RED}Install of ${YELLOW}libboost ${RED}and {$YELLOW}extra files ${RED}failed! ${NC}"
        exit 1;
     fi
     echo -ne "${GREEN} >Progress: ${BLUE}[##############]${NC}"
@@ -228,7 +228,7 @@ function copy_binaries()
     wget $LATEST_CLI > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
-       echo "${RED}Getting latest binaries failed!${NC}"
+       echo -e "${RED}Getting latest binaries failed!${NC}"
        exit 1;
     fi
     
