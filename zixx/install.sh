@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.15"
+VERSION="1.2.16"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -271,6 +271,7 @@ function add_cron()
 
 function start_wallet()
 {
+  
   echo
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
   if [ -f $DAEMON ]; then
@@ -294,6 +295,17 @@ function start_wallet()
     echo -e "${BLUE}Once Synchronized, you will be prompted to go back to your Windows/Mac wallet,${NC}"
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
     echo
+    echo -e "${BLUE}Optionally, to syncronize faster, you can bootstrap the install. ${NC}"
+    read -e -p "Do you want to Bootstrap? [Y/N] : " CHOICE
+  if [[ ("$CHOICE" == "y" || "$CHOICE" == "Y") ]]; then
+    cd $DATADIR
+    echo
+    echo "${BLUE} Downloading Bootstrap..."
+    wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/bootstrap.tar.gz > /dev/null 2>&1
+    echo
+    echo "${BLUE} Decompressing Bootstrapfiles..."
+    tar -xf bootstrap.tar.gz --overwrite > /dev/null 2>&1
+  fi
     echo
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
