@@ -167,6 +167,7 @@ function install_prerequisites()
     if [ $? -ne 0 ]; then
        echo 
        echo "${RED}Install of ${YELLOW}software-properties-common ${RED}and {$YELLOW}curl ${RED}failed! ${NC}"
+       exit 1;
     fi
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
@@ -174,12 +175,14 @@ function install_prerequisites()
     if [ $? -ne 0 ]; then
        echo 
        echo "${RED}Install of ${YELLOW}libmini, build-essential ${RED}and {$YELLOW}libevent ${RED}failed! ${NC}"
+       exit 1;
     fi
     echo -ne "${GREEN} >Progress: ${BLUE}[#######-------]\r"
     sudo add-apt-repository -y ppa:bitcoin/bitcoin > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
        echo "${RED}Adding ${YELLOW}BITCOIN PPA ${RED}failed! ${NC}"
+       exit 1;
     fi
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
@@ -187,11 +190,17 @@ function install_prerequisites()
     if [ $? -ne 0 ]; then
        echo 
        echo "${RED}Install of ${YELLOW}livdb4.8 libraries ${RED}failed! ${NC}"
+       exit 1;
     fi
     echo -ne "${GREEN} >Progress: ${BLUE}[############--]${NC}\r"
     #end libdbcxx section
   
-    sudo apt install -y build-essential htop libevent-2.0-5 libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip > /dev/null 2>&1
+    sudo apt install -y libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+       echo 
+       echo "${RED}Install of ${YELLOW}libboost ${RED}and {$YELLOW}extra files ${RED}failed! ${NC}"
+       exit 1;
+    fi
     echo -ne "${GREEN} >Progress: ${BLUE}[##############]${NC}"
     echo
   fi
@@ -217,6 +226,11 @@ function copy_binaries()
     LATEST_CLI=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixx-cli)
     wget $LATEST_D > /dev/null 2>&1
     wget $LATEST_CLI > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+       echo 
+       echo "${RED}Getting latest binaries failed!${NC}"
+       exit 1;
+    fi
     
     chmod +x zixx{d,-cli}
     if [ ! -f '/usr/local/bin/z.sh' ]; then
