@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.16"
+VERSION="1.2.17"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -164,14 +164,30 @@ function install_prerequisites()
     #addid this for libdbcxx
     echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
     sudo apt install -y software-properties-common curl > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+       echo 
+       echo "${RED}Install of ${YELLOW}software-properties-common ${RED}and {$YELLOW}curl ${RED}failed! ${NC}"
+    fi
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
     sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5 > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+       echo 
+       echo "${RED}Install of ${YELLOW}libmini, build-essential ${RED}and {$YELLOW}libevent ${RED}failed! ${NC}"
+    fi
     echo -ne "${GREEN} >Progress: ${BLUE}[#######-------]\r"
     sudo add-apt-repository -y ppa:bitcoin/bitcoin > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+       echo 
+       echo "${RED}Adding ${YELLOW}BITCOIN PPA ${RED}failed! ${NC}"
+    fi
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
     sudo apt install -y jq libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+       echo 
+       echo "${RED}Install of ${YELLOW}livdb4.8 libraries ${RED}failed! ${NC}"
+    fi
     echo -ne "${GREEN} >Progress: ${BLUE}[############--]${NC}\r"
     #end libdbcxx section
   
