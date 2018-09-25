@@ -359,7 +359,7 @@ function start_wallet()
       MNSYNC=$(echo $GETSYNC | jq .AssetName | tr -d '\"')
       MNSTATUS=$($CLI mnsync status | jq .IsSynced)
       MNSTAGE=$(echo $GETSYNC | jq .Attempt)
-      echo -ne "${YELLOW} >Masternode Sync Stage [${GREEN}$MNSTAGE${YELLOW}]: ${BLUE}$MNSYNC                \r"
+      echo -ne "${YELLOW} >Masternode Sync Stage: ${BLUE}$MNSYNC attempt [${GREEN}$MNSTAGE of 8${YELLOW}]                \r"
       sleep 2
     done
     echo
