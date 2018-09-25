@@ -330,10 +330,10 @@ function start_wallet()
   if [[ ("$CHOICE" == "y" || "$CHOICE" == "Y") ]]; then
     cd $DATADIR
     echo
-    echo "${BLUE} Downloading Bootstrap..."
+    echo -e "${BLUE} Downloading Bootstrap..."
     wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/bootstrap.tar.gz > /dev/null 2>&1
     echo
-    echo "${BLUE} Decompressing Bootstrapfiles..."
+    echo -e "${BLUE} Decompressing Bootstrapfiles..."
     tar -xf bootstrap.tar.gz --overwrite > /dev/null 2>&1
   fi
     echo
