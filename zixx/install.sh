@@ -204,9 +204,9 @@ function copy_binaries()
     
     chmod +x zixx{d,-cli}
     if [ ! -f '/usr/local/bin/z.sh' ]; then
-      wget -O /usr/local/bin/z.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh
-      chmod +x /usr/local/bin/z.sh
-      echo "alias z='/usr/local/bin/z.sh'" >> ~/.bashrc
+      wget -O /usr/local/bin/z.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh > /dev/null 2>&1
+      chmod +x /usr/local/bin/z.sh > /dev/null 2>&1
+      echo "alias z='/usr/local/bin/z.sh'" >> ~/.bashrc > /dev/null 2>&1
     fi
   fi
   if [ -f $DAEMON ]; then
