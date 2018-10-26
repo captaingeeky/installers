@@ -1,7 +1,7 @@
 
 #!/bin/bash
 
-VERSION="1.2.18"
+VERSION="1.2.19"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
