@@ -163,7 +163,7 @@ function install_prerequisites()
     echo
     #addid this for libdbcxx
     echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
-    sudo apt install -y software-properties-common curl > /dev/null 2>&1
+    sudo apt install -y jq software-properties-common curl > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
        echo -e "${RED}Install of ${YELLOW}software-properties-common ${RED}and {$YELLOW}curl ${RED}failed! ${NC}"
@@ -195,7 +195,7 @@ function install_prerequisites()
     echo -ne "${GREEN} >Progress: ${BLUE}[############--]${NC}\r"
     #end libdbcxx section
   
-    sudo apt install -y libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip > /dev/null 2>&1
+    sudo apt install -y jq libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
        echo -e "${RED}Install of ${YELLOW}libboost ${RED}and {$YELLOW}extra files ${RED}failed! ${NC}"
@@ -241,9 +241,9 @@ function copy_binaries()
   fi
   if [ -f $DAEMON ]; then
       mkdir $DATADIR
-      echo -e "${BLUE}Starting daemon ...(30 seconds)${NC}"
+      echo -e "${BLUE}Starting daemon ...(5 seconds)${NC}"
       $DAEMON_START
-      sleep 30
+      sleep 5
     else
       echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
       exit 1;
@@ -259,12 +259,12 @@ function create_conf_file()
   GENKEY=$($CLI masternode genkey)
   echo
   echo -e "${BLUE}Creating conf file...${NC}"
-  echo -e "${YELLOW}Ignore any errors you see below. (15 seconds)${NC}"
-  sleep 15
+  echo -e "${YELLOW}Ignore any errors you see below. (5 seconds)${NC}"
+  sleep 5
   echo
-  echo -e "${BLUE}Stopping the daemon and writing config (15 seconds)${NC}"
+  echo -e "${BLUE}Stopping the daemon and writing config (5 seconds)${NC}"
   $CLI stop
-  sleep 16
+  sleep 5
   
 cat <<EOF > $CONF_FILE
 masternode=1
@@ -339,7 +339,7 @@ function start_wallet()
     echo
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
-    sleep 10
+    sleep 3
     BLOCKS=$(curl -s https://api.zixx.org/extended/summary | jq .data.status.blockcount)
     CURBLOCK=$($CLI getinfo | grep "blocks" | awk {'print $2'} | tr -d ',')
 
