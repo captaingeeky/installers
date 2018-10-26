@@ -115,7 +115,7 @@ function set_environment()
   CONF_FILE="$DATADIR/zixx.conf"
   CLI="$PROJECT_FOLDER/$CLI_BINARY -conf=$CONF_FILE -datadir=$DATADIR"
   DAEMON_START="$DAEMON -datadir=$DATADIR -conf=$CONF_FILE -daemon"
-  CRONTAB_LINE="@reboot $DAEMON_START"
+  CRONTAB_LINE="@reboot sleep 30; $DAEMON_START"
 }
 
 function show_header()
