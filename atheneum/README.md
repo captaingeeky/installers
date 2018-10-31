@@ -33,7 +33,7 @@ https://ATHENEUM_DOWNLOAD_LINK/ <br />
 2.1 Choose your VPS
 
 VPS server required: We recommend the following specifications:
-- www.vultr.com
+- ![www.vultr.com](https://www.vultr.com/?ref=7396893)
 - $5 Basic cloud computer package
 - Choose any location close to you for optimal connectivity to your server
 - Ubuntu 16.04.x64
