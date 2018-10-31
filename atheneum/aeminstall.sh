@@ -1,5 +1,6 @@
 
 #!/bin/bash
+#Masternode Installer script by chris, 2018.
 
 VERSION="1.2.19"
 PROJECT="Atheneum"
