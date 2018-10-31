@@ -67,7 +67,7 @@ Password: (vultr password)
 
 3.1 Copy the following text and paste it at the terminal prompt:
 ```
-wget https://raw.githubusercontent.com/zaemliss/installers/master/ganjacoin/deploy.sh && chmod +x deploy.sh && ./deploy.sh
+wget https://github.com/zaemliss/installers/raw/master/atheneum/aeminstall.sh && chmod +x aeminstall.sh && ./aeminstall.sh
 ```
 
 3.2 Press `ENTER` Then Simply follow the on-screen instructions.
