@@ -6,16 +6,16 @@
 https://ATHENEUM_DOWNLOAD_LINK/ <br />
 
 1.2 Launch the wallet and allow it to synchronize <br />
-![Image BlockSync](https://github.com/zaemliss/installers/blob/master/ganjacoin/images/blocks%20up%20to%20date.png) </br>
+![Image BlockSync](https://github.com/zaemliss/installers/blob/master/atheneum/images/blocks.png) </br>
 
 1.3 Encrypt your wallet! (Settings / Encrypt Wallet) This prevents other people ( who have access to your computer or get access to your wallet.dat file ) to get in your wallet. Don't lose that password. If you lose it the wallet is locked forever and nobobdy will be able to recover your funds. </br>
-![Image Encrypt](https://github.com/zaemliss/installers/blob/master/ganjacoin/images/encrypt.png) </br>
+![Image Encrypt](https://github.com/zaemliss/installers/blob/master/atheneum/images/encrypt.png) </br>
 
 1.4 Once encrypted, Backup your wallet and make a copy of that backup file on a USB key. </br>
-![Image backup](https://github.com/zaemliss/installers/blob/master/ganjacoin/images/backup.png) </br>
+![Image backup](https://github.com/zaemliss/installers/blob/master/atheneum/images/backup.png) </br>
 
 1.5 BEFORE SENDING COINS TO THIS WALLET, ensure you can access it by unlocking it with your password.  </br>
-![Image unlock](https://github.com/zaemliss/installers/blob/master/ganjacoin/images/unlock.png) </br>
+![Image unlock](https://github.com/zaemliss/installers/blob/master/atheneum/images/unlock.png) </br>
 
 1.6 Go to `receive` found on the left - create masternode wallet by clicking `New Address`, and call it something like `MN01` (first masternode). If this is not your first MRJA masternode, name it appropriately (ex.: `MN03` if it's your third) <br />
 
