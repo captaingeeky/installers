@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.11"
+ver="1.0.12"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"')
 
 red='\033[1;31m'
@@ -46,22 +46,22 @@ while [ 1 ]; do
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
-  logresult=$(tail -n 8 ./.atheneum/debug.log)
+  logresult=$(tail -n 8 ~/.atheneum/debug.log)
 
   clear
-  echo -e "${blue}Protocol    : ${green}$protocol${clear}"
-  echo -e "${blue}Version     : ${green}$version${clear}"
-  echo -e "${blue}Connections : ${green}$connections${clear}"
-  echo -e "${blue}Supply      : ${green}$supply${clear}"
+  echo -e "${blue} Protocol    : ${green}$protocol${clear}"
+  echo -e "${blue} Version     : ${green}$version${clear}"
+  echo -e "${blue} Connections : ${green}$connections${clear}"
+  echo -e "${blue} Supply      : ${green}$supply${clear}"
   echo
-  echo -e "${blue}blocks      : ${yellow}$blocks${clear}"
+  echo -e "${blue} blocks      : ${yellow}$blocks${clear}"
   echo
-  echo -e "${blue}Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
-  echo -e "${blue}MN Status   : ${green}$mnstatus${clear}"
+  echo -e "${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
+  echo -e "${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
-  echo -e "${yellow}==========================================================================="
-  echo -e "${blue}$logresult${clear}"
-  echo -e "${yellow}===========================================================================${clear}"
+  echo -e "${yellow} ==========================================================================="
+  echo -e "${blue} $logresult${clear}"
+  echo -e "${yellow} ===========================================================================${clear}"
   echo -e "${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
   
   sleep 2
