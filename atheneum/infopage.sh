@@ -1,7 +1,8 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by chris 2018
-
+version="1.0.9"
+getcurrent=$(curl
 client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
 red='\033[1;31m'
