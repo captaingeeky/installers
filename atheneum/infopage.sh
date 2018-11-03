@@ -1,12 +1,14 @@
 #!/bin/bash
-#wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
-#User Friendly Masternode Info page by chris 2018
+clear
+
+client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
 red='\033[1;31m'
 green='\033[1;32m'
 yellow='\033[1;33m'
 blue='\033[1;36m'
 clear='\033[0m'
+cls='\033[2J'
 
 declare -a status
 status[0]="Initial Masternode Syncronization"
@@ -23,9 +25,9 @@ status[999]="Masternode Sync Successful"
 while [ 1 ]; do
 
 
-getinfo=$(~/atheneum/src/atheneum-cli getinfo)
-mnsync=$(~/atheneum/src/atheneum-cli mnsync status)
-mnstatus=$(~/atheneum/src/atheneum-cli masternode debug)
+getinfo=$($client getinfo)
+mnsync=$($client mnsync status)
+mnstatus=$($client masternode debug)
 
 version=$(echo $getinfo | jq .version)
 protocol=$(echo $getinfo | jq .protocolversion)
@@ -39,7 +41,9 @@ attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
 logresult=$(tail -n 8 ./.atheneum/debug.log)
 
-clear
+
+echo -e "${cls}"
+
 echo -e "${blue}Protocol    : ${green}$protocol${clear}"
 echo -e "${blue}Version     : ${green}$version${clear}"
 echo -e "${blue}Connections : ${green}$connections${clear}"
