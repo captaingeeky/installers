@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-version="1.0.10"
+ver="1.0.10"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"')
 
 if ! [[ $version == $getcurrent ]]; then 
@@ -65,7 +65,7 @@ echo
 echo -e "${yellow}==========================================================================="
 echo -e "${blue}$logresult${clear}"
 echo -e "${yellow}===========================================================================${clear}"
-echo -e "${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $version ${clear}"
+echo -e "${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
 
 sleep 2
 done
