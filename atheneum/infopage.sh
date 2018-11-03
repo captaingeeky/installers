@@ -60,7 +60,7 @@ while [ 1 ]; do
   echo -e "${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
   echo -e "${yellow} ==========================================================================="
-  echo -e "${blue} $logresult${clear}"
+  echo -e "${blue}$logresult${clear}"
   echo -e "${yellow} ===========================================================================${clear}"
   echo -e "${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
   
