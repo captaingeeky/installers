@@ -1,12 +1,13 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by chris 2018
-version="1.0.9"
+version="1.0.10"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"')
 
 if ! [[ $version == $getcurrent ]]; then 
   echo -e "${red} Version outdated! Downloading new version ...${clear}"
   wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
+  sleep 2
   exec "./infopage.sh"
 fi
 
