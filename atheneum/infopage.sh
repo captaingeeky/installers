@@ -4,7 +4,7 @@
 ver="1.0.11"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"')
 
-if ! [[ $version == $getcurrent ]]; then 
+if ! [[ $ver == $getcurrent ]]; then 
   echo -e "${red} Version outdated! Downloading new version ...${clear}"
   wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
   sleep 2
