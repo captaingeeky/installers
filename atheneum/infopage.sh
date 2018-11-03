@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.12"
+ver="1.0.13"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"')
 
 red='\033[1;31m'
@@ -49,6 +49,7 @@ while [ 1 ]; do
   logresult=$(tail -n 8 ~/.atheneum/debug.log | pr -T -o 2)
 
   clear
+  echo
   echo -e "${blue} Protocol    : ${green}$protocol${clear}"
   echo -e "${blue} Version     : ${green}$version${clear}"
   echo -e "${blue} Connections : ${green}$connections${clear}"
