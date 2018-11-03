@@ -46,7 +46,7 @@ while [ 1 ]; do
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
-  logresult=$(tail -n 8 ~/.atheneum/debug.log)
+  logresult=$(tail -n 8 ~/.atheneum/debug.log | pr -T -o 2)
 
   clear
   echo -e "${blue} Protocol    : ${green}$protocol${clear}"
