@@ -65,7 +65,7 @@ echo
 echo -e "${yellow}==========================================================================="
 echo -e "${blue}$logresult${clear}"
 echo -e "${yellow}===========================================================================${clear}"
-echo -e "${green} Press CTRL-C to exit. Updated every 2 seconds.${clear}"
+echo -e "${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 chris version $version ${clear}"
 
 sleep 2
 done
