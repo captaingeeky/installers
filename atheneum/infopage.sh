@@ -1,4 +1,6 @@
 #!/bin/bash
+#wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
+#User Friendly Masternode Info page by chris 2018
 
 red='\033[1;31m'
 green='\033[1;32m'
