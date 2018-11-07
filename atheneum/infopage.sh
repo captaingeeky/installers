@@ -47,7 +47,7 @@ while [ 1 ]; do
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
-  logresult=$(tail -n 16 ~/.atheneum/debug.log | pr -T -o 2)
+  logresult=$(tail -n 16 ~/.Atheneum/debug.log | pr -T -o 2)
 
   clear
   echo
