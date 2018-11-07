@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.13"
+ver="1.0.14"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"')
 
 red='\033[1;31m'
@@ -35,7 +35,8 @@ while [ 1 ]; do
   getinfo=$($client getinfo)
   mnsync=$($client mnsync status)
   mnstatus=$($client masternode debug)
-
+  count=$($client masternode list | grep -c addr)
+  
   version=$(echo $getinfo | jq .version)
   protocol=$(echo $getinfo | jq .protocolversion)
   blocks=$(echo $getinfo | jq .blocks)
@@ -46,7 +47,7 @@ while [ 1 ]; do
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
-  logresult=$(tail -n 8 ~/.atheneum/debug.log | pr -T -o 2)
+  logresult=$(tail -n 16 ~/.atheneum/debug.log | pr -T -o 2)
 
   clear
   echo
@@ -54,6 +55,7 @@ while [ 1 ]; do
   echo -e "${blue} Version     : ${green}$version${clear}"
   echo -e "${blue} Connections : ${green}$connections${clear}"
   echo -e "${blue} Supply      : ${green}$supply${clear}"
+  echo -e "${blue} MN Count    : ${green}$count${clear}"
   echo
   echo -e "${blue} blocks      : ${yellow}$blocks${clear}"
   echo
