@@ -33,8 +33,11 @@ client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
 while [ 1 ]; do
   getinfo=$($client getinfo)
-  mnsync=$($client mnsync status)
-  mnstatus=$($client masternode debug)
+  ismasternode=$(cat ~/.Atheneum/atheneum.conf | grep -C "masternode")
+  if ! [[ $ismasternode == "0" ]]; then
+    mnsync=$($client mnsync status)
+    mnstatus=$($client masternode debug)
+  fi
   count=$($client masternode list | grep -c addr)
   
   version=$(echo $getinfo | jq .version)
