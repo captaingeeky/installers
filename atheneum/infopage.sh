@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.17"
+ver="1.0.18"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"')
 
 red='\033[1;31m'
@@ -33,7 +33,7 @@ client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
 while [ 1 ]; do
   getinfo=$($client getinfo)
-  ismasternode=$(cat ~/.Atheneum/atheneum.conf | grep -C "masternode")
+  ismasternode=$(cat ~/.Atheneum/atheneum.conf | grep -c masternode)
   if ! [[ $ismasternode == "0" ]]; then
     mnsync=$($client mnsync status)
     mnstatus=$($client masternode debug) 
@@ -65,9 +65,9 @@ while [ 1 ]; do
   echo -e "${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
   echo -e "${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
-  echo -e "${yellow} ==========================================================================="
+  echo -e "${yellow} ==============================================================================="
   echo -e "${blue}$logresult${clear}"
-  echo -e "${yellow} ===========================================================================${clear}"
+  echo -e "${yellow} ===============================================================================${clear}"
   echo -e "${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
   
   sleep 2
