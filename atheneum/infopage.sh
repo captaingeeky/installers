@@ -36,7 +36,7 @@ while [ 1 ]; do
   ismasternode=$(cat ~/.Atheneum/atheneum.conf | grep -C "masternode")
   if ! [[ $ismasternode == "0" ]]; then
     mnsync=$($client mnsync status)
-    mnstatus=$($client masternode debug)
+    mnstatus=$($client masternode debug) 
   fi
   count=$($client masternode list | grep -c addr)
   
