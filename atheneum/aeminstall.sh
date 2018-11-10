@@ -2,9 +2,9 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.2.19"
+VERSION="1.1.0"
 PROJECT="Atheneum"
-PROJECT_FOLDER="$HOME/atheneum"
+PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
 CLI_BINARY="atheneum-cli"
 
