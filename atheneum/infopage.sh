@@ -1,14 +1,16 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.18"
-getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"')
 
 red='\033[1;31m'
 green='\033[1;32m'
 yellow='\033[1;33m'
 blue='\033[1;36m'
 clear='\033[0m'
+
+echo -e "${red} Checking Version ...${clear}"
+ver="1.0.19"
+getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
 
 declare -a status
   status[0]="Initial Masternode Syncronization"
@@ -24,7 +26,7 @@ declare -a status
 
 if ! [[ $ver == $getcurrent ]]; then 
   echo -e "${red} Version outdated! Downloading new version ...${clear}"
-  wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
+  wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh > /dev/null 2>&1
   sleep 2
   exec "./infopage.sh"
 fi
