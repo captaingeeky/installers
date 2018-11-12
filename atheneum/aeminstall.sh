@@ -320,25 +320,25 @@ function start_wallet()
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
     sleep 3
-    APIBLOCKS=$(curl -s https://api.zixx.org/extended/summary | jq .data.status.blockcount)
-    CURBLOCK=$($CLI getinfo | grep "blocks" | awk {'print $2'} | tr -d ',')
+#    APIBLOCKS=$(curl -s https://api.zixx.org/extended/summary | jq .data.status.blockcount)
+#    CURBLOCK=$($CLI getinfo | grep "blocks" | awk {'print $2'} | tr -d ',')
 
-    echo -ne "${YELLOW}Current Block: ${GREEN}$BLOCKS${NC}\n\n"
-    CURBLOCK=$($CLI getinfo | grep blocks | awk {'print $2'} | tr -d ',')
-    echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
-    while [[ $CURBLOCK -lt $BLOCKS ]]; do
-      CURBLOCK=$($CLI getinfo | grep blocks | awk {'print $2'} | tr -d ',')
-      echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
-      sleep 2
-    done
-    echo
+#    echo -ne "${YELLOW}Current Block: ${GREEN}$BLOCKS${NC}\n\n"
+#    CURBLOCK=$($CLI getinfo | grep blocks | awk {'print $2'} | tr -d ',')
+#    echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
+#    while [[ $CURBLOCK -lt $BLOCKS ]]; do
+#      CURBLOCK=$($CLI getinfo | grep blocks | awk {'print $2'} | tr -d ',')
+#      echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
+#      sleep 2
+#    done
+#    echo
     
-    MNSTATUS=$($CLI mnsync status | jq .IsSynced)
+    MNSTATUS=$($CLI mnsync status | jq .IsBlockChainSynced)
     while [ "$MNSTATUS" != "true" ]; do
       GETSYNC=$($CLI mnsync status)
-      MNSYNC=$(echo $GETSYNC | jq .AssetName | tr -d '\"')
+      MNSYNC=$(echo $GETSYNC | jq .RequestedMasternodeAssets | tr -d '\"')
       MNSTATUS=$($CLI mnsync status | jq .IsSynced)
-      MNSTAGE=$(echo $GETSYNC | jq .Attempt)
+      MNSTAGE=$(echo $GETSYNC | jq .RequestedMasternodeAttempt)
       echo -ne "${YELLOW} >Masternode Sync Stage: ${BLUE}$MNSYNC attempt [${GREEN}$MNSTAGE of 8${YELLOW}]                \r"
       sleep 2
     done
@@ -347,10 +347,10 @@ function start_wallet()
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
     echo
-    MNSTATUS=$($CLI masternode status | jq .status)
+    MNSTATUS=$($CLI masternode status | jq .message)
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation....${NC}"
     while [ "$MNSTATUS" != "\"Masternode successfully started\"" ]; do
-      MNSTATUS=$($CLI masternode status | jq .status)
+      MNSTATUS=$($CLI masternode status | jq .message)
       sleep 2
     done
     echo
