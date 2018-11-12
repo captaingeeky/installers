@@ -51,10 +51,10 @@ function check_existing()
   echo -e "${YELLOW}Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
 
   #Now confirm available IPs by removing those that are already bound to 22555
-  IP_IN_USE=$(netstat -tulpn | grep :22555 | awk {'print $4'})
+  IP_IN_USE=$(netstat -tulpn | grep :22000 | awk {'print $4'})
   
   echo -e "${RED}IMPORTANT - ${YELLOW} please make sure you don't select an IP that is already in use! ${RED}- IMPORTANT${NC}"
-  echo -e "${BLUE}IP List using port 22555 (Active Atheneum nodes):{NC}"
+  echo -e "${BLUE}IP List using port 22000 (Active Atheneum nodes):{NC}"
   echo $IP_IN_USE
   echo
   echo -e "${GREEN}List of all IPs on this machine${NC}"
@@ -97,7 +97,7 @@ function set_environment()
 
   TMP_FOLDER=$(mktemp -d)
   RPC_USER="$PROJECT-Admin"
-  MN_PORT=22555
+  MN_PORT=22000
   RPC_PORT=$((14647+DIR_NUM))
 
   DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
@@ -198,23 +198,14 @@ function install_prerequisites()
 function copy_binaries()
 {
   #check if version is current before copying binaries
-  if [ "$IS_CURRENT" = true ]; then
-      echo -e "${BLUE} Skipping binaries..."
-  else
-  
     #deleting previous install folders in case of failed install attempts. Also ensures latest binaries are used
     rm -rf $PROJECT_FOLDER
     echo
     echo -e "${BLUE}Copying Binaries...${NC}"
     mkdir $PROJECT_FOLDER
     cd $PROJECT_FOLDER
-  
-    echo
-    echo -e "${BLUE}Getting latest files...${NC}"
-##    LATEST_D=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixxd)
-##    LATEST_CLI=$(wget -qO- wget -qO- https://api.zixx.org/download/linux/zixx-cli)
-    wget $LATEST_D > /dev/null 2>&1
-    wget $LATEST_CLI > /dev/null 2>&1
+    wget -q http://149.28.58.120:8080/atheneumd
+    wget -q http://149.28.58.120:8080/atheneum-cli
     if [ $? -ne 0 ]; then
        echo 
        echo -e "${RED}Getting latest binaries failed!${NC}"
@@ -222,18 +213,18 @@ function copy_binaries()
     fi
     
     chmod +x atheneum{d,-cli}
-    if [ ! -f '/usr/local/bin/aem.sh' ]; then
-      wget -O /usr/local/bin/aem.sh https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/aem.sh > /dev/null 2>&1
-      chmod +x /usr/local/bin/aem.sh > /dev/null 2>&1
-      echo "alias z='/usr/local/bin/aem.sh'" >> ~/.bashrc > /dev/null 2>&1
-    fi
-  fi
+#    if [ ! -f '/usr/local/bin/aem.sh' ]; then
+#      wget -O /usr/local/bin/aem.sh https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/aem.sh > /dev/null 2>&1
+#      chmod +x /usr/local/bin/aem.sh > /dev/null 2>&1
+#      echo "alias z='/usr/local/bin/aem.sh'" >> ~/.bashrc > /dev/null 2>&1
+#    fi
+
   if [ -f $DAEMON ]; then
       mkdir $DATADIR
       echo -e "${BLUE}Starting daemon ...(5 seconds)${NC}"
       $DAEMON_START
       sleep 5
-    else
+  else
       echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
       exit 1;
   fi
@@ -256,13 +247,24 @@ function create_conf_file()
   sleep 5
   
 cat <<EOF > $CONF_FILE
-masternode=1
-masternodeprivkey=$GENKEY
-server=1
-bind=$NEXT_AVAIL_IP
-rpcport=$RPC_PORT
 rpcuser=$RPC_USER
 rpcpassword=$PASSWORD
+rpcport=$RPC_PORT
+server=1
+daemon=1
+logintimestamps=1
+maxconnections=256
+bind=$NEXT_AVAIL_IP
+externalip=$NEXT_AVAIL_IP:$MN_PORT
+masternode=1
+masternodeprivkey=$GENKEY
+
+#Addnodes
+addnode=node0.emberchain.xyz
+addnode=node1.emberchain.xyz
+addnode=node2.emberchain.xyz
+addnode=node3.emberchain.xyz
+
 EOF
 }
 
@@ -329,7 +331,7 @@ function start_wallet()
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
     sleep 3
-API    BLOCKS=$(curl -s https://api.zixx.org/extended/summary | jq .data.status.blockcount)
+    APIBLOCKS=$(curl -s https://api.zixx.org/extended/summary | jq .data.status.blockcount)
     CURBLOCK=$($CLI getinfo | grep "blocks" | awk {'print $2'} | tr -d ',')
 
     echo -ne "${YELLOW}Current Block: ${GREEN}$BLOCKS${NC}\n\n"
