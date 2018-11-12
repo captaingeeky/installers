@@ -316,17 +316,6 @@ function start_wallet()
     echo -e "${BLUE}Once Synchronized, you will be prompted to go back to your Windows/Mac wallet,${NC}"
     echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
     echo
-##    echo -e "${BLUE}Optionally, to syncronize faster, you can bootstrap the install. ${NC}"
-##    read -e -p "Do you want to Bootstrap? [Y/N] : " CHOICE
-##  if [[ ("$CHOICE" == "y" || "$CHOICE" == "Y") ]]; then
-##    cd $DATADIR
-##    echo
-##    echo -e "${BLUE} Downloading Bootstrap..."
-##    wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/bootstrap.tar.gz > /dev/null 2>&1
-##    echo
-##    echo -e "${BLUE} Decompressing Bootstrapfiles..."
-##    tar -xf bootstrap.tar.gz --overwrite > /dev/null 2>&1
-##  fi
     echo
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
@@ -368,8 +357,7 @@ function start_wallet()
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Masternode Activated!"
     echo
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
-    echo
-    echo -e "${BLUE}Type ${YELLOW}aem.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
+    echo    echo -e "${BLUE}Type ${YELLOW}aem.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
     echo -e "${BLUE}Ex: ${GREEN}aem.sh atheneum2 masternode status ${NC}"
     echo
 
