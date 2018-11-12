@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.2"
+VERSION="1.1.3"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -224,6 +224,13 @@ function copy_binaries()
       echo -e "${BLUE}Starting daemon ...(5 seconds)${NC}"
       $DAEMON_START
       sleep 5
+      $DAEMON_STOP
+cat <<EOF > $CONF_FILE
+rpcuser=$RPC_USER
+rpcpassword=$PASSWORD
+EOF
+      sleep 3
+      $DAEMON_START
   else
       echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
       exit 1;
