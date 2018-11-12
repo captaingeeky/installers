@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.1"
+VERSION="1.1.2"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -93,7 +93,7 @@ function check_existing()
 
 function set_environment()
 {
-  DATADIR="$HOME/.atheneum$DIR_NUM"
+  DATADIR="$HOME/.Atheneum$DIR_NUM"
 
   TMP_FOLDER=$(mktemp -d)
   RPC_USER="$PROJECT-Admin"
