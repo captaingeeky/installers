@@ -54,7 +54,7 @@ function check_existing()
   IP_IN_USE=$(netstat -tulpn | grep :22000 | awk {'print $4'})
   
   echo -e "${RED}IMPORTANT - ${YELLOW} please make sure you don't select an IP that is already in use! ${RED}- IMPORTANT${NC}"
-  echo -e "${BLUE}IP List using port 22000 (Active Atheneum nodes):{NC}"
+  echo -e "${BLUE}IP List using port 22000 (Active Atheneum nodes):${NC}"
   echo $IP_IN_USE
   echo
   echo -e "${GREEN}List of all IPs on this machine${NC}"
@@ -98,7 +98,7 @@ function set_environment()
   TMP_FOLDER=$(mktemp -d)
   RPC_USER="$PROJECT-Admin"
   MN_PORT=22000
-  RPC_PORT=$((14647+DIR_NUM))
+  RPC_PORT=$((15647+DIR_NUM))
 
   DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
   CONF_FILE="$DATADIR/atheneum.conf"
