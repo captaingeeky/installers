@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.3"
+VERSION="1.1.4"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -223,6 +223,7 @@ function copy_binaries()
       mkdir $DATADIR
       echo -e "${BLUE}Starting daemon ...(5 seconds)${NC}"
       $DAEMON_START
+      PASSWORD=$(pwgen -s 64 1)
       sleep 5
       $DAEMON_STOP
 cat <<EOF > $CONF_FILE
