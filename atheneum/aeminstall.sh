@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.4"
+VERSION="1.1.5"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -243,7 +243,6 @@ EOF
 function create_conf_file()
 {
   echo
-  PASSWORD=$(pwgen -s 64 1)
   GENKEY=$($CLI masternode genkey)
   echo
   echo -e "${BLUE}Creating conf file...${NC}"
