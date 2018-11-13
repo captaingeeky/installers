@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.9"
+VERSION="1.1.10"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -321,7 +321,7 @@ function start_wallet()
     read -n 1 -s -r -p " "
     echo
     echo
-    echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
+    echo -e "${BLUE}Now wait for a full synchro (can take 5-10 minutes)${NC}"
     echo -e "${BLUE}Once Synchronized, you will be prompted to go back to your Windows/Mac wallet,${NC}"
     echo -e "${BLUE}and perform one more operation.${NC}"
     echo
@@ -351,6 +351,14 @@ function start_wallet()
       echo -ne "${YELLOW} >Masternode Sync Stage: ${BLUE}$MNSYNC attempt [${GREEN}$MNSTAGE of 8${YELLOW}]                \r"
       sleep 2
     done
+    
+    TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations)
+    while [ "$TXSTATUS" < 15 ]; do
+      TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations)
+      echo -ne "${YELLOW} >Transaction Confirmation: ${BLUE}$TXSTATUS of 15${YELLOW}]                \r"
+      sleep 15
+    done
+    
     echo
     echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
