@@ -176,7 +176,7 @@ function install_prerequisites()
     fi
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
-    sudo apt install -y jq libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
+    sudo apt install -y jq libdb4.8-dev libdb4.8++-dev libdb5.3++-dev > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
        echo -e "${RED}Install of ${YELLOW}livdb4.8 libraries ${RED}failed! ${NC}"
