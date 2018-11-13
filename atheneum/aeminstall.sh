@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.8"
+VERSION="1.1.9"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -223,7 +223,7 @@ function copy_binaries()
   if [ -f $DAEMON ]; then
       mkdir $DATADIR
       echo -e "${BLUE}Starting daemon ...(5 seconds)${NC}"
-      $DAEMON -daemon
+      $DAEMON -daemon > /dev/null 2>&1
       PASSWORD=$(pwgen -s 64 1)
       sleep 10
       $STARTCLI stop
@@ -232,7 +232,7 @@ rpcuser=$RPC_USER
 rpcpassword=$PASSWORD
 EOF
       sleep 3
-      $DAEMON -daemon
+      $DAEMON -daemon > /dev/null 2>&1
       sleep 10
   else
       echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
@@ -285,13 +285,13 @@ function configure_firewall()
   sudo apt-get update -y > /dev/null 2>&1
   
   #configure ufw firewall
-  sudo ufw default allow outgoing
-  sudo ufw default deny incoming
-  sudo ufw allow ssh/tcp
-  sudo ufw limit ssh/tcp
-  sudo ufw allow $MN_PORT/tcp
-  sudo ufw logging on
-  echo "y" | sudo ufw enable
+  sudo ufw default allow outgoing > /dev/null 2>&1
+  sudo ufw default deny incoming > /dev/null 2>&1
+  sudo ufw allow ssh/tcp > /dev/null 2>&1
+  sudo ufw limit ssh/tcp > /dev/null 2>&1
+  sudo ufw allow $MN_PORT/tcp > /dev/null 2>&1
+  sudo ufw logging on > /dev/null 2>&1
+  echo "y" | sudo ufw enable > /dev/null 2>&1
 }
 
 function add_cron()
