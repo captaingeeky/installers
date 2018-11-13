@@ -356,10 +356,10 @@ function start_wallet()
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
     echo
-    MNSTATUS=$($CLI masternode status | jq .message)
+    MNSTATUS=$($CLI masternode debug)
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation....${NC}"
-    while [ "$MNSTATUS" != "\"Masternode successfully started\"" ]; do
-      MNSTATUS=$($CLI masternode status | jq .message)
+    while [ "$MNSTATUS" != "Masternode successfully started" ]; do
+      MNSTATUS=$($CLI masternode debug)
       sleep 2
     done
     echo
