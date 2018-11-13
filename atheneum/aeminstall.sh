@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.13"
+VERSION="1.1.14"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -352,7 +352,7 @@ function start_wallet()
     done
     
     TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations)
-    while [ "$TXSTATUS" -lt "15" ]; do
+    while [[ "$TXSTATUS" -lt "15" ] || [ "$TXSTATUS" -eq "" ]]; do
       TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations)
       echo -ne "${YELLOW} >Transaction Confirmation: ${BLUE}$TXSTATUS of 15${YELLOW}]                \r"
       sleep 15
