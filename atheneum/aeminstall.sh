@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.5"
+VERSION="1.1.6"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -101,6 +101,7 @@ function set_environment()
   RPC_PORT=$((15647+DIR_NUM))
 
   DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
+  STARTCLI="$PROJECT_FOLDER/$CLI_BINARY"
   CONF_FILE="$DATADIR/atheneum.conf"
   CLI="$PROJECT_FOLDER/$CLI_BINARY -conf=$CONF_FILE -datadir=$DATADIR"
   DAEMON_START="$DAEMON -datadir=$DATADIR -conf=$CONF_FILE -daemon"
@@ -222,16 +223,16 @@ function copy_binaries()
   if [ -f $DAEMON ]; then
       mkdir $DATADIR
       echo -e "${BLUE}Starting daemon ...(5 seconds)${NC}"
-      $DAEMON_START
+      $DAEMON -daemon
       PASSWORD=$(pwgen -s 64 1)
       sleep 5
-      $DAEMON_STOP
+      $STARTCLI stop
 cat <<EOF > $CONF_FILE
 rpcuser=$RPC_USER
 rpcpassword=$PASSWORD
 EOF
       sleep 3
-      $DAEMON_START
+      $DAEMON -daemon
   else
       echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
       exit 1;
@@ -243,14 +244,14 @@ EOF
 function create_conf_file()
 {
   echo
-  GENKEY=$($CLI masternode genkey)
+  GENKEY=$($STARTCLI masternode genkey)
   echo
   echo -e "${BLUE}Creating conf file...${NC}"
   echo -e "${YELLOW}Ignore any errors you see below. (5 seconds)${NC}"
   sleep 5
   echo
   echo -e "${BLUE}Stopping the daemon and writing config (5 seconds)${NC}"
-  $CLI stop
+  $STARTCLI stop
   sleep 5
   
 cat <<EOF > $CONF_FILE
