@@ -6,7 +6,7 @@
 https://ATHENEUM_DOWNLOAD_LINK/ <br />
 
 1.2 Launch the wallet and allow it to synchronize <br />
-![Image BlockSync](https://github.com/zaemliss/installers/blob/master/atheneum/images/blocks.png) </br>
+![Image BlockSync](https://github.com/zaemliss/installers/blob/master/atheneum/images/AEMSync.png) </br>
 
 1.3 Encrypt your wallet! (Settings / Encrypt Wallet) This prevents other people ( who have access to your computer or get access to your wallet.dat file ) to get in your wallet. Don't lose that password. If you lose it the wallet is locked forever and nobobdy will be able to recover your funds. </br>
 ![Image Encrypt](https://github.com/zaemliss/installers/blob/master/atheneum/images/encrypt.png) </br>
