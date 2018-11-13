@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.11"
+VERSION="1.1.13"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -329,18 +329,17 @@ function start_wallet()
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
     sleep 3
-#    APIBLOCKS=$(curl -s https://api.zixx.org/extended/summary | jq .data.status.blockcount)
-#    CURBLOCK=$($CLI getinfo | grep "blocks" | awk {'print $2'} | tr -d ',')
+    APIBLOCKS=$(curl -s http://158.69.211.151/chain/AemChain/q/getblockcount)
+    CURBLOCK=$($CLI getinfo | jq .blocks)
 
-#    echo -ne "${YELLOW}Current Block: ${GREEN}$BLOCKS${NC}\n\n"
-#    CURBLOCK=$($CLI getinfo | grep blocks | awk {'print $2'} | tr -d ',')
-#    echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
-#    while [[ $CURBLOCK -lt $BLOCKS ]]; do
-#      CURBLOCK=$($CLI getinfo | grep blocks | awk {'print $2'} | tr -d ',')
-#      echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $BLOCKS ${BLUE}...${NC} \r"
-#      sleep 2
-#    done
-#    echo
+    echo -ne "${YELLOW}Current Block: ${GREEN}$APIBLOCKS${NC}\n\n"
+    echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $APIBLOCKS ${BLUE}...${NC} \r"
+    while [[ $CURBLOCK -lt $APIBLOCKS ]]; do
+      CURBLOCK=$($CLI getinfo | jq .blocks)
+      echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $APIBLOCKS ${BLUE}...${NC} \r"
+      sleep 2
+    done
+    echo
     
     MNSTATUS=$($CLI mnsync status | jq .RequestedMasternodeAssets)
     while [ "$MNSTATUS" != 999 ]; do
@@ -353,7 +352,7 @@ function start_wallet()
     done
     
     TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations)
-    while [ $TXSTATUS < 15 ]; do
+    while [ "$TXSTATUS" -lt "15" ]; do
       TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations)
       echo -ne "${YELLOW} >Transaction Confirmation: ${BLUE}$TXSTATUS of 15${YELLOW}]                \r"
       sleep 15
