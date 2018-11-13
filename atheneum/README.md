@@ -19,14 +19,14 @@ https://ATHENEUM_DOWNLOAD_LINK/ <br />
 
 1.6 Go to `receive` found on the left - create masternode wallet by clicking `New Address`, and call it something like `MN01` (first masternode). If this is not your first MRJA masternode, name it appropriately (ex.: `MN03` if it's your third) <br />
 
-1.7 Send EXACTLY 30,000 coins to the wallet address you've just created by right-clicking on that new address and clicking on `Copy Address` then going to the send tab and pasting that address in the `Pay To` field. Make sure that it's exactly 30000 - no more, no less.<br />
+1.7 Send EXACTLY 10,000 coins to the wallet address you've just created by right-clicking on that new address and clicking on `Copy Address` then going to the send tab and pasting that address in the `Pay To` field. Make sure that it's exactly 10000 - no more, no less.<br />
 
 1.8. Go to `Help / Debug Window / Console ` and type `masternode outputs` <br />
 
 1.9. Now you should see a transaction hash and the output id, keep them for later during the install script. (Copy them to a notepad or text editor) <br />
 ![Image txhash](https://github.com/zaemliss/installers/blob/master/ganjacoin/images/txhash.png) </br>
 
-1.10. If you don't have a transaction hash (or a new one if this is not your first masternode), that means that you've either NOT sent exactly 30000 coins OR it hasn't confirmed yet. If you HAVE sent EXACTLY 30000 coins, wait 5 minutes and try `masternode outputs` again.
+1.10. If you don't have a transaction hash (or a new one if this is not your first masternode), that means that you've either NOT sent exactly 10000 coins OR it hasn't confirmed yet. If you HAVE sent EXACTLY 10000 coins, wait 5 minutes and try `masternode outputs` again.
 
 ## 2. Set up the Masternode on a Linux VPS
 
