@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.18"
+VERSION="1.1.20"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -354,7 +354,7 @@ function start_wallet()
     
     TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations) > /dev/null 2>&1
     while (( TXSTATUS < 1 )); do
-      echo -ne "${YELLOW} >Waiting for the transaction to appear on the blockchain...${YELLOW}]                \r"
+      echo -ne "${YELLOW} >Waiting for the transaction to appear on the blockchain...${YELLOW}                \r"
       sleep 15
     done
     
