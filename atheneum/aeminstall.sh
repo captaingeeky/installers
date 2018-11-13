@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.7"
+VERSION="1.1.8"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -323,7 +323,7 @@ function start_wallet()
     echo
     echo -e "${BLUE}Now wait for a full synchro (can take 10-15 minutes)${NC}"
     echo -e "${BLUE}Once Synchronized, you will be prompted to go back to your Windows/Mac wallet,${NC}"
-    echo -e "${BLUE}go to your Masternodes tab, click on your masternode and press on ${YELLOW}Start Alias${NC}"
+    echo -e "${BLUE}and perform one more operation.${NC}"
     echo
     echo
     $DAEMON_START
@@ -342,11 +342,11 @@ function start_wallet()
 #    done
 #    echo
     
-    MNSTATUS=$($CLI mnsync status | jq .IsBlockChainSynced)
-    while [ "$MNSTATUS" != "true" ]; do
+    MNSTATUS=$($CLI mnsync status | jq .RequestedMasternodeAssets)
+    while [ "$MNSTATUS" != 999 ]; do
       GETSYNC=$($CLI mnsync status)
       MNSYNC=$(echo $GETSYNC | jq .RequestedMasternodeAssets | tr -d '\"')
-      MNSTATUS=$($CLI mnsync status | jq .IsSynced)
+      MNSTATUS=$($CLI mnsync status | jq .RequestedMasternodeAssets)
       MNSTAGE=$(echo $GETSYNC | jq .RequestedMasternodeAttempt)
       echo -ne "${YELLOW} >Masternode Sync Stage: ${BLUE}$MNSYNC attempt [${GREEN}$MNSTAGE of 8${YELLOW}]                \r"
       sleep 2
