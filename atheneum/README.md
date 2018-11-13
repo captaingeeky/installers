@@ -21,7 +21,7 @@ https://ATHENEUM_DOWNLOAD_LINK/ <br />
 
 1.7 Send EXACTLY 10,000 coins to the wallet address you've just created by right-clicking on that new address and clicking on `Copy Address` then going to the send tab and pasting that address in the `Pay To` field. Make sure that it's exactly 10000 - no more, no less.<br />
 
-1.8. Go to your Transactions tab and wait for that "Payment to yourself" to have at least 1 transaction 
+1.8. Go to your Transactions tab and wait for that "Payment to yourself" to have at least 1 confirmation 
 ![Image BlockSync](https://github.com/zaemliss/installers/blob/master/atheneum/images/confirmations.png) </br>
 
 then, go to `Help / Debug Window / Console ` and type `masternode outputs` <br />
