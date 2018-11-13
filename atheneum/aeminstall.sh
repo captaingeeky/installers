@@ -214,11 +214,11 @@ function copy_binaries()
     fi
     
     chmod +x atheneum{d,-cli}
-#    if [ ! -f '/usr/local/bin/aem.sh' ]; then
-#      wget -O /usr/local/bin/aem.sh https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/aem.sh > /dev/null 2>&1
-#      chmod +x /usr/local/bin/aem.sh > /dev/null 2>&1
-#      echo "alias z='/usr/local/bin/aem.sh'" >> ~/.bashrc > /dev/null 2>&1
-#    fi
+    if [ ! -f '/usr/local/bin/aem.sh' ]; then
+      wget -O /usr/local/bin/aem.sh https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/aem.sh > /dev/null 2>&1
+      chmod +x /usr/local/bin/aem.sh > /dev/null 2>&1
+      echo "alias aem='/usr/local/bin/aem.sh'" >> ~/.bashrc > /dev/null 2>&1
+    fi
 
   if [ -f $DAEMON ]; then
       mkdir $DATADIR
@@ -373,7 +373,8 @@ function start_wallet()
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Masternode Activated!"
     echo
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
-    echo    echo -e "${BLUE}Type ${YELLOW}aem.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
+    echo    
+    echo -e "${BLUE}Type ${YELLOW}aem.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
     echo -e "${BLUE}Ex: ${GREEN}aem.sh atheneum2 masternode status ${NC}"
     echo
 
