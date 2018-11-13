@@ -8,7 +8,7 @@ if [ -z $1 ]; then
         echo
         echo -e "${RED}ERROR: you must provide parameters.${NC}"
         echo -e "Syntax: ${BLUE}aem.sh datadir command [options]${NC}"
-        echo -e "ex.: ${GREEN}aem.sh atheneum2 masternode status${NC}"
+        echo -e "ex.: ${GREEN}aem.sh Atheneum2 masternode status${NC}"
         echo
         exit 1;
 fi
