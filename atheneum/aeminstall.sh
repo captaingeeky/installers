@@ -223,6 +223,7 @@ function copy_binaries()
   if [ -f $DAEMON ]; then
       mkdir $DATADIR
       echo -e "${BLUE}Starting daemon ...(5 seconds)${NC}"
+      echo -e "${YELLOW}Ignore any errors you see below. (5 seconds)${NC}"
       $DAEMON -daemon > /dev/null 2>&1
       PASSWORD=$(pwgen -s 64 1)
       sleep 10
