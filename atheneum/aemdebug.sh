@@ -2,7 +2,7 @@
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
 
-VERSION="1.1.20"
+VERSION="1.1.21"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -319,7 +319,7 @@ function start_wallet()
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
     echo -e "${GREEN}Save the masternode.conf file, restart the QT wallet and press any key to continue to syncronisation steps.${NC}"
-    read -n 1 -s -r -p " "
+    read -e -p "Press enter to continue : " CHOICE
     echo
     echo
     echo -e "${BLUE}Now wait for a full synchro (can take 5-10 minutes)${NC}"
@@ -367,7 +367,7 @@ function start_wallet()
     echo
     echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
-    read -n 1 -s -r -p "Press any key to continue"
+    read -e -p "Press enter to continue : " CHOICE
     echo
     MNSTATUS=$($CLI masternode debug)
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation....${NC}"
