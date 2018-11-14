@@ -9,7 +9,7 @@ blue='\033[1;36m'
 clear='\033[0m'
 
 echo -e "${red} Checking Version ...${clear}"
-ver="1.0.19"
+ver="1.0.20"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
 
 declare -a status
@@ -35,6 +35,7 @@ client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
 while [ 1 ]; do
   getinfo=$($client getinfo)
+  gettxoutsetinfo=$($client gettxoutsetinfo)
   ismasternode=$(cat ~/.Atheneum/atheneum.conf | grep -c masternode)
   if ! [[ $ismasternode == "0" ]]; then
     mnsync=$($client mnsync status)
@@ -46,7 +47,8 @@ while [ 1 ]; do
   protocol=$(echo $getinfo | jq .protocolversion)
   blocks=$(echo $getinfo | jq .blocks)
   connections=$(echo $getinfo | jq .connections)
-  supply=$(echo $getinfo | jq .moneysupply)
+  supply=$(echo $gettxoutsetinfo | jq .total_amount)
+  transactions=$(echo $gettxoutsetinfo | jq .transactions)
 
   blockchainsynced=$(echo $mnsync | jq .IsBlockchainSynced)
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
@@ -60,6 +62,7 @@ while [ 1 ]; do
   echo -e "${blue} Version     : ${green}$version${clear}"
   echo -e "${blue} Connections : ${green}$connections${clear}"
   echo -e "${blue} Supply      : ${green}$supply${clear}"
+  echo -e "${blue} Transactions: ${green}$transactions${clear}"
   echo -e "${blue} MN Count    : ${green}$count${clear}"
   echo
   echo -e "${blue} blocks      : ${yellow}$blocks${clear}"
