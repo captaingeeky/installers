@@ -7,10 +7,10 @@ green='\033[1;32m'
 yellow='\033[1;33m'
 blue='\033[1;36m'
 clear='\033[0m'
-nuke='\033[2K'
+nuke='                                                                                     '
 
 echo -e "${red} Checking Version ...${clear}"
-ver="1.0.22"
+ver="1.0.23"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
 
 declare -a status
