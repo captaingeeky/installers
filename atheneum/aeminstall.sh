@@ -1,6 +1,15 @@
 
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
+#exec >/dev/null
+# still shows the prompt
+#exec 2>/dev/null
+# now the prompt is gone, too
+
+# restore stdout
+#exec >/dev/tty
+# restore stderr
+#exec 2>/dev/tty
 
 VERSION="1.1.20"
 PROJECT="Atheneum"
