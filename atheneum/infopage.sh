@@ -10,7 +10,7 @@ clear='\033[0m'
 nuke='\033[2K'
 
 echo -e "${red} Checking Version ...${clear}"
-ver="1.0.21"
+ver="1.0.22"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
 
 declare -a status
@@ -25,7 +25,7 @@ declare -a status
   status[998]="Masternode Sync Failed"
   status[999]="Masternode Sync Successful"
 
-if ! [[ $ver == $getcurrent ]]; then 
+if ! [[ $ver == $getcurrent ]]; then
   echo -e "${red} Version outdated! Downloading new version ...${clear}"
   wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh > /dev/null 2>&1
   sleep 2
@@ -34,16 +34,17 @@ fi
 
 client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
+clear
 while [ 1 ]; do
   getinfo=$($client getinfo)
   gettxoutsetinfo=$($client gettxoutsetinfo)
   ismasternode=$(cat ~/.Atheneum/atheneum.conf | grep -c masternode)
   if ! [[ $ismasternode == "0" ]]; then
     mnsync=$($client mnsync status)
-    mnstatus=$($client masternode debug) 
+    mnstatus=$($client masternode debug)
   fi
   count=$($client masternode list | grep -c addr)
-  
+
   version=$(echo $getinfo | jq .version)
   protocol=$(echo $getinfo | jq .protocolversion)
   blocks=$(echo $getinfo | jq .blocks)
@@ -57,7 +58,7 @@ while [ 1 ]; do
 
   logresult=$(tail -n 12 ~/.Atheneum/debug.log | pr -T -o 2 | cut -c 1-80)
 
-  tput cupo 0 0
+  tput cup 0 0
   echo -ne "$nuke\r"
   echo
   echo -ne "$nuke\r"
@@ -82,11 +83,16 @@ while [ 1 ]; do
   echo -e "${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
   echo -e "${yellow} ==============================================================================="
-  echo -ne "$nuke\r"
+  for i in {14..25}
+  do
+        tput cup i$ 0
+        echo -ne "$nuke\r"
+  done
+  tput cup 14 0
   echo -e "${blue}$logresult${clear}"
   echo -e "${yellow} ===============================================================================${clear}"
   echo -ne "$nuke\r"
   echo -e "${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
-  
+
   sleep 2
 done
