@@ -7,9 +7,10 @@ green='\033[1;32m'
 yellow='\033[1;33m'
 blue='\033[1;36m'
 clear='\033[0m'
+nuke='\033[2K'
 
 echo -e "${red} Checking Version ...${clear}"
-ver="1.0.20"
+ver="1.0.21"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
 
 declare -a status
@@ -56,23 +57,35 @@ while [ 1 ]; do
 
   logresult=$(tail -n 12 ~/.Atheneum/debug.log | pr -T -o 2 | cut -c 1-80)
 
-  clear
+  tput cupo 0 0
+  echo -ne "$nuke\r"
   echo
+  echo -ne "$nuke\r"
   echo -e "${blue} Protocol    : ${green}$protocol${clear}"
+  echo -ne "$nuke\r"
   echo -e "${blue} Version     : ${green}$version${clear}"
+  echo -ne "$nuke\r"
   echo -e "${blue} Connections : ${green}$connections${clear}"
+  echo -ne "$nuke\r"
   echo -e "${blue} Supply      : ${green}$supply${clear}"
+  echo -ne "$nuke\r"
   echo -e "${blue} Transactions: ${green}$transactions${clear}"
+  echo -ne "$nuke\r"
   echo -e "${blue} MN Count    : ${green}$count${clear}"
   echo
+  echo -ne "$nuke\r"
   echo -e "${blue} blocks      : ${yellow}$blocks${clear}"
   echo
+  echo -ne "$nuke\r"
   echo -e "${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
+  echo -ne "$nuke\r"
   echo -e "${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
   echo -e "${yellow} ==============================================================================="
+  echo -ne "$nuke\r"
   echo -e "${blue}$logresult${clear}"
   echo -e "${yellow} ===============================================================================${clear}"
+  echo -ne "$nuke\r"
   echo -e "${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
   
   sleep 2
