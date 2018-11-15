@@ -79,7 +79,7 @@ while [ 1 ]; do
   echo -e "${erase}${yellow} ==============================================================================="
   echo -e "${blue}$logresult${clear}"
   echo -e "${erase}${yellow} ===============================================================================${clear}"
-  echo -e "${erase}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly${clear}"
+  echo -e "${erase}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018               @bitmonopoly${clear}"
 
   sleep 2
 done
