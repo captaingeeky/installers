@@ -72,7 +72,7 @@ while [ 1 ]; do
   echo
   echo -e "${erase}${blue} blocks      : ${yellow}$blocks${clear}"
   echo
-  echo -e "${erase}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}                "
+  echo -e "${erase}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8                ${clear}"
   echo -e "${erase}${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
   echo -e "${erase}${yellow} ==============================================================================="
