@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.29"
+ver="1.1.9"
 project='Ingenuity'
 client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
@@ -55,8 +55,8 @@ while [ 1 ]; do
   transactions=$(echo $gettxoutsetinfo | jq .transactions | awk '{printf("%.80s \n", $0"                                                    ")}')
 
   blockchainsynced=$(echo $mnsync | jq .IsBlockchainSynced | awk '{printf("%.80s \n", $0"                                                    ")}')
-  asset=$(echo $mnsync | jq .RequestedMasternodeAssets | awk '{printf("%.80s \n", $0"                                                    ")}')
-  attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt | awk '{printf("%.80s \n", $0"                                                    ")}')
+  asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
+  attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
   logresult=$(tail -n 12 ~/.Atheneum/debug.log | pr -T -o 2 | cut -c 1-80 | awk '{printf("%.80s \n", $0"                                                    ")}')
 
@@ -72,7 +72,7 @@ while [ 1 ]; do
   echo
   echo -e "${erase}${blue} blocks      : ${yellow}$blocks${clear}"
   echo
-  echo -e "${erase}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
+  echo -e "${erase}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}                "
   echo -e "${erase}${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
   echo -e "${erase}${yellow} ==============================================================================="
