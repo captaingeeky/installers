@@ -45,16 +45,16 @@ while [ 1 ]; do
     mnstatus="This is not a masternode"  
   fi
   mnsync=$($client mnsync status)
-  count=$($client masternode list | grep -c addr | awk '{printf("%.80s \n", $0"                                                    ")}')
+  count=$($client masternode list | grep -c addr | awk '{print $0"                             "}')
 
-  version=$(echo $getinfo | jq .version | awk '{printf("%.80s \n", $0"                                                    ")}')
-  protocol=$(echo $getinfo | jq .protocolversion | awk '{printf("%.80s \n", $0"                                                    ")}')
-  blocks=$(echo $getinfo | jq .blocks | awk '{printf("%.80s \n", $0"                                                    ")}')
-  connections=$(echo $getinfo | jq .connections | awk '{printf("%.80s \n", $0"                                                    ")}')
-  supply=$(echo $gettxoutsetinfo | jq .total_amount | awk '{printf("%.80s \n", $0"                                                    ")}')
-  transactions=$(echo $gettxoutsetinfo | jq .transactions | awk '{printf("%.80s \n", $0"                                                    ")}')
+  version=$(echo $getinfo | jq .version | awk '{print $0"                             "}')
+  protocol=$(echo $getinfo | jq .protocolversion | awk '{print $0"                             "}')
+  blocks=$(echo $getinfo | jq .blocks | awk '{print $0"                             "}')
+  connections=$(echo $getinfo | jq .connections | awk '{print $0"                             "}')
+  supply=$(echo $gettxoutsetinfo | jq .total_amount | awk '{print $0"                             "}')
+  transactions=$(echo $gettxoutsetinfo | jq .transactions | awk '{print $0"                             "}')
 
-  blockchainsynced=$(echo $mnsync | jq .IsBlockchainSynced | awk '{printf("%.80s \n", $0"                                                    ")}')
+  blockchainsynced=$(echo $mnsync | jq .IsBlockchainSynced | awk '{print $0"                             "}')
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
