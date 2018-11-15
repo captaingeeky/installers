@@ -1,1 +1,1 @@
-install script
+* Ingenuity Information Scriptlet *
