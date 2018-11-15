@@ -1,7 +1,9 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.27"
+ver="1.0.28"
+project='Ingenuity'
+client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
 red='\033[1;31m'
 green='\033[1;32m'
@@ -32,8 +34,6 @@ if ! [[ $ver == $getcurrent ]]; then
   exec "./infopage.sh"
 fi
 
-client=$(find ~/ -name "atheneum-cli" | head -n 1)
-
 clear
 while [ 1 ]; do
   getinfo=$($client getinfo)
@@ -61,22 +61,22 @@ while [ 1 ]; do
   #clear
   tput cup 0 0
   echo
-  echo -e "${erase}${blue} Protocol    : ${green}$protocol${clear}"
-  echo -e "${erase}${blue} Version     : ${green}$version${clear}"
-  echo -e "${erase}${blue} Connections : ${green}$connections${clear}"
-  echo -e "${erase}${blue} Supply      : ${green}$supply${clear}"
-  echo -e "${erase}${blue} Transactions: ${green}$transactions${clear}"
-  echo -e "${erase}${blue} MN Count    : ${green}$count${clear}"
+  echo -e "${erase}${blue} Protocol    : ${green}$protocol${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
+  echo -e "${erase}${blue} Version     : ${green}$version${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
+  echo -e "${erase}${blue} Connections : ${green}$connections${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
+  echo -e "${erase}${blue} Supply      : ${green}$supply${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
+  echo -e "${erase}${blue} Transactions: ${green}$transactions${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
+  echo -e "${erase}${blue} MN Count    : ${green}$count${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
   echo
-  echo -e "${erase}${blue} blocks      : ${yellow}$blocks${clear}"
+  echo -e "${erase}${blue} blocks      : ${yellow}$blocks${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
   echo
   echo -e "${erase}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
-  echo -e "${erase}${blue} MN Status   : ${green}$mnstatus${clear}"
+  echo -e "${erase}${blue} MN Status   : ${green}$mnstatus${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
   echo
-  echo -e "${erase}${yellow} ==============================================================================="
+  echo -e "${erase}${yellow} ===============================================================================" | awk '{printf("%.80s \n", $0"                                                    ")}')
   echo -e "${blue}$logresult${clear}"
   echo -e "${erase}${yellow} ===============================================================================${clear}"
-  echo -e "${erase}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
+  echo -e "${erase}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
 
   sleep 2
 done
