@@ -10,7 +10,7 @@ clear='\033[0m'
 erase='\033[K'
 
 echo -e "${red} Checking Version ...${clear}"
-ver="1.0.25"
+ver="1.0.26"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
 
 declare -a status
@@ -56,9 +56,10 @@ while [ 1 ]; do
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
-  logresult=$(tail -n 12 ~/.Atheneum/debug.log | pr -T -o 2 | cut -c 1-80 | awk '{printf("%.80s|\n", $0"                                                    ")}')
+  logresult=$(tail -n 12 ~/.Atheneum/debug.log | pr -T -o 2 | cut -c 1-80 | awk '{printf("%.80s \n", $0"                                                    ")}')
 
   #clear
+  tput cup 0 0
   echo
   echo -e "${clear}${blue} Protocol    : ${green}$protocol${clear}"
   echo -e "${clear}${blue} Version     : ${green}$version${clear}"
