@@ -7,9 +7,10 @@ green='\033[1;32m'
 yellow='\033[1;33m'
 blue='\033[1;36m'
 clear='\033[0m'
+erase='\033[K'
 
 echo -e "${red} Checking Version ...${clear}"
-ver="1.0.24"
+ver="1.0.25"
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
 
 declare -a status
@@ -55,26 +56,26 @@ while [ 1 ]; do
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
-  logresult=$(tail -n 12 ~/.Atheneum/debug.log | pr -T -o 2 | cut -c 1-80)
+  logresult=$(tail -n 12 ~/.Atheneum/debug.log | pr -T -o 2 | cut -c 1-80 | awk '{printf("%.80s|\n", $0"                                                    ")}')
 
-  clear
+  #clear
   echo
-  echo -e "${blue} Protocol    : ${green}$protocol${clear}"
-  echo -e "${blue} Version     : ${green}$version${clear}"
-  echo -e "${blue} Connections : ${green}$connections${clear}"
-  echo -e "${blue} Supply      : ${green}$supply${clear}"
-  echo -e "${blue} Transactions: ${green}$transactions${clear}"
-  echo -e "${blue} MN Count    : ${green}$count${clear}"
+  echo -e "${clear}${blue} Protocol    : ${green}$protocol${clear}"
+  echo -e "${clear}${blue} Version     : ${green}$version${clear}"
+  echo -e "${clear}${blue} Connections : ${green}$connections${clear}"
+  echo -e "${clear}${blue} Supply      : ${green}$supply${clear}"
+  echo -e "${clear}${blue} Transactions: ${green}$transactions${clear}"
+  echo -e "${clear}${blue} MN Count    : ${green}$count${clear}"
   echo
-  echo -e "${blue} blocks      : ${yellow}$blocks${clear}"
+  echo -e "${clear}${blue} blocks      : ${yellow}$blocks${clear}"
   echo
-  echo -e "${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
-  echo -e "${blue} MN Status   : ${green}$mnstatus${clear}"
+  echo -e "${clear}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
+  echo -e "${clear}${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
-  echo -e "${yellow} ==============================================================================="
+  echo -e "${clear}${yellow} ==============================================================================="
   echo -e "${blue}$logresult${clear}"
-  echo -e "${yellow} ===============================================================================${clear}"
-  echo -e "${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
+  echo -e "${clear}${yellow} ===============================================================================${clear}"
+  echo -e "${clear}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
 
   sleep 2
 done
