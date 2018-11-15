@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.1.9"
+ver="1.1.10"
 project='Ingenuity'
 client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
@@ -58,10 +58,11 @@ while [ 1 ]; do
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
-  logresult=$(tail -n 12 ~/.Atheneum/debug.log | pr -T -o 2 | cut -c 1-80 | awk '{printf("%.80s \n", $0"                                                    ")}')
+  logresult=$(tail -n 11 ~/.Atheneum/debug.log | pr -T -o 2 | cut -c 1-80 | awk '{printf("%.80s \n", $0"                                                    ")}')
 
   #clear
   tput cup 0 0
+  echo -e "${red}$project ${yellow}node information script version ${blue}$ver${clear}"
   echo
   echo -e "${erase}${blue} Protocol    : ${green}$protocol${clear}"
   echo -e "${erase}${blue} Version     : ${green}$version${clear}"
@@ -78,7 +79,7 @@ while [ 1 ]; do
   echo -e "${erase}${yellow} ==============================================================================="
   echo -e "${blue}$logresult${clear}"
   echo -e "${erase}${yellow} ===============================================================================${clear}"
-  echo -e "${erase}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
+  echo -e "${erase}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly${clear}"
 
   sleep 2
 done
