@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.1.10"
+ver="1.1.11"
 project='Atheneum'
 client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
