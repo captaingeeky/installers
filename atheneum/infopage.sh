@@ -1,6 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
+ver="1.0.27"
 
 red='\033[1;31m'
 green='\033[1;32m'
@@ -10,9 +11,8 @@ clear='\033[0m'
 erase='\033[K'
 
 echo -e "${red} Checking Version ...${clear}"
-ver="1.0.26"
-getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
 
+getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
 declare -a status
   status[0]="Initial Masternode Syncronization"
   status[1]="Syncing Masternode Sporks"
@@ -61,22 +61,22 @@ while [ 1 ]; do
   #clear
   tput cup 0 0
   echo
-  echo -e "${clear}${blue} Protocol    : ${green}$protocol${clear}"
-  echo -e "${clear}${blue} Version     : ${green}$version${clear}"
-  echo -e "${clear}${blue} Connections : ${green}$connections${clear}"
-  echo -e "${clear}${blue} Supply      : ${green}$supply${clear}"
-  echo -e "${clear}${blue} Transactions: ${green}$transactions${clear}"
-  echo -e "${clear}${blue} MN Count    : ${green}$count${clear}"
+  echo -e "${erase}${blue} Protocol    : ${green}$protocol${clear}"
+  echo -e "${erase}${blue} Version     : ${green}$version${clear}"
+  echo -e "${erase}${blue} Connections : ${green}$connections${clear}"
+  echo -e "${erase}${blue} Supply      : ${green}$supply${clear}"
+  echo -e "${erase}${blue} Transactions: ${green}$transactions${clear}"
+  echo -e "${erase}${blue} MN Count    : ${green}$count${clear}"
   echo
-  echo -e "${clear}${blue} blocks      : ${yellow}$blocks${clear}"
+  echo -e "${erase}${blue} blocks      : ${yellow}$blocks${clear}"
   echo
-  echo -e "${clear}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
-  echo -e "${clear}${blue} MN Status   : ${green}$mnstatus${clear}"
+  echo -e "${erase}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
+  echo -e "${erase}${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
-  echo -e "${clear}${yellow} ==============================================================================="
+  echo -e "${erase}${yellow} ==============================================================================="
   echo -e "${blue}$logresult${clear}"
-  echo -e "${clear}${yellow} ===============================================================================${clear}"
-  echo -e "${clear}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
+  echo -e "${erase}${yellow} ===============================================================================${clear}"
+  echo -e "${erase}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
 
   sleep 2
 done
