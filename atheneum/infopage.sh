@@ -62,7 +62,7 @@ while [ 1 ]; do
 
   #clear
   tput cup 0 0
-  echo -e "${red}$project ${yellow}node information script version ${blue}$ver${clear}"
+  echo -e "${red}$project ${yellow}node information script version ${blue}$ver     ${clear}"
   echo
   echo -e "${erase}${blue} Protocol    : ${green}$protocol${clear}"
   echo -e "${erase}${blue} Version     : ${green}$version${clear}"
