@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.28"
+ver="1.0.29"
 project='Ingenuity'
 client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
@@ -40,43 +40,45 @@ while [ 1 ]; do
   gettxoutsetinfo=$($client gettxoutsetinfo)
   ismasternode=$(cat ~/.Atheneum/atheneum.conf | grep -c masternode)
   if ! [[ $ismasternode == "0" ]]; then
-    mnsync=$($client mnsync status)
     mnstatus=$($client masternode debug)
+  else
+    mnstatus="This is not a masternode"  
   fi
-  count=$($client masternode list | grep -c addr)
+  mnsync=$($client mnsync status)
+  count=$($client masternode list | grep -c addr | awk '{printf("%.80s \n", $0"                                                    ")}')
 
-  version=$(echo $getinfo | jq .version)
-  protocol=$(echo $getinfo | jq .protocolversion)
-  blocks=$(echo $getinfo | jq .blocks)
-  connections=$(echo $getinfo | jq .connections)
-  supply=$(echo $gettxoutsetinfo | jq .total_amount)
-  transactions=$(echo $gettxoutsetinfo | jq .transactions)
+  version=$(echo $getinfo | jq .version | awk '{printf("%.80s \n", $0"                                                    ")}')
+  protocol=$(echo $getinfo | jq .protocolversion | awk '{printf("%.80s \n", $0"                                                    ")}')
+  blocks=$(echo $getinfo | jq .blocks | awk '{printf("%.80s \n", $0"                                                    ")}')
+  connections=$(echo $getinfo | jq .connections | awk '{printf("%.80s \n", $0"                                                    ")}')
+  supply=$(echo $gettxoutsetinfo | jq .total_amount | awk '{printf("%.80s \n", $0"                                                    ")}')
+  transactions=$(echo $gettxoutsetinfo | jq .transactions | awk '{printf("%.80s \n", $0"                                                    ")}')
 
-  blockchainsynced=$(echo $mnsync | jq .IsBlockchainSynced)
-  asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
-  attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
+  blockchainsynced=$(echo $mnsync | jq .IsBlockchainSynced | awk '{printf("%.80s \n", $0"                                                    ")}')
+  asset=$(echo $mnsync | jq .RequestedMasternodeAssets | awk '{printf("%.80s \n", $0"                                                    ")}')
+  attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt | awk '{printf("%.80s \n", $0"                                                    ")}')
 
   logresult=$(tail -n 12 ~/.Atheneum/debug.log | pr -T -o 2 | cut -c 1-80 | awk '{printf("%.80s \n", $0"                                                    ")}')
 
   #clear
   tput cup 0 0
   echo
-  echo -e "${erase}${blue} Protocol    : ${green}$protocol${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
-  echo -e "${erase}${blue} Version     : ${green}$version${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
-  echo -e "${erase}${blue} Connections : ${green}$connections${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
-  echo -e "${erase}${blue} Supply      : ${green}$supply${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
-  echo -e "${erase}${blue} Transactions: ${green}$transactions${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
-  echo -e "${erase}${blue} MN Count    : ${green}$count${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
+  echo -e "${erase}${blue} Protocol    : ${green}$protocol${clear}"
+  echo -e "${erase}${blue} Version     : ${green}$version${clear}"
+  echo -e "${erase}${blue} Connections : ${green}$connections${clear}"
+  echo -e "${erase}${blue} Supply      : ${green}$supply${clear}"
+  echo -e "${erase}${blue} Transactions: ${green}$transactions${clear}"
+  echo -e "${erase}${blue} MN Count    : ${green}$count${clear}"
   echo
-  echo -e "${erase}${blue} blocks      : ${yellow}$blocks${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
+  echo -e "${erase}${blue} blocks      : ${yellow}$blocks${clear}"
   echo
   echo -e "${erase}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
-  echo -e "${erase}${blue} MN Status   : ${green}$mnstatus${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
+  echo -e "${erase}${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
-  echo -e "${erase}${yellow} ===============================================================================" | awk '{printf("%.80s \n", $0"                                                    ")}')
+  echo -e "${erase}${yellow} ==============================================================================="
   echo -e "${blue}$logresult${clear}"
   echo -e "${erase}${yellow} ===============================================================================${clear}"
-  echo -e "${erase}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}" | awk '{printf("%.80s \n", $0"                                                    ")}')
+  echo -e "${erase}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly version $ver ${clear}"
 
   sleep 2
 done
