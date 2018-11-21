@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.1.11"
+ver="1.1.12"
 project='Atheneum'
 client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
@@ -38,6 +38,8 @@ clear
 while [ 1 ]; do
   getinfo=$($client getinfo)
   gettxoutsetinfo=$($client gettxoutsetinfo)
+  getwinner=$($client getpoolinfo)
+
   ismasternode=$(cat ~/.Atheneum/atheneum.conf | grep -c masternode)
   if ! [[ $ismasternode == "0" ]]; then
     mnstatus=$($client masternode debug)
@@ -46,6 +48,7 @@ while [ 1 ]; do
   fi
   mnsync=$($client mnsync status)
   count=$($client masternode list | grep -c addr | awk '{print $0"                             "}')
+  winner=$(echo $getwinner | jq .current_masternode | awk '{print $0"                             "}')
 
   version=$(echo $getinfo | jq .version | awk '{print $0"                             "}')
   protocol=$(echo $getinfo | jq .protocolversion | awk '{print $0"                             "}')
@@ -70,7 +73,7 @@ while [ 1 ]; do
   echo -e "${erase}${blue} Supply      : ${green}$supply${clear}"
   echo -e "${erase}${blue} Transactions: ${green}$transactions${clear}"
   echo -e "${erase}${blue} MN Count    : ${green}$count${clear}"
-  echo
+  echo -e "${erase}${blue} Last Winner : ${green}$winner${clear}"
   echo -e "${erase}${blue} blocks      : ${yellow}$blocks${clear}"
   echo
   echo -e "${erase}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8                ${clear}"
