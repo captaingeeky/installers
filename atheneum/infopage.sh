@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.1.12"
+ver="1.1.13"
 project='Atheneum'
 client=$(find ~/ -name "atheneum-cli" | head -n 1)
 
@@ -48,7 +48,7 @@ while [ 1 ]; do
   fi
   mnsync=$($client mnsync status)
   count=$($client masternode list | grep -c addr | awk '{print $0"                             "}')
-  winner=$(echo $getwinner | jq .current_masternode | awk '{print $0"                             "}')
+  winner=$(echo $getwinner | jq .current_masternode | tr -d '"' | awk '{print $0"                             "}')
 
   version=$(echo $getinfo | jq .version | awk '{print $0"                             "}')
   protocol=$(echo $getinfo | jq .protocolversion | awk '{print $0"                             "}')
