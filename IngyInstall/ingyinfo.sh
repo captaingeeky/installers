@@ -9,13 +9,6 @@ blue='\033[1;36m'
 clear='\033[0m'
 erase='\033[K'
 
-terminal=/dev/pts/1
-columns=$(stty -a <"$terminal" | grep -Po '(?<=columns )\d+')
-rows=$(stty -a <"$terminal" | grep -Po '(?<=rows )\d+')
-rows="$(($rows-20))"
-columns="$(($columns-2))"
-
-
 declare -a status
   status[0]="Initial Masternode Syncronization"
   status[1]="Syncing Masternode Sporks"
