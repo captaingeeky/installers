@@ -2,6 +2,7 @@
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
 
+sudo apt install -y jq > /dev/null 2>&1
 red='\033[1;31m'
 green='\033[1;32m'
 yellow='\033[1;33m'
