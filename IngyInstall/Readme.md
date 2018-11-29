@@ -22,3 +22,15 @@ to execute the script:
 cd ~/.ingenuity
 ./nuke.sh
 ```
+
+# Multiple Ingy on same VPS, different IPs
+to download:
+```
+
+```
+
+to execute the script:
+```
+cd ~
+./ingyinfo.sh
+```
