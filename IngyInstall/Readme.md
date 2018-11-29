@@ -26,11 +26,15 @@ cd ~/.ingenuity
 # Multiple Ingy on same VPS, different IPs
 to download:
 ```
-
+wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/i.sh -O /usr/local/bin/i.sh + chmod +x /usr/local/bin/i.sh
 ```
 
-to execute the script:
+to execute:
 ```
 cd ~
-./ingyinfo.sh
+i.sh ingenuity stop
+sleep 5
+cp -r .ingenuity .ingenuity2
+i.sh ingenuity start
+
 ```
