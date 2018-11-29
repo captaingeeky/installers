@@ -29,12 +29,12 @@ to download:
 wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/i.sh -O /usr/local/bin/i.sh + chmod +x /usr/local/bin/i.sh
 ```
 
-to execute:
+to execute (replace ingenuity2 by the # of your MN, ex.: ingenuity3):
 ```
 cd ~
 i.sh ingenuity stop
 sleep 5
-cp -r .ingenuity .ingenuity2
+cp -r .ingenuity **.ingenuity2**
 i.sh ingenuity start
-
+wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/ingenuity.conf -O ~/.ingenuity2/ingenuity.conf
 ```
