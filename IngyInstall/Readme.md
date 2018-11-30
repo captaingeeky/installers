@@ -31,8 +31,9 @@ wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/i.
 
 to execute (replace ingenuity2 by the # of your MN, ex.: ingenuity3):
 ```
+systemctl stop Ingenuity.service
+systemctl disable Ingenuity.service
 cd ~
-i.sh ingenuity stop
 sleep 5
 cp -r .ingenuity .ingenuity2
 i.sh ingenuity start
