@@ -26,7 +26,7 @@ cd ~/.ingenuity
 # Multiple Ingy on same VPS, different IPs
 to download:
 ```
-wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/i.sh -O /usr/local/bin/i.sh + chmod +x /usr/local/bin/i.sh
+wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/i.sh -O /usr/local/bin/i.sh && chmod +x /usr/local/bin/i.sh
 ```
 
 to execute (replace ingenuity2 by the # of your MN, ex.: ingenuity3):
