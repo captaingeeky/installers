@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.1.1";
+ver="1.1.2";
 sudo apt install -y jq > /dev/null 2>&1
 
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
@@ -35,13 +35,20 @@ declare -a status
 client=$(find / -name "ingenuity-cli" | head -n 1)
 
 clear
+if [ -z "$1" ]; then
+  datadir='/root/.ingenuity'
+  conf='/root/.ingenuity/ingenuity.conf'
+else
+  datadir="/root/.$1"
+  conf="/root/.$1/ingenuity.conf"
+fi
 
 while [ 1 ]; do
-  getinfo=$($client getinfo)
-  gettxoutsetinfo=$($client gettxoutsetinfo)
-  mnsync=$($client mnsync status)
-  mnstatus=$($client masternode debug)
-  count=$($client masternode list | grep -c addr)
+  getinfo=$($client -datadir=$datadir -conf=$conf getinfo)
+  gettxoutsetinfo=$($client -datadir=$datadir -conf=$conf gettxoutsetinfo)
+  mnsync=$($client -datadir=$datadir -conf=$conf mnsync status)
+  mnstatus=$($client -datadir=$datadir -conf=$conf masternode debug)
+  count=$($client -datadir=$datadir -conf=$conf masternode list | grep -c addr)
 
   version=$(echo $getinfo | jq .version)
   protocol=$(echo $getinfo | jq .protocolversion)
