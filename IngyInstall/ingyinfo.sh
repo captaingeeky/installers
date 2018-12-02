@@ -4,7 +4,7 @@
 ver="1.1.1";
 sudo apt install -y jq > /dev/null 2>&1
 
-getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/Ingyinstall/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
+getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
 
 if ! [[ $ver == $getcurrent ]]; then
   echo -e "${red} Version outdated! Downloading new version ...${clear}"
