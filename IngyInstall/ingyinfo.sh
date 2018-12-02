@@ -1,8 +1,18 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-
+ver="1.1.1";
 sudo apt install -y jq > /dev/null 2>&1
+
+getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/Ingyinstall/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
+
+if ! [[ $ver == $getcurrent ]]; then
+  echo -e "${red} Version outdated! Downloading new version ...${clear}"
+  wget https://github.com/zaemliss/installers/raw/master/ingyinstall/ingyinfo.sh -O ingyinfo.sh > /dev/null 2>&1
+  sleep 2
+  exec "./ingyinfo.sh"
+fi
+
 red='\033[1;31m'
 green='\033[1;32m'
 yellow='\033[1;33m'
