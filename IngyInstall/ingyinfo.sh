@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.1.2";
+ver="1.1.3";
 sudo apt install -y jq > /dev/null 2>&1
 
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
@@ -49,14 +49,15 @@ while [ 1 ]; do
   mnsync=$($client -datadir=$datadir -conf=$conf mnsync status)
   mnstatus=$($client -datadir=$datadir -conf=$conf masternode debug)
   count=$($client -datadir=$datadir -conf=$conf masternode list | grep -c addr)
-
+  getwinner=$($client -datadir=$datadir -conf=$conf getpoolinfo)
+  
   version=$(echo $getinfo | jq .version)
   protocol=$(echo $getinfo | jq .protocolversion)
   blocks=$(echo $getinfo | jq .blocks)
   connections=$(echo $getinfo | jq .connections)
   supply=$(echo $getinfo | jq .moneysupply)
   transactions=$(echo $gettxoutsetinfo | jq .transactions)
-
+  winner=$(echo $getwinner | jq .current_masternode | tr -d '"' | awk '{print $0"                             "}')
   blockchainsynced=$(echo $mnsync | jq .IsBlockchainSynced)
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
@@ -72,7 +73,7 @@ while [ 1 ]; do
   echo -e "${erase}${blue} Supply      : ${green}$supply${clear}"
   echo -e "${erase}${blue} Transactions: ${green}$transactions${clear}"
   echo -e "${erase}${blue} MN Count    : ${green}$count${clear}"
-  echo
+  echo -e "${erase}${blue} Last Winner : ${green}$winner${clear}"
   echo -e "${erase}${blue} blocks      : ${yellow}$blocks${clear}"
   echo
   echo -e "${erase}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
