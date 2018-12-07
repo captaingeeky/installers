@@ -1,7 +1,7 @@
 cd /usr/local/bin
 rm ing*
 wget https://github.com/IngenuityCoin/Ingenuity/files/2657057/Ingenuity-Daemon-.Ubuntu_16.04.tar.gz
-https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/i.sh && chmod +x i.sh
+wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/i.sh && chmod +x i.sh
 tar -xf https://github.com/IngenuityCoin/Ingenuity/files/2657057/Ingenuity-Daemon-.Ubuntu_16.04.tar.gz
 cd ~
 i.sh ingenuity stop
