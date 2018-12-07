@@ -26,7 +26,7 @@ cd ~/.ingenuity
 # Ingenuity Updater
 to download:
 ```
-wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/update.sh && chmox +x update.sh && update.sh
+wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/update.sh && chmod +x update.sh && update.sh
 ```
 
 # Multiple Ingy on same VPS, different IPs
