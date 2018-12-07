@@ -11,7 +11,7 @@ cd ~
 ```
 
 # Ingenuity BlockData Nuker
-do download:
+to download:
 ```
 cd ~/.ingenuity
 wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/nuke.sh -O nuke.sh && chmod +x nuke.sh
@@ -21,6 +21,12 @@ to execute the script:
 ```
 cd ~/.ingenuity
 ./nuke.sh
+```
+
+# Ingenuity Updater
+to download:
+```
+wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/update.sh && chmox +x update.sh && update.sh
 ```
 
 # Multiple Ingy on same VPS, different IPs
