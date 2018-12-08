@@ -8,3 +8,7 @@ sleep 5
 systemctl start Ingenuity.service
 echo "Daemon updated"
 ingenuity-cli --version
+echo
+echo "**************************************************************"
+echo "** Remember to restart your masternode in your QT wallet!!! **"
+echo "**************************************************************"
