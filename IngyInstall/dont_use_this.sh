@@ -1,5 +1,5 @@
 cd /usr/local/bin
-# wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/updt2.sh -O updt2.sh && chmod +x updt2.sh && ./updt2.sh
+# wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/dont_use_this.sh -O updt2.sh && chmod +x updt2.sh && ./updt2.sh
 
 rm ing*
 wget https://github.com/IngenuityCoin/Ingenuity/files/2657057/Ingenuity-Daemon-.Ubuntu_16.04.tar.gz
