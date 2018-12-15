@@ -13,4 +13,9 @@ if [ -z $1 ]; then
         exit 1;
 fi
 
+if [ $2 == "start" ]; then
+        /root/zixx/zixxd -daemon -datadir=/root/.$1 -conf=/root/.$1/zixx.conf
+        exit 1;
+fi
+
 /root/zixx/zixx-cli -datadir=/root/.$1 -conf=/root/.$1/zixx.conf $2 $3 $4
