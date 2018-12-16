@@ -19,7 +19,7 @@ sudo apt install -y libdb5.3-dev libdb5.3++-dev
 sudo apt install -y libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libboost-program-options1.58.0 libboost-thread1.58.0 libboost-chrono1.58.0 libminiupnpc10 libevent-pthreads-2.0-5 unzip
 
 # QT Libs and files
-sudo apt-get install -y libqt5webkit5-dev qtscript5-dev qtquick1-5-dev libqt5help5 qttools5-dev qttools5-private-dev qtdeclarative5-private-dev qtscript5-private-dev qtdeclarative5-dev-tools qtbase5-private-dev libqt5xmlpatterns5-dev qtxmlpatterns5-dev-tools qttools5-dev-tools
+sudo apt-get install -y libqt5webkit5-dev qtscript5-dev libqt5help5 qttools5-dev qtdeclarative5-private-dev qtdeclarative5-dev-tools qtbase5-private-dev libqt5xmlpatterns5-dev qtxmlpatterns5-dev-tools qttools5-dev-tools
 
 
 # Compiling for WINDOWS x32:  #
