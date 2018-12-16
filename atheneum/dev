@@ -31,7 +31,7 @@ cd depends
 make HOST=x86_64-w64-mingw32
 cd ..
 ./autogen.sh
-CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/opt/local
+CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/opt/local --with-incompatible-bdb
 make
 
 
@@ -44,16 +44,18 @@ cd depends
 make HOST=i686-w64-mingw32
 cd ..
 ./autogen.sh
-CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix=/
+CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix=/ --with-incompatible-bdb
 make
 
 # =========================== #
 # Compiling for Ubuntu        #
 # =========================== #
 
+See https://github.com/PIVX-Project/PIVX/blob/master/doc/build-unix.md
+
 cd Atheneum
 ./autogen.sh
-./configure --with-gui=qt5    #(if you want to build daemon, use --without-gui)
+./configure #(if you want to build daemon, use --without-gui)
 make
 
 
