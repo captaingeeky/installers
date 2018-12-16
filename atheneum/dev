@@ -64,7 +64,7 @@ sudo apt install build-essential libtool autotools-dev automake pkg-config bsdma
 sudo apt install unzip
 cd Atheneum
 ./autogen.sh
-./configure --with-gui=qt5    (if you want to build daemon, use --without-gui)
+./configure --with-gui=qt5    #(if you want to build daemon, use --without-gui)
 make
 
 
