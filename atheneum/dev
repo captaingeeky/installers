@@ -55,3 +55,16 @@ cd ..
 CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix=/
 make
 
+# =========================== #
+# Compiling for Ubuntu        #
+# =========================== #
+sudo apt update
+sudo apt upgrade
+sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
+sudo apt install unzip
+cd Atheneum
+./autogen.sh
+./configure --with-gui=qt5    (if you want to build daemon, use --without-gui)
+make
+
+
