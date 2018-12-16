@@ -12,7 +12,7 @@ sudo apt install -y unzip
 #AEM Dependencies
 sudo apt install -y jq software-properties-common curl
 sudo apt update > /dev/null 2>&1
-sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev libevent-2.0-5
+sudo apt install -y pwgen build-essential libssl-dev libboost-all-dev libqrencode-dev libminiupnpc-dev
 sudo add-apt-repository -y ppa:bitcoin/bitcoin
 sudo apt update
 sudo apt install -y libdb5.3-dev libdb5.3++-dev
