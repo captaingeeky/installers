@@ -1,5 +1,7 @@
 #!/bin/bash
 
+Pre-reqs:
+===========================
 #GIT and Compiler dependencies
 sudo apt update
 sudo apt upgrade
@@ -18,4 +20,38 @@ sudo apt install -y libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libb
 
 # QT Libs and files
 sudo apt-get install -y libqt5webkit5-dev qtscript5-dev qtquick1-5-dev libqt5help5 qttools5-dev qttools5-private-dev qtdeclarative5-private-dev qtscript5-private-dev qtdeclarative5-dev-tools qtbase5-private-dev libqt5xmlpatterns5-dev qtxmlpatterns5-dev-tools qttools5-dev-tools
+
+
+# Compiling for WINDOWS x32:  #
+# =========================== #
+sudo apt update
+sudo apt upgrade
+sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
+sudo apt install g++-mingw-w64-x86-64
+sudo apt install unzip
+sudo update-alternatives --config x86_64-w64-mingw32-g++ #POSIX will be the default one
+cd Atheneum/depends/
+cd depends
+make HOST=x86_64-w64-mingw32
+cd ..
+./autogen.sh
+CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/opt/local
+make
+
+
+# Compiling for WINDOWS x64:  #
+# =========================== #
+sudo apt update
+sudo apt upgrade
+sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
+sudo apt install g++-mingw-w64-x86-64
+sudo apt install unzip
+sudo update-alternatives --config x86_64-w64-mingw32-g++ #POSIX will be the default one
+cd Atheneum/depends/
+cd depends
+make HOST=i686-w64-mingw32
+cd ..
+./autogen.sh
+CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix=/
+make
 
