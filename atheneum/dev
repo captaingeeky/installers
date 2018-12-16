@@ -24,11 +24,7 @@ sudo apt-get install -y libqt5webkit5-dev qtscript5-dev libqt5help5 qttools5-dev
 
 # Compiling for WINDOWS x32:  #
 # =========================== #
-sudo apt update
-sudo apt upgrade
-sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
-sudo apt install g++-mingw-w64-x86-64
-sudo apt install unzip
+
 sudo update-alternatives --config x86_64-w64-mingw32-g++ #POSIX will be the default one
 cd Atheneum/depends/
 cd depends
@@ -41,11 +37,7 @@ make
 
 # Compiling for WINDOWS x64:  #
 # =========================== #
-sudo apt update
-sudo apt upgrade
-sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
-sudo apt install g++-mingw-w64-x86-64
-sudo apt install unzip
+
 sudo update-alternatives --config x86_64-w64-mingw32-g++ #POSIX will be the default one
 cd Atheneum/depends/
 cd depends
@@ -58,10 +50,7 @@ make
 # =========================== #
 # Compiling for Ubuntu        #
 # =========================== #
-sudo apt update
-sudo apt upgrade
-sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
-sudo apt install unzip
+
 cd Atheneum
 ./autogen.sh
 ./configure --with-gui=qt5    #(if you want to build daemon, use --without-gui)
