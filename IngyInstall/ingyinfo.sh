@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.1.3";
+ver="1.1.4";
 sudo apt install -y jq > /dev/null 2>&1
 
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
@@ -62,7 +62,7 @@ while [ 1 ]; do
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
-  logresult=$(tail -n 10 ~/.ingenuity/debug.log | pr -T -o 2 | cut -c 1-68 | awk '{printf("%.68s \n", $0"                                                    ")}')
+  logresult=$(tail -n 10 ~/.ingenuity/debug.log | pr -T -o 2 | cut -c 1-71 | awk '{printf("%.71s \n", $0"                                                    ")}')
 
   #clear
   tput cup 0 0
