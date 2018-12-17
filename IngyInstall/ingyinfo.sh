@@ -8,9 +8,9 @@ getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/maste
 
 if ! [[ $ver == $getcurrent ]]; then
   echo -e "${red} Version outdated! Downloading new version ...${clear}"
-  wget https://github.com/zaemliss/installers/raw/master/ingyinstall/ingyinfo.sh -O ingyinfo.sh > /dev/null 2>&1
+  https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/ingyinfo.sh -O ingyinfo.sh > /dev/null 2>&1
   sleep 2
-  exec "./ingyinfo.sh"
+  exec "./ingyinfo.sh %1"
 fi
 
 red='\033[1;31m'
