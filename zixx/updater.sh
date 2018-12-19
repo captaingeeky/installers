@@ -18,7 +18,7 @@ clear
 echo -e "${yel}Searching for Zixx binaries and installation directories...${clr}"
 echo
 client=$(find / -name "zixx-cli" | head -n 1)
-workDir=$(basename "$client")
+workDir=$(dirname "$client")
 
 #Get number of existing Zixx masternode directories
 DIR_COUNT=$(ls -la /root/ | grep "\.zixx" | grep -c '^')
