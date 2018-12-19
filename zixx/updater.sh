@@ -43,7 +43,7 @@ if [[ $DIR_COUNT -gt 1 ]]; then
 fi
 echo
 
-echo -e "${blu}Downloading new clients...${clr}"
+echo -e "${blu}Downloading new binaries...${clr}"
 echo
 wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.5/zixxd -O $workDir/zixxd > /dev/null 2>&1
 wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.5/zixx-cli -O $workDir/zixx-cli> /dev/null 2>&1
