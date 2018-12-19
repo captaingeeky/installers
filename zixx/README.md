@@ -8,3 +8,9 @@ wget -q https://raw.githubusercontent.com/zaemliss/installers/master/zixx/instal
 ```
 
 and follow the on-sceen instructions.
+
+
+# Zixx bulk updater
+```
+wget -q https://raw.githubusercontent.com/zaemliss/installers/master/zixx/updater.sh -O updater.sh && chmod +x updater.sh && ./updater.sh
+```
