@@ -22,6 +22,9 @@ workDir=$(basename "$client")
 DIR_COUNT=$(ls -la /root/ | grep "\.zixx" | grep -c '^')
 
 if [[ $DIR_COUNT -lt 1 ]]; then
-  echo -e "${red}No data directories found! Please make sure you have Zixx Masternodes installed on this server."
+  echo -e "${red}No data directories found! Please make sure you have Zixx Masternodes installed on this server.${clear}"
   exit 1;
 fi
+
+echo "${blu}$DIR_COUNT Zixx installations found!${clear}"
+echo
