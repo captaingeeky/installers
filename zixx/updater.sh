@@ -63,5 +63,5 @@ echo
 echo -e "${blu}Update complete. Zixx now updated to version below.${yel}"
 $client -datadir=/root/.zixx$i -conf=/root/.zixx$i/zixx.conf --version
 echo
-echo -e "${clr}"
+echo -e "${clr} ";
 
