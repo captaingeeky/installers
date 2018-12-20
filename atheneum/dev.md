@@ -68,7 +68,7 @@ sudo apt-get install python3-dnspython
 cd contrib/seeds
 nano nodes_main.txt
 ```
-enter all of the seeds in the format ```xxx.xxx.xxx.xxx:22000``` one per line. Save and exit
+enter all of the seeds in the format ```x.x.x.x:22000``` one per line. Save and exit
 ```
 touch nodes_test.txt
 python3 generate-seeds.py . > ../../src/chainparamsseeds.h
