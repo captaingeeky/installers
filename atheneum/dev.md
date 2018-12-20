@@ -1,7 +1,5 @@
-#!/bin/bash
-
-Pre-reqs:
-===========================
+## Pre-requisites
+```
 #GIT and Compiler dependencies
 sudo apt update
 sudo apt upgrade
@@ -20,12 +18,11 @@ sudo apt install -y libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libb
 
 # QT Libs and files
 sudo apt-get install -y libqt5webkit5-dev qtscript5-dev libqt5help5 qttools5-dev qtdeclarative5-private-dev qtdeclarative5-dev-tools qtbase5-private-dev libqt5xmlpatterns5-dev qtxmlpatterns5-dev-tools qttools5-dev-tools
+```
 
-# =========================== #
-# Compiling for WINDOWS x32:  #
-# =========================== #
-# ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
-
+## Compiling for WINDOWS x32:
+### ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
+```
 sudo update-alternatives --config x86_64-w64-mingw32-g++ #POSIX will be the default one
 cd Atheneum/depends/
 make HOST=x86_64-w64-mingw32
@@ -33,12 +30,11 @@ cd ..
 ./autogen.sh
 CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/opt/local --with-incompatible-bdb
 make
+```
 
-# =========================== #
-# Compiling for WINDOWS x64:  #
-# =========================== #
-# ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
-
+## Compiling for WINDOWS x64:
+### ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
+```
 sudo update-alternatives --config x86_64-w64-mingw32-g++ #POSIX will be the default one
 cd Atheneum/depends/
 make HOST=i686-w64-mingw32
@@ -46,17 +42,36 @@ cd ..
 ./autogen.sh
 CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix=/ --with-incompatible-bdb
 make
+```
 
-# =========================== #
-# Compiling for Ubuntu        #
-# =========================== #
-# ONLY GOT THIS TO WORK ON UBUNTU 16.04 !!!
-
+## Compiling for Ubuntu        
+### ONLY GOT THIS TO WORK ON UBUNTU 16.04 !!!
 See https://github.com/PIVX-Project/PIVX/blob/master/doc/build-unix.md
-
+```
 cd Atheneum
 ./autogen.sh
 ./configure #(if you want to build daemon, use --without-gui)
 make
+```
+
+## Compiling for Mac OS
 
 
+## Harcoding Seeds
+###Pre-requisites:
+```
+sudo apt-get install python3-dnspython
+```
+
+###Procedure
+```
+cd contrib/seeds
+nano nodes_main.txt
+```
+enter all of the seeds in the format ```xxx.xxx.xxx.xxx:22000``` one per line. Save and exit
+```
+touch nodes_test.txt
+python3 generate-seeds.py . > ../../src/chainparamsseeds.h
+```
+
+Then recompile the wallet(s)
