@@ -58,12 +58,12 @@ make
 
 
 ## Harcoding Seeds
-###Pre-requisites:
+### Pre-requisites:
 ```
 sudo apt-get install python3-dnspython
 ```
 
-###Procedure
+### Procedure
 ```
 cd contrib/seeds
 nano nodes_main.txt
