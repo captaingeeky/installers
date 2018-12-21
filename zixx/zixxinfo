@@ -12,7 +12,7 @@ function versionCheck()
 
         if ! [[ $ver == $getcurrent ]]; then
           echo -e "${red} Version outdated! Downloading new version ...${clear}"
-          wget -q https://github.com/zaemliss/installers/raw/master/zixx/zixxinfo -O /usr/local/bin/zixxinfo > /dev/null 2>&1
+          wget -q https://raw.githubusercontent.com/zaemliss/installers/master/zixx/zixxinfo -O /usr/local/bin/zixxinfo > /dev/null 2>&1
           sleep 2
           exec "zixxinfo"
         fi
