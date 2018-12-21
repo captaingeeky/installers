@@ -20,4 +20,5 @@ wget -q https://raw.githubusercontent.com/zaemliss/installers/master/zixx/update
 wget -q https://raw.githubusercontent.com/zaemliss/installers/master/zixx/zixxinfo -O /usr/local/bin/zixxinfo && chmod +x /usr/local/bin/zixxinfo $$ zixxinfo
 ```
 Usage: ```zixxinfo [dataDirectory]```
+
 Ex: ```zixxinfo zixx2```
