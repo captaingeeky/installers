@@ -65,6 +65,6 @@ $workDir/zixxd -datadir=/root/.zixx$i -conf=/root/.zixx$i/zixx.conf --version | 
 echo
 echo -e "${red} !!! IMPORTANT !!! ${grn}"
 echo -e "Don't forget to update your QT wallet with the latest executables. You can find them at the official repo at:"
-echo -e "${blu}https://github.com/zixxcrypto/zixxcore/releases/tag/v0.16.5${clr}"
-echo e
+echo -e "${blu}https://github.com/zixxcrypto/zixxcore/releases/tag/v0.16.5 ${clr}"
+echo
 
