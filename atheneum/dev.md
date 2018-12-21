@@ -23,7 +23,7 @@ sudo apt-get install -y libqt5webkit5-dev qtscript5-dev libqt5help5 qttools5-dev
 
 ## Compiling for WINDOWS x32:
 ### ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
-```
+```bash
 sudo update-alternatives --config x86_64-w64-mingw32-g++ #POSIX will be the default one
 cd Atheneum/depends/
 make HOST=x86_64-w64-mingw32
