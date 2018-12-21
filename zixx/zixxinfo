@@ -50,7 +50,7 @@ else
   datadir="/root/.$1"
   conf="/root/.$1/zixx.conf"
 fi
-client=$(echo $client $datadir $conf)
+client=$(echo $client -datadir=$datadir -conf=$conf)
 
 while [ 1 ]; do
   getinfo=$($client getinfo)
