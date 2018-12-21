@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.5"
+ver="1.0.6"
 project='Zixx'
 client=$(find ~/ -name "zixx-cli" | head -n 1)
 
@@ -51,7 +51,7 @@ else
   datadir="/root/.$1"
   conf="/root/.$1/zixx.conf"
 fi
-client=$client+" "+$datadir+" "+$conf
+client=$client $datadir $conf
 
 while [ 1 ]; do
   getinfo=$($client getinfo)
