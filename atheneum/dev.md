@@ -74,7 +74,7 @@ export CPPFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/qt/include"
 5. Build atheneum-qt
 ```
 ./autogen.sh
-./configure Ð-with-gui=qt5
+./configure --with-gui=qt5
 make
 ```
 
