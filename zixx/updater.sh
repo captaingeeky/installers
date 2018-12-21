@@ -37,7 +37,7 @@ $client -datadir=/root/.zixx -conf=/root/.zixx/zixx.conf stop
 if [[ $DIR_COUNT -gt 1 ]]; then
   for i in `seq 2 $DIR_COUNT`; 
     do 
-      echo -e "${grn}Stopping Daemon using datadir /.zixx$i"
+      echo -e "${grn}Stopping Daemon using datadir .zixx$i"
       $client -datadir=/root/.zixx$i -conf=/root/.zixx$i/zixx.conf stop
     done
 fi
@@ -49,7 +49,7 @@ rm $workDir/zixxd
 rm $workDir/zixx-cli
 wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.5/zixxd -O $workDir/zixxd > /dev/null 2>&1
 wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.5/zixx-cli -O $workDir/zixx-cli> /dev/null 2>&1
-chmod +x zixxd zixx-cli
+chmod +x $workDir/zixxd $workDir/zixx-cli
 echo -e "${grn}Starting Daemon using datadir /.zixx"
 $workDir/zixxd -datadir=/root/.zixx -conf=/root/.zixx/zixx.conf -daemon
 
