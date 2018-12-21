@@ -17,7 +17,7 @@ wget -q https://raw.githubusercontent.com/zaemliss/installers/master/zixx/update
 
 # Zixx Information Scriptlet
 ```
-wget -q https://raw.githubusercontent.com/zaemliss/installers/master/zixx/zixxinfo -O /usr/local/bin/zixxinfo && chmod +x /usr/local/bin/zixxinfo $$ zixxinfo
+wget -q https://raw.githubusercontent.com/zaemliss/installers/master/zixx/zixxinfo -O /usr/local/bin/zixxinfo && chmod +x /usr/local/bin/zixxinfo && zixxinfo
 ```
 Usage: ```zixxinfo [dataDirectory]```
 
