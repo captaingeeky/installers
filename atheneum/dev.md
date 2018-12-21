@@ -1,5 +1,5 @@
 ## Pre-requisites
-```
+```bash
 #GIT and Compiler dependencies
 sudo apt update
 sudo apt upgrade
@@ -36,7 +36,7 @@ make
 
 ## Compiling for WINDOWS x64:
 ### ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
-```
+```bash
 sudo update-alternatives --config x86_64-w64-mingw32-g++ #POSIX will be the default one
 cd Atheneum/depends/
 make HOST=i686-w64-mingw32
@@ -50,7 +50,7 @@ make
 ## Compiling for Ubuntu        
 ### ONLY GOT THIS TO WORK ON UBUNTU 16.04 !!!
 See https://github.com/PIVX-Project/PIVX/blob/master/doc/build-unix.md
-```
+```bash
 cd Atheneum
 ./autogen.sh
 ./configure #(if you want to build daemon, use --without-gui)
@@ -65,27 +65,27 @@ make
 2. Install Xcode with Command Line Tools
 
 3. Install Dependencies using Homebrew:
-```
+```bash
 brew install autoconf automake berkeley-db@4 git libevent libtool boost@1.57 miniupnpc openssl pkg-config protobuf qt5 zeromq librsvg
 ```
 4. We need a specific version of boost to build the current Atheneum wallet, and now that it's installed, we need to link it:
-```
+```bash
 brew link boost@1.57 --force
 ```
 5. Make the Homebrew OpenSSL and Qt headers visible to the configure script.
-```
+```bash
 export LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/qt/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/qt/include"
 ```
 6. Build atheneum-qt
-```
+```bash
 ./autogen.sh
 ./configure --with-gui=qt5
 make
 ```
 ### How to get a Atheneum-QT App:
 After make is finished, you can create an App bundle inside a disk image with:
-```
+```bash
 make deploy
 ```
 Once this is done, you'll find AEM-Qt.dmg inside your Core folder. Open and install as usual.
@@ -94,17 +94,17 @@ Once this is done, you'll find AEM-Qt.dmg inside your Core folder. Open and inst
 
 ## Harcoding Seeds
 ### Pre-requisites:
-```
+```bash
 sudo apt-get install python3-dnspython
 ```
 
 ### Procedure
-```
+```bash
 cd contrib/seeds
 nano nodes_main.txt
 ```
 enter all of the seeds in the format ```x.x.x.x:22000``` one per line. Save and exit
-```
+```bash
 touch nodes_test.txt
 python3 generate-seeds.py . > ../../src/chainparamsseeds.h
 ```
