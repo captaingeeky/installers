@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.1"
+ver="1.0.4"
 project='Zixx'
 client=$(find ~/ -name "zixx-cli" | head -n 1)
 
@@ -12,7 +12,7 @@ function versionCheck()
 
         if ! [[ $ver == $getcurrent ]]; then
           echo -e "${red} Version outdated! Downloading new version ...${clear}"
-          wget https://github.com/zaemliss/installers/raw/master/zixx/zixxinfo -O /usr/local/bin/zixxinfo > /dev/null 2>&1
+          wget -q https://github.com/zaemliss/installers/raw/master/zixx/zixxinfo -O /usr/local/bin/zixxinfo > /dev/null 2>&1
           sleep 2
           exec "zixxinfo"
         fi
