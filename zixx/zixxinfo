@@ -1,6 +1,6 @@
 #!/bin/bash
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.7"
+ver="1.0.8"
 project='Zixx'
 client=$(find ~/ -name "zixx-cli" | head -n 1)
 
@@ -50,7 +50,7 @@ else
   datadir="/root/.$1"
   conf="/root/.$1/zixx.conf"
 fi
-client=$client $datadir $conf
+client=$(echo $client $datadir $conf)
 
 while [ 1 ]; do
   getinfo=$($client getinfo)
