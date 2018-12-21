@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="1.0.4"
+VERSION="1.0.6"
 PROJECT="Zixx"
 PROJECT_FOLDER="$HOME/zixx"
 DAEMON_BINARY="zixxd"
@@ -61,7 +61,7 @@ fi
 echo
 
 echo -e "${blu}Update complete. Zixx now updated to version below.${yel}"
-$workDir/zixxd -datadir=/root/.zixx$i -conf=/root/.zixx$i/zixx.conf --version
+$workDir/zixxd -datadir=/root/.zixx$i -conf=/root/.zixx$i/zixx.conf --version | head -n 1
 echo
 echo -e "${red} !!! IMPORTANT !!! ${grn}"
 echo -e "Don't forget to update your QT wallet with the latest executables. You can find them at the official repo at:"
