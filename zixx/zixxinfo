@@ -57,7 +57,7 @@ while [ 1 ]; do
   gettxoutsetinfo=$($client gettxoutsetinfo)
   getwinner=$($client masternode current)
 
-  ismasternode=$(cat ~/.$1/zixx.conf | grep -c masternode)
+  ismasternode=$(cat $datadir/zixx.conf | grep -c masternode)
   if ! [[ $ismasternode == "0" ]]; then
     mnstatus=$($client masternode status | jq .status | tr -d '"')
   else
