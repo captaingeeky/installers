@@ -40,7 +40,7 @@ function declareVariables ()
         erase='\033[K'
 }
 
-versionCheck()
+versionCheck
 declareVariables
 
 clear
