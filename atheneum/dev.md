@@ -83,7 +83,7 @@ export CPPFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/qt/include"
 ./configure --with-gui=qt5
 make
 ```
-## How to get a Atheneum-QT App:
+### How to get a Atheneum-QT App:
 After make is finished, you can create an App bundle inside a disk image with:
 ```
 make deploy
