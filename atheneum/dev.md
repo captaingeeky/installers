@@ -20,6 +20,7 @@ sudo apt install -y libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libb
 sudo apt-get install -y libqt5webkit5-dev qtscript5-dev libqt5help5 qttools5-dev qtdeclarative5-private-dev qtdeclarative5-dev-tools qtbase5-private-dev libqt5xmlpatterns5-dev qtxmlpatterns5-dev-tools qttools5-dev-tools
 ```
 
+
 ## Compiling for WINDOWS x32:
 ### ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
 ```
@@ -31,6 +32,7 @@ cd ..
 CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/opt/local --with-incompatible-bdb
 make
 ```
+
 
 ## Compiling for WINDOWS x64:
 ### ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
@@ -44,6 +46,7 @@ CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix
 make
 ```
 
+
 ## Compiling for Ubuntu        
 ### ONLY GOT THIS TO WORK ON UBUNTU 16.04 !!!
 See https://github.com/PIVX-Project/PIVX/blob/master/doc/build-unix.md
@@ -53,6 +56,7 @@ cd Atheneum
 ./configure #(if you want to build daemon, use --without-gui)
 make
 ```
+
 
 ## Compiling for Mac OSX
 
@@ -79,6 +83,13 @@ export CPPFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/qt/include"
 ./configure --with-gui=qt5
 make
 ```
+## How to get a Atheneum-QT App:
+After make is finished, you can create an App bundle inside a disk image with:
+```
+make deploy
+```
+Once this is done, you'll find AEM-Qt.dmg inside your Core folder. Open and install as usual.
+
 
 
 ## Harcoding Seeds
