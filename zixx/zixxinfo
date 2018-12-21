@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.4"
+ver="1.0.5"
 project='Zixx'
 client=$(find ~/ -name "zixx-cli" | head -n 1)
 
@@ -44,12 +44,21 @@ versionCheck
 declareVariables
 
 clear
+if [ -z "$1" ]; then
+  datadir='/root/.zixx'
+  conf='/root/.zixx/zixx.conf'
+else
+  datadir="/root/.$1"
+  conf="/root/.$1/zixx.conf"
+fi
+client=$client+" "+$datadir+" "+$conf
+
 while [ 1 ]; do
   getinfo=$($client getinfo)
   gettxoutsetinfo=$($client gettxoutsetinfo)
   getwinner=$($client masternode current)
 
-  ismasternode=$(cat ~/.zixx/zixx.conf | grep -c masternode)
+  ismasternode=$(cat ~/.$1/zixx.conf | grep -c masternode)
   if ! [[ $ismasternode == "0" ]]; then
     mnstatus=$($client masternode status | jq .status | tr -d '"')
   else
