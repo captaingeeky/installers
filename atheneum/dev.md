@@ -56,22 +56,24 @@ make
 
 ## Compiling for Mac OSX
 
-1. Install Xcode with Command Line Tools
+1. Revise makefile.am and make sure the naming of the qt wallet is the right naming convention... I.E.: change pivx-qt to atheneum-qt etc...
 
-2. Install Dependencies using Homebrew:
+2. Install Xcode with Command Line Tools
+
+3. Install Dependencies using Homebrew:
 ```
 brew install autoconf automake berkeley-db@4 git libevent libtool boost@1.57 miniupnpc openssl pkg-config protobuf qt5 zeromq librsvg
 ```
-3. We need a specific version of boost to build the current Atheneum wallet, and now that it's installed, we need to link it:
+4. We need a specific version of boost to build the current Atheneum wallet, and now that it's installed, we need to link it:
 ```
 brew link boost@1.57 --force
 ```
-4. Make the Homebrew OpenSSL and Qt headers visible to the configure script.
+5. Make the Homebrew OpenSSL and Qt headers visible to the configure script.
 ```
 export LDFLAGS="-L/usr/local/opt/openssl/lib -L/usr/local/opt/qt/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl/include -I/usr/local/opt/qt/include"
 ```
-5. Build atheneum-qt
+6. Build atheneum-qt
 ```
 ./autogen.sh
 ./configure --with-gui=qt5
