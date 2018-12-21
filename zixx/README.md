@@ -14,3 +14,10 @@ and follow the on-sceen instructions.
 ```
 wget -q https://raw.githubusercontent.com/zaemliss/installers/master/zixx/updater.sh -O updater.sh && chmod +x updater.sh && ./updater.sh
 ```
+
+# Zixx Information Scriptlet
+```
+wget -q https://raw.githubusercontent.com/zaemliss/installers/master/zixx/zixxinfo -O /usr/local/bin/zixxinfo && chmod +x /usr/local/bin/zixxinfo $$ zixxinfo
+```
+Usage: ```zixxinfo [dataDirectory]```
+Ex: ```zixxinfo zixx2```
