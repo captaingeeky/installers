@@ -1,6 +1,6 @@
 #!/bin/bash
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.0.6"
+ver="1.0.7"
 project='Zixx'
 client=$(find ~/ -name "zixx-cli" | head -n 1)
 
