@@ -243,7 +243,7 @@ function copy_binaries()
       mkdir $DATADIR
       echo -e "${BLUE}Starting daemon ...(5 seconds)${NC}"
       $DAEMON_START
-      sleep 5
+      sleep 15
     else
       echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
       exit 1;
@@ -331,7 +331,7 @@ function start_wallet()
     cd $DATADIR
     echo
     echo -e "${BLUE} Downloading Bootstrap..."
-    wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.4/bootstrap.tar.gz > /dev/null 2>&1
+    wget https://github.com/zixxcrypto/zixxcore/releases/download/v0.16.5/bootstrap.tar.gz > /dev/null 2>&1
     echo
     echo -e "${BLUE} Decompressing Bootstrapfiles..."
     tar -xf bootstrap.tar.gz --overwrite > /dev/null 2>&1
