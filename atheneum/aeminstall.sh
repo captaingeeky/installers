@@ -11,7 +11,7 @@
 # restore stderr
 #exec 2>/dev/tty
 
-VERSION="1.1.20"
+VERSION="1.1.21"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
