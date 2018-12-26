@@ -339,7 +339,7 @@ function start_wallet()
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
     sleep 3
-    APIBLOCKS=$(curl -s http://158.69.211.151/chain/AemChain/q/getblockcount)
+    APIBLOCKS=$(curl -s http://explorer.atheneumchain.io/api/getblockcount)
     CURBLOCK=$($CLI getinfo | jq .blocks)
 
     echo -ne "${YELLOW}Current Block: ${GREEN}$APIBLOCKS${NC}\n\n"
