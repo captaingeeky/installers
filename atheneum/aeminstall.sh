@@ -11,7 +11,7 @@
 # restore stderr
 #exec 2>/dev/tty
 
-VERSION="1.1.22"
+VERSION="1.1.23"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
 DAEMON_BINARY="atheneumd"
@@ -185,7 +185,7 @@ function install_prerequisites()
     fi
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
-    sudo apt install -y jq libdb5.3-dev libdb5.3++-dev libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
+    sudo apt install -y jq libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
        echo -e "${RED}Install of ${YELLOW}libdb5.3 libraries ${RED}failed! ${NC}"
