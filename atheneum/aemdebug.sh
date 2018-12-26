@@ -185,7 +185,7 @@ function install_prerequisites()
     fi
     sudo apt update
     echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
-    sudo apt install -y jq libdb5.3-dev libdb5.3++-dev
+    sudo apt install -y jq libdb5.3-dev libdb5.3++-dev libdb4.8-dev libdb4.8++-dev
     if [ $? -ne 0 ]; then
        echo 
        echo -e "${RED}Install of ${YELLOW}libdb5.3 libraries ${RED}failed! ${NC}"
