@@ -1,6 +1,15 @@
 
 #!/bin/bash
 #Masternode Installer script by chris, 2018.
+#exec >/dev/null
+# still shows the prompt
+#exec 2>/dev/null
+# now the prompt is gone, too
+
+# restore stdout
+#exec >/dev/tty
+# restore stderr
+#exec 2>/dev/tty
 
 VERSION="1.1.21"
 PROJECT="Atheneum"
@@ -319,7 +328,7 @@ function start_wallet()
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
     echo -e "${GREEN}Save the masternode.conf file, restart the QT wallet and press any key to continue to syncronisation steps.${NC}"
-    read -e -p "Press enter to continue : " CHOICE
+    read -n 1 -s -r -p " "
     echo
     echo
     echo -e "${BLUE}Now wait for a full synchro (can take 5-10 minutes)${NC}"
@@ -330,7 +339,7 @@ function start_wallet()
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
     sleep 3
-    APIBLOCKS=$(curl -s http://158.69.211.151/chain/AemChain/q/getblockcount)
+    APIBLOCKS=$(curl -s http://explorer.atheneumchain.io/api/getblockcount)
     CURBLOCK=$($CLI getinfo | jq .blocks)
 
     echo -ne "${YELLOW}Current Block: ${GREEN}$APIBLOCKS${NC}\n\n"
@@ -367,7 +376,7 @@ function start_wallet()
     echo
     echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
-    read -e -p "Press enter to continue : " CHOICE
+    read -n 1 -s -r -p "Press any key to continue"
     echo
     MNSTATUS=$($CLI masternode debug)
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation....${NC}"
