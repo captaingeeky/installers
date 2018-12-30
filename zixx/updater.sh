@@ -44,7 +44,7 @@ fi
 echo
 
 echo -e "${blu}Downloading new binaries...${clr}"
-sleep 5
+sleep 15
 echo
 rm $workDir/zixxd
 rm $workDir/zixx-cli
