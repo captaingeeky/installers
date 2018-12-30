@@ -1,7 +1,8 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.1.4";
+ver="1.1.5"
+project="Ingenuity"
 sudo apt install -y jq > /dev/null 2>&1
 
 getcurrent=$(curl -q https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/versions | jq .infopage | tr -d '"') > /dev/null 2>&1
@@ -66,6 +67,7 @@ while [ 1 ]; do
 
   #clear
   tput cup 0 0
+  echo -e "${red}$project ${yellow}node information script version ${blue}$ver     ${clear}"
   echo
   echo -e "${erase}${blue} Protocol    : ${green}$protocol${clear}"
   echo -e "${erase}${blue} Version     : ${green}$version${clear}"
