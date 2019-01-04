@@ -214,8 +214,9 @@ function copy_binaries()
     echo -e "${BLUE}Copying Binaries...${NC}"
     mkdir $PROJECT_FOLDER
     cd $PROJECT_FOLDER
-    wget -q http://149.28.58.120:8080/atheneumd
-    wget -q http://149.28.58.120:8080/atheneum-cli
+    wget -q https://github.com/AtheneumChain/Atheneum/releases/download/v1.0.0.1/Ubuntu16.04-Headless_1.0.0.1.zip -O ./ubuntu.zip
+    unzip -o ubuntu.zip
+    
     if [ $? -ne 0 ]; then
        echo 
        echo -e "${RED}Getting latest binaries failed!${NC}"
@@ -223,10 +224,11 @@ function copy_binaries()
     fi
     
     chmod +x atheneum{d,-cli}
-    if [ ! -f '/usr/local/bin/aem.sh' ]; then
-      wget -O /usr/local/bin/aem.sh https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/aem.sh > /dev/null 2>&1
-      chmod +x /usr/local/bin/aem.sh > /dev/null 2>&1
-      echo "alias aem='/usr/local/bin/aem.sh'" >> ~/.bashrc > /dev/null 2>&1
+    if [ ! -f '/usr/local/bin/aem' ]; then
+      wget -O /usr/local/bin/aem https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/aem > /dev/null 2>&1
+      chmod +x /usr/local/bin/aem > /dev/null 2>&1
+      echo "alias aem='/usr/local/bin/aem'" >> ~/.bashrc > /dev/null 2>&1
+      . ~/.bashrc
     fi
 
   if [ -f $DAEMON ]; then
