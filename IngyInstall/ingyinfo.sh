@@ -11,7 +11,7 @@ if ! [[ $ver == $getcurrent ]]; then
   echo -e "${red} Version outdated! Downloading new version ...${clear}"
   https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/ingyinfo.sh -O ingyinfo.sh > /dev/null 2>&1
   sleep 2
-  exec "./ingyinfo.sh %1"
+  exec "./ingyinfo.sh $1"
 fi
 
 red='\033[1;31m'
