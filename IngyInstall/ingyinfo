@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.1.6"
+ver="1.2.1"
 project="Ingenuity"
 sudo apt install -y jq > /dev/null 2>&1
 
@@ -19,7 +19,10 @@ if ! [[ $ver == $getcurrent ]]; then
   wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/ingyinfo -O /usr/local/bin/ingyinfo > /dev/null 2>&1
   sleep 2
   echo
-  echo -e "${yellow} Script updated! please run the command again"
+  echo -e "${yellow} Script updated! please run the command again."
+  echo -e "${red} Please note that the new command syntax is: ${green}ingyinfo [all|datadir]."
+  echo -e "${blue} Ex: ${green}ingyinfo all"
+  echo -e "${blue} Ex: ${green}ingyinfo ingenuity3${clear}"
   echo
 fi
 
