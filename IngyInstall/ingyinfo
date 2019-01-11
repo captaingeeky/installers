@@ -100,8 +100,8 @@ done
 
 function allNodes()
 {
-  FINDFOLDER="\.Ingenuity"
-  DATAFOLDER=".Ingenuity"
+  FINDFOLDER="\.ingenuity"
+  DATAFOLDER=".ingenuity"
   CONFIG="ingenuity.conf"
 
   #Get number of existing masternode directories
