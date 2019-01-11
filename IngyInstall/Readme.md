@@ -1,7 +1,7 @@
 # Ingenuity Information Scriptlet 
 to download:
 ```
-cd ~ && wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/ingyinfo -O /usr/local/bin/ingyinfo && chmod +x /usr/local/bin/ingyinfo
+wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/ingyinfo -O /usr/local/bin/ingyinfo && chmod +x /usr/local/bin/ingyinfo
 ```
 
 to execute the script:
