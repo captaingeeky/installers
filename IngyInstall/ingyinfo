@@ -72,7 +72,7 @@ while [ 1 ]; do
   asset=$(echo $mnsync | jq .RequestedMasternodeAssets)
   attempt=$(echo $mnsync | jq .RequestedMasternodeAttempt)
 
-  logresult=$(tail -n 7 ~/.ingenuity/debug.log | pr -T -o 2 | cut -c 1-68 | awk '{printf("%.68s \n", $0"                                                    ")}')
+  logresult=$(tail -n 6 ~/.ingenuity/debug.log | pr -T -o 2 | cut -c 1-66 | awk '{printf("%.66s \n", $0"                                                    ")}')
 
   clear
   tput cup 0 0
@@ -90,9 +90,9 @@ while [ 1 ]; do
   echo -e "${erase}${blue} Sync Status : ${green}${status[$asset]} ${blue}attempt ${yellow}$attempt ${blue}of ${yellow}8${clear}"
   echo -e "${erase}${blue} MN Status   : ${green}$mnstatus${clear}"
   echo
-  echo -e "${erase}${yellow} ====================================================================="
+  echo -e "${erase}${yellow} ==================================================================="
   echo -e "${blue}$logresult${clear}"
-  echo -e "${erase}${yellow} ====================================================================="
+  echo -e "${erase}${yellow} ==================================================================="
   echo -e "${erase}${green} Press CTRL-C to exit. Updated every 2 seconds. ${blue} 2018 @bitmonopoly${clear}"
 
   sleep 4
