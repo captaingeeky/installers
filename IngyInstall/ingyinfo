@@ -125,22 +125,21 @@ while [ 1 ]; do
   LINS=$(tput lines);
 if [[ $COLS -lt $mincol ]]; then
   clear;
-  tput cup 0 0
   echo "Display too small. please widen it: Columns: $COLS/$mincol           ";
   sleep 1
 else
-tput cup 0 0
+  clear
     STATUS=$($client -datadir=/root/$DATAFOLDER -conf=/root/$DATAFOLDER/$CONFIG masternode debug)
     SYNC=$($client -datadir=/root/$DATAFOLDER -conf=/root/$DATAFOLDER/$CONFIG mnsync status | jq .IsBlockchainSynced)
     echo -e "${red}$project ${yellow}Masternode Status script version ${blue}$ver        ${yellow}              ${clear}"
     echo
-    echo -e "${blue}Masternode ${green}$DATAFOLDER ${blue} status  : BlockChainSynced: ${yellow}$SYNC ${clear}, ${blue}Masternode: ${yellow}$STATUS${clear}                                 "
+    echo -e "${blue}Masternode ${green}$DATAFOLDER ${blue} status  : BlockChainSynced: ${yellow}$SYNC ${clear}, ${blue}Masternode: ${yellow}$STATUS${clear}"
     if [[ $DIR_COUNT -gt 1 ]]; then
       for i in `seq 2 $DIR_COUNT`;
         do
           STATUS=$($client -datadir=/root/$DATAFOLDER$i -conf=/root/$DATAFOLDER$i/$CONFIG masternode debug)
           SYNC=$($client -datadir=/root/$DATAFOLDER$i -conf=/root/$DATAFOLDER$i/$CONFIG mnsync status | jq .IsBlockchainSynced)
-          echo -e "${blue}Masternode ${green}$DATAFOLDER$i ${blue}status  : BlockChainSynced: ${yellow}$SYNC ${clear}, ${blue}Masternode: ${yellow}$STATUS${clear}                                 "
+          echo -e "${blue}Masternode ${green}$DATAFOLDER$i ${blue}status  : BlockChainSynced: ${yellow}$SYNC ${clear}, ${blue}Masternode: ${yellow}$STATUS${clear}"
         done
     fi
     sleep 2
