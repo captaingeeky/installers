@@ -158,6 +158,7 @@ function install_prerequisites()
   if [ "$IS_INSTALLED" = true ]; then
       echo -e "${BLUE} Skipping pre-requisites..."
   else
+    sudo dpkg --configure -a
     echo
     echo -ne "${BLUE}Installing Pre-requisites${NC}"
     echo
