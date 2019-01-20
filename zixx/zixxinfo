@@ -87,7 +87,7 @@ else
   asset=$(echo $mnsync | jq .AssetName)
   attempt=$(echo $mnsync | jq .Attempt)
 
-  logresult=$(tail -n $(( $LINS - 18 )) $datadir/debug.log | pr -T -o 2 | cut -c 1-$(( $COLS - 2 )) | awk '{printf("%.'$(( $COLS - 2 ))'s \n", $0"                                                    ")}')
+  logresult=$(tail -n $(( $LINS - 23 )) $datadir/debug.log | pr -T -o 2 | cut -c 1-$(( $COLS - 2 )) | awk '{printf("%.'$(( $COLS - 2 ))'s \n", $0"                                                    ")}')
   
   currentnodes=$($client masternode list full | tr -d '",' | awk '{print $3}' | grep 70209 -c)
   oldnodes=$($client masternode list full | tr -d '",' | awk '{print $3}' | grep 70208 -c)
