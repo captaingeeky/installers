@@ -236,10 +236,9 @@ function copy_binaries()
     fi
     
     chmod +x zixx{d,-cli}
-    if [ ! -f '/usr/local/bin/z.sh' ]; then
-      wget -O /usr/local/bin/z.sh https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z.sh > /dev/null 2>&1
-      chmod +x /usr/local/bin/z.sh > /dev/null 2>&1
-      echo "alias z='/usr/local/bin/z.sh'" >> ~/.bashrc > /dev/null 2>&1
+    if [ ! -f '/usr/local/bin/z' ]; then
+      wget -O /usr/local/bin/z https://raw.githubusercontent.com/zaemliss/installers/master/zixx/z > /dev/null 2>&1
+      chmod +x /usr/local/bin/z > /dev/null 2>&1
     fi
   fi
   if [ -f $DAEMON ]; then
@@ -381,8 +380,8 @@ function start_wallet()
     echo
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo
-    echo -e "${BLUE}Type ${YELLOW}z.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
-    echo -e "${BLUE}Ex: ${GREEN}z.sh zixx2 masternode status ${NC}"
+    echo -e "${BLUE}Type ${YELLOW}z <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
+    echo -e "${BLUE}Ex: ${GREEN}z zixx2 masternode status ${NC}"
     echo
 
     
