@@ -1,6 +1,6 @@
 #!/bin/bash
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.1.0"
+ver="1.1.2"
 project="Zixx"
 sudo apt install -y jq > /dev/null 2>&1
 
@@ -141,7 +141,7 @@ if [[ $COLS -lt $mincol ]]; then
   sleep 1
 else
   clear
-    STATUS=$($client -datadir=/root/$DATAFOLDER -conf=/root/$DATAFOLDER/$CONFIG masternode debug)
+    STATUS=$($client -datadir=/root/$DATAFOLDER -conf=/root/$DATAFOLDER/$CONFIG masternode status | jq .status)
     SYNC=$($client -datadir=/root/$DATAFOLDER -conf=/root/$DATAFOLDER/$CONFIG mnsync status | jq .IsBlockchainSynced)
     echo -e "${red}$project ${yellow}Masternode Status script version ${blue}$ver        ${yellow}              ${clear}"
     echo
