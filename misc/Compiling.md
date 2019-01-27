@@ -37,13 +37,25 @@ make
 ## Compiling for WINDOWS x64:
 ### ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
 ```bash
-sudo update-alternatives --config x86_64-w64-mingw32-g++ #POSIX will be the default one
-cd Atheneum/depends/
-make HOST=i686-w64-mingw32
+sudo make clean
+chmod 777 -R *
+sudo apt-get update
+sudo apt-get -y upgrade
+PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
+cd `pwd`/depends
+sudo make -j16 HOST=x86_64-w64-mingw32
 cd ..
-./autogen.sh
-CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix=/ --with-incompatible-bdb
-make
+sudo ./autogen.sh
+mkdir db4
+wget -c 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz'
+tar -xzvf db-4.8.30.NC.tar.gz
+cd db-4.8.30.NC/build_unix/
+../dist/configure --enable-cxx --disable-shared --with-pic --prefix=`pwd`/db4
+sudo make install
+cd ../../
+sudo ./autogen.sh
+./configure LDFLAGS="-L`pwd`/db4/lib/" CPPFLAGS="-I`pwd`/db4/include/" --prefix=`pwd`/depends/x86_64-w64-mingw32
+sudo make -j16
 ```
 
 
