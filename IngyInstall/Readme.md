@@ -6,8 +6,7 @@ wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/in
 
 to execute the script:
 ```
-cd ~
-./ingyinfo.sh
+ingyinfo
 ```
 
 # Ingenuity BlockData Nuker
