@@ -44,7 +44,7 @@ fi
 echo
 
 echo -e "${blu}Downloading new binaries...${clr}"
-sleep 15
+sleep 20
 echo
 rm $workDir/zixxd
 rm $workDir/zixx-cli
@@ -62,9 +62,13 @@ if [[ $DIR_COUNT -gt 1 ]]; then
     done
 fi
 echo
-
+echo -e "Waiting 10 seconds for all daemons to start up..."
+echo
+sleep 10
 echo -e "${blu}Update complete. Zixx now updated to version below.${yel}"
 $workDir/zixxd -datadir=/root/.zixx$i -conf=/root/.zixx$i/zixx.conf --version | head -n 1
+echo -e "${blu}Version : ${grn}" $($workDir/zixx-cli -datadir=/root/.zixx$i -conf=/root/.zixx$i/zixx.conf getinfo | grep '"version":' | tr -d '"version:, ')
+echo -e "${blu}Protocol: ${grn}" $($workDir/zixx-cli -datadir=/root/.zixx$i -conf=/root/.zixx$i/zixx.conf getinfo | grep '"protocolversion":' | tr -d '"protocolversion:, ')
 echo
 echo -e "${red} !!! IMPORTANT !!! ${grn}"
 echo -e "Don't forget to update your QT wallet with the latest executables. \nYou can find them at the official repo at:"
