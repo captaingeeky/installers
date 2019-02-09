@@ -20,20 +20,6 @@ sudo apt install -y libzmq5 libboost-system1.58.0 libboost-filesystem1.58.0 libb
 sudo apt-get install -y libqt5webkit5-dev qtscript5-dev libqt5help5 qttools5-dev qtdeclarative5-private-dev qtdeclarative5-dev-tools qtbase5-private-dev libqt5xmlpatterns5-dev qtxmlpatterns5-dev-tools qttools5-dev-tools
 ```
 
-
-## Compiling for WINDOWS x32:
-### ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
-```bash
-sudo update-alternatives --config x86_64-w64-mingw32-g++ #POSIX will be the default one
-cd Atheneum/depends/
-make HOST=x86_64-w64-mingw32
-cd ..
-./autogen.sh
-CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/opt/local --with-incompatible-bdb
-make
-```
-
-
 ## Compiling for WINDOWS x64:
 ### ONLY GOT THIS TO WORK ON UBUNTU 14.04 !!!
 ```bash
