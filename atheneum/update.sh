@@ -1,5 +1,6 @@
 #!/bin/bash
-# ```wget https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/update.sh -O update.sh && chmod +x update.sh && ./update.sh```
+# wget https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/update.sh -O update.sh && chmod +x update.sh && ./update.sh
+
 VERSION="1.0.6"
 PROJECT="Atheneum"
 PROJECT_FOLDER="$HOME/Atheneum"
