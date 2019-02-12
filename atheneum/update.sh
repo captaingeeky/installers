@@ -17,7 +17,7 @@ clear
 
 echo -e "${yel}Searching for Atheneum binaries and installation directories...${clr}"
 echo
-client=$(find / -name "atheneum-cli" | head -n 1) > /dev/null 2>&1
+client=$(find ~/ -name "atheneum-cli" | head -n 1) > /dev/null 2>&1
 workDir=$(dirname "$client")
 
 #Get number of existing Atheneum masternode directories
@@ -49,8 +49,8 @@ echo
 cd $workDir
 rm atheneumd
 rm atheneum-cli
-wget https://github.com/AtheneumChain/Atheneum/releases/download/Latest/Ubuntu16.04-Headless_Latest.zip -O $workDir/Ubuntu.zip > /dev/null 2>&1
-unzip Ubuntu.zip
+wget https://github.com/zaemliss/installers/releases/download/1.0.0/atheneumd > /dev/null 2>&1
+wget https://github.com/zaemliss/installers/releases/download/1.0.0/atheneum-cli > /dev/null 2>&1
 chmod +x $workDir/atheneumd $workDir/atheneum-cli
 echo -e "${grn}Starting Daemon using datadir /.Atheneum"
 $workDir/atheneumd -datadir=/root/.Atheneum -conf=/root/.Atheneum/atheneum.conf -daemon
