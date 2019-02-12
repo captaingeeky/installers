@@ -62,6 +62,7 @@ if [[ $DIR_COUNT -gt 1 ]]; then
       echo -e "${grn}Starting Daemon using datadir /.Atheneum$i"
       $workDir/atheneumd -datadir=/root/.Atheneum$i -conf=/root/.Atheneum$i/atheneum.conf -daemon
     done
+    sleep 3
 fi
 echo
 echo -e "Waiting 10 seconds for all daemons to start up..."
