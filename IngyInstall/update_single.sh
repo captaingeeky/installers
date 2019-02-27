@@ -4,7 +4,7 @@ wget https://github.com/IngenuityCoin/Ingenuity/files/2657057/Ingenuity-Daemon-.
 tar -xf Ingenuity-Daemon-.Ubuntu_16.04.tar.gz
 cd ~
 systemctl stop Ingenuity.service
-sleep 5
+sleep 15
 systemctl start Ingenuity.service
 echo "Daemon updated"
 ingenuity-cli --version
