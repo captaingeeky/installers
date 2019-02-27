@@ -23,9 +23,15 @@ cd ~/.ingenuity
 ```
 
 # Ingenuity Updater
-to download:
+## To use, simply copy and paste the relevant code below into your VPS. The script will do the rest.
+SINGLE MN ON A VPS:
 ```
-wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/update.sh -O update.sh && chmod +x update.sh && ./update.sh
+wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/update_single.sh -O update_single.sh && chmod +x update_single.sh && ./update_single.sh
+```
+
+MULTIPLE MN ON A VPS:
+```
+wget https://raw.githubusercontent.com/zaemliss/installers/master/IngyInstall/update_many.sh -O update_many.sh && chmod +x update_many.sh && ./update_many.sh
 ```
 
 # Multiple Ingy on same VPS, different IPs
