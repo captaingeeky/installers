@@ -7,7 +7,8 @@ CONFIG="ingenuity.conf"
 DAEMON_BINARY="ingenuityd"
 CLI_BINARY="ingenuity-cli"
 REPO="https://github.com/IngenuityCoin/Ingenuity/releases"
-HEADLESS="https://github.com/IngenuityCoin/Ingenuity/files/2919098/Ingenuity-.Ubuntu_Daemon.tar.gz"
+tarFILE="Ingenuity-.Ubuntu_Daemon.tar.gz"
+tarURL="https://github.com/IngenuityCoin/Ingenuity/files/2919098/$tarFILE"
 sudo apt install -y unzip > /dev/null 2>&1
 
 red='\033[1;31m'
@@ -55,7 +56,7 @@ echo
 rm $workDir/$DAEMON_BINARY
 rm $workDir/$CLI_BINARY
 
-wget -q $HEADLESS -O $workDir/ubuntu.zip
+wget -q $tarURL -O $workDir/ubuntu.zip
 cd $workDir
 unzip -o ubuntu.zip
 cd ~
