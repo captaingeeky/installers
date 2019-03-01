@@ -1,5 +1,5 @@
-tarFILE="Ingenuity-Daemon-.Ubuntu_16.04.tar.gz"
-tarURL="https://github.com/IngenuityCoin/Ingenuity/files/2657057/$tarFILE"
+tarFILE="Ingenuity-.Ubuntu_Daemon.tar.gz"
+tarURL="https://github.com/IngenuityCoin/Ingenuity/files/2919098/$tarFILE"
 PROJECT="Ingenuity"
 
 red='\033[1;31m'
