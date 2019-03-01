@@ -7,7 +7,7 @@ CONFIG="ingenuity.conf"
 DAEMON_BINARY="ingenuityd"
 CLI_BINARY="ingenuity-cli"
 REPO="https://github.com/IngenuityCoin/Ingenuity/releases"
-HEADLESS="https://github.com/IngenuityCoin/Ingenuity/files/2666202/Ingenuity-Daemon-.Ubuntu_16.04.tar.tar.gz"
+HEADLESS="https://github.com/IngenuityCoin/Ingenuity/files/2919098/Ingenuity-.Ubuntu_Daemon.tar.gz"
 sudo apt install -y unzip > /dev/null 2>&1
 
 red='\033[1;31m'
