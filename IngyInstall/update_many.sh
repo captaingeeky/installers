@@ -58,7 +58,7 @@ rm $workDir/$CLI_BINARY
 
 wget -q $tarURL -O $workDir/$tarFILE
 cd $workDir
-tax -xf $tarFILE
+tar -xf $tarFILE
 cd ~
 
 chmod +x $workDir/$DAEMON_BINARY $workDir/$CLI_BINARY
