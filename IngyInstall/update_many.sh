@@ -52,10 +52,14 @@ echo
 echo -e "${blu}waiting 60s for processes to end normally..."
 echo
 sleep 60
-echo -e "${red}killing rogue processes that may have stalled...${clr}"
-pgrep ingenuityd | xargs kill -9 > /dev/null 2>&1
-echo
 
+
+rogues=$(pgrep ingenuityd | grep -c .)
+if [[ "$rogues" -gt "0" ]]; then
+  echo -e "${red}killing rogue processes that may have stalled...${clr}"
+  pgrep ingenuityd | xargs kill -9 > /dev/null 2>&1
+fi
+echo
 echo -e "${blu}Downloading new binaries...${clr}"
 echo
 rm $workDir/$DAEMON_BINARY
