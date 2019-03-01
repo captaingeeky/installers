@@ -1,4 +1,7 @@
 #!/bin/bash
+#############################################################
+## Masternode Update Script by Chris aka @bitmonopoly 2019 ##
+#############################################################
 
 PROJECT="Ingenuity"
 DATAFOLDER=".ingenuity"
