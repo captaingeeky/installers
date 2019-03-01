@@ -1,3 +1,7 @@
+#!/bin/bash
+#############################################################
+## Masternode Update Script by Chris aka @bitmonopoly 2019 ##
+#############################################################
 tarFILE="Ingenuity-.Ubuntu_Daemon.tar.gz"
 tarURL="https://github.com/IngenuityCoin/Ingenuity/files/2919098/$tarFILE"
 PROJECT="Ingenuity"
