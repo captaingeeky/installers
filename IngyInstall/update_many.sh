@@ -56,9 +56,9 @@ echo
 rm $workDir/$DAEMON_BINARY
 rm $workDir/$CLI_BINARY
 
-wget -q $tarURL -O $workDir/ubuntu.zip
+wget -q $tarURL -O $workDir/$tarFILE
 cd $workDir
-unzip -o ubuntu.zip
+tax -xf $tarFILE
 cd ~
 
 chmod +x $workDir/$DAEMON_BINARY $workDir/$CLI_BINARY
