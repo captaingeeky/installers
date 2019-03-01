@@ -50,6 +50,10 @@ if [[ $DIR_COUNT -gt 1 ]]; then
 fi
 echo
 
+echo -e "${red}killing rogue processes that may have stalled...${clr}"
+pgrep ingenuityd | xargs kill
+echo
+
 echo -e "${blu}Downloading new binaries...${clr}"
 sleep 15
 echo
