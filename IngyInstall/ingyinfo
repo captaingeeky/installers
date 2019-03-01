@@ -1,7 +1,7 @@
 #!/bin/bash
 # wget https://github.com/zaemliss/installers/raw/master/atheneum/infopage.sh -O infopage.sh
 # User Friendly Masternode infopage by @bitmonopoly 2018
-ver="1.2.8"
+ver="1.3.0"
 project="Ingenuity"
 sudo apt install -y jq > /dev/null 2>&1
 
@@ -69,7 +69,8 @@ else
   gettxoutsetinfo=$($client -datadir=$datadir -conf=$conf gettxoutsetinfo)
   mnsync=$($client -datadir=$datadir -conf=$conf mnsync status)
   mnstatus=$($client -datadir=$datadir -conf=$conf masternode debug)
-  count=$($client -datadir=$datadir -conf=$conf masternode list | grep -c addr)
+  count1=$($client -datadir=$datadir -conf=$conf masternode list | grep -c 70916)
+  count2=$($client -datadir=$datadir -conf=$conf masternode list | grep -c 70915)
   getwinner=$($client -datadir=$datadir -conf=$conf getpoolinfo)
   
   version=$(echo $getinfo | jq .version)
@@ -94,7 +95,7 @@ else
   echo -e "${erase}${blue} Connections : ${green}$connections${clear}"
   echo -e "${erase}${blue} Supply      : ${green}$supply${clear}"
   echo -e "${erase}${blue} Transactions: ${green}$transactions${clear}"
-  echo -e "${erase}${blue} MN Count    : ${green}$count${clear}"
+  echo -e "${erase}${blue} MN Count    : ${green}$count1 x 70916  ${yellow}-  ${blue}$count2 x 70915${clear}"
   echo -e "${erase}${blue} Last Winner : ${green}$winner${clear}"
   echo -e "${erase}${blue} blocks      : ${yellow}$blocks${clear}"
   echo
