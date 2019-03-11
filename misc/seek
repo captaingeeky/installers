@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -z $2 ]; then
+  searchfrom=$2
+else
+  searchfrom=$PWD
+fi
+
+grep -rn --color=always $searchfrom $1
