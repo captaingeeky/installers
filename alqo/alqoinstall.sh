@@ -1,6 +1,6 @@
 
 #!/bin/bash
-#Masternode Installer script by chris, 2018.
+#Masternode Installer script by chris and ALQO community, 2019.
 #exec >/dev/null
 # still shows the prompt
 #exec 2>/dev/null
@@ -11,11 +11,11 @@
 # restore stderr
 #exec 2>/dev/tty
 
-VERSION="1.1.23"
-PROJECT="Atheneum"
-PROJECT_FOLDER="$HOME/Atheneum"
-DAEMON_BINARY="atheneumd"
-CLI_BINARY="atheneum-cli"
+VERSION="TO BE DECIDED"
+PROJECT="ALQO"
+PROJECT_FOLDER="$HOME/ALQO"
+DAEMON_BINARY="alqod"
+CLI_BINARY="alqo-cli"
 
 RED='\033[1;31m'
 GREEN='\033[1;32m'
@@ -49,7 +49,7 @@ function check_existing()
   IP_NUM=$(echo "$IP_LIST" | wc -l)
 
   #Get number of existing masternode directories
-  DIR_COUNT=$(ls -la /root/ | grep "\.atheneum" | grep -c '^')
+  DIR_COUNT=$(ls -la /root/ | grep "\.ALQO" | grep -c '^')
   
   #Check if there are more IPs than existing nodes
   if [[ $DIR_COUNT -ge $IP_NUM ]]; then
@@ -59,11 +59,11 @@ function check_existing()
 
   echo -e "${YELLOW}Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
 
-  #Now confirm available IPs by removing those that are already bound to 22555
-  IP_IN_USE=$(netstat -tulpn | grep :22000 | awk {'print $4'})
+  #Now confirm available IPs by removing those that are already bound to 55500
+  IP_IN_USE=$(netstat -tulpn | grep :55500 | awk {'print $4'})
   
   echo -e "${RED}IMPORTANT - ${YELLOW} please make sure you don't select an IP that is already in use! ${RED}- IMPORTANT${NC}"
-  echo -e "${BLUE}IP List using port 22000 (Active Atheneum nodes):${NC}"
+  echo -e "${BLUE}IP List using port 55500 (Active Atheneum nodes):${NC}"
   echo $IP_IN_USE
   echo
   echo -e "${GREEN}List of all IPs on this machine${NC}"
@@ -82,9 +82,9 @@ function check_existing()
   echo
   echo -e "${YELLOW}Masternode Transaction Information for masternode.conf in the QT Wallet${NC}"
   echo -e "For this section, you will need the debug console of your QT wallet by going to ${GREEN}Tools ${NC}then ${GREEN}Debug Console.${NC}"
-  echo -e "When executing the command ${GREEN}masternode outputs${NC}, you will see the following information:"
+  echo -e "When executing the command ${GREEN}masternode outputs${NC}, you will see the following information (example):"
   echo -e "{"
-  echo -e "  \"${RED}b672c35585500a0221e726de710a3de8caadb9624b60f3bdefbfc71e0a4e78ab${NC}\": \"${YELLOW}1${NC}\","
+  echo -e "  \"${RED}c8f4965ea57a68d0e6dd384324dfd28cfbe0c801015b973e7331db8ce018716999${NC}\": \"${YELLOW}1${NC}\","
   echo -e "}"
   echo -e "The ${RED}first part${NC} is your TXid and the ${YELLOW}second part${NC} is your TXOutput"
   echo -e "${BLUE}Please enter the TXid for your new masternode generated in the debug console via ${YELLOW}masternode outputs ${NC}"
@@ -102,16 +102,16 @@ function check_existing()
 
 function set_environment()
 {
-  DATADIR="$HOME/.Atheneum$DIR_NUM"
+  DATADIR="$HOME/.ALQO$DIR_NUM"
 
   TMP_FOLDER=$(mktemp -d)
   RPC_USER="$PROJECT-Admin"
-  MN_PORT=22000
+  MN_PORT=55500
   RPC_PORT=$((15647+DIR_NUM))
 
   DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
   STARTCLI="$PROJECT_FOLDER/$CLI_BINARY"
-  CONF_FILE="$DATADIR/atheneum.conf"
+  CONF_FILE="$DATADIR/alqo.conf"
   CLI="$PROJECT_FOLDER/$CLI_BINARY -conf=$CONF_FILE -datadir=$DATADIR"
   DAEMON_START="$DAEMON -datadir=$DATADIR -conf=$CONF_FILE -daemon"
   CRONTAB_LINE="@reboot sleep 30; $DAEMON_START"
@@ -121,7 +121,7 @@ function show_header()
 {
   clear
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
-  echo -e "${YELLOW}$PROJECT Masternode Installer v$VERSION - chris 2018"
+  echo -e "${YELLOW}$PROJECT Masternode Installer v$VERSION - chris and ALQO community 2019"
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
   echo
   echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
@@ -214,7 +214,7 @@ function copy_binaries()
     echo -e "${BLUE}Copying Binaries...${NC}"
     mkdir $PROJECT_FOLDER
     cd $PROJECT_FOLDER
-    wget -q https://github.com/AtheneumChain/Atheneum/releases/download/v1.0.0.1/Ubuntu16.04-Headless_1.0.0.1.zip -O ./ubuntu.zip
+    wget -q https://github.com/AtheneumChain/Atheneum/releases/download/v1.0.0.1/Ubuntu16.04-Headless_1.0.0.1.zip -O ./ubuntu.zip #no information of the github link yet#
     unzip -o ubuntu.zip
     
     if [ $? -ne 0 ]; then
@@ -223,11 +223,11 @@ function copy_binaries()
        exit 1;
     fi
     
-    chmod +x atheneum{d,-cli}
-    if [ ! -f '/usr/local/bin/aem' ]; then
-      wget -O /usr/local/bin/aem https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/aem > /dev/null 2>&1
-      chmod +x /usr/local/bin/aem > /dev/null 2>&1
-      echo "alias aem='/usr/local/bin/aem'" >> ~/.bashrc > /dev/null 2>&1
+    chmod +x alqo{d,-cli}
+    if [ ! -f '/usr/local/bin/alqo' ]; then
+      wget -O /usr/local/bin/alqo https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/aem > /dev/null 2>&1 #need a link to alqo script here#
+      chmod +x /usr/local/bin/alqo > /dev/null 2>&1
+      echo "alias alqo='/usr/local/bin/alqo'" >> ~/.bashrc > /dev/null 2>&1
       . ~/.bashrc
     fi
 
@@ -280,11 +280,11 @@ externalip=$NEXT_AVAIL_IP:$MN_PORT
 masternode=1
 masternodeprivkey=$GENKEY
 
-#Addnodes
-addnode=node0.emberchain.xyz
-addnode=node1.emberchain.xyz
-addnode=node2.emberchain.xyz
-addnode=node3.emberchain.xyz
+#Addnodes (Addnodes not yet known)
+addnode=
+addnode=
+addnode=
+addnode=
 
 EOF
 }
@@ -341,7 +341,7 @@ function start_wallet()
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
     sleep 3
-    APIBLOCKS=$(curl -s http://explorer.atheneumchain.io/api/getblockcount)
+    APIBLOCKS=$(curl -s https://explorer.alqo.app/api/getblockcount) #exact link not yet known#
     CURBLOCK=$($CLI getinfo | jq .blocks)
 
     echo -ne "${YELLOW}Current Block: ${GREEN}$APIBLOCKS${NC}\n\n"
@@ -391,8 +391,8 @@ function start_wallet()
     echo
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo    
-    echo -e "${BLUE}Type ${YELLOW}aem.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
-    echo -e "${BLUE}Ex: ${GREEN}aem.sh atheneum2 masternode status ${NC}"
+    echo -e "${BLUE}Type ${YELLOW}aem.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}" #not sure about this line#
+    echo -e "${BLUE}Ex: ${GREEN}aem.sh atheneum2 masternode status ${NC}" #not sure about this line#
     echo
 
     
