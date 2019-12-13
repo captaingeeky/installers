@@ -1,49 +1,43 @@
 # Masternode-setup-guide
 
-## 1. Wallet Setup
+# 1. Introduction
 
-1.1 Download the wallet for your operating system which is available on the bottom of our page at
-https://ATHENEUM_DOWNLOAD_LINK/ <br />
+This guide is for a single masternode, on a Ubuntu 16.04 64bit server (VPS) running headless and will be controlled from the wallet on your local computer (Control wallet). The wallet on the VPS will be referred to as the Remote wallet.
+You will need your server details for progressing through this guide.
+First the basic requirements:
+10,000 ALQO(may need a fraction of a ALQO more to cover for the transaction fee)
+A main computer (Your everyday computer) — This will run the control wallet, hold your collateral 10,000 ALQO and can be not running without affecting the masternode.
+Masternode Server (VPS — The computer/node that will be on 24/7)
+A unique IP address for your VPS / Remote wallet
+(For security reasons, you’re are going to need a different IP for each masternode you plan to host)
+The basic reasoning for these requirements is that, you get to keep your ALQO in your local wallet and host your masternode remotely, securely..
 
-1.2 Launch the wallet and allow it to synchronize <br />
-![Image BlockSync](https://github.com/zaemliss/installers/blob/master/atheneum/images/AEMSync.png) </br>
+# 2. Wallet configuration
 
-1.3 Encrypt your wallet! (Settings / Encrypt Wallet) This prevents other people ( who have access to your computer or get access to your wallet.dat file ) to get in your wallet. Don't lose that password. If you lose it the wallet is locked forever and nobobdy will be able to recover your funds. </br>
-![Image Encrypt](https://github.com/zaemliss/installers/blob/master/atheneum/images/encrypt.png) </br>
+1) Using the control wallet, enter the debug console (Settings>Debug>console) and type the following command:
+createmasternodekey
+(This will be the masternode’s privkey. We’ll use this later…)
+2) Using the control wallet still, enter the following command:
+getaccountaddress <AnyNameForYourMasternode>
+3) Still in the control wallet, send 10,000 ALQO to the address you generated in step 2 (Be 100% sure that you entered the address correctly. You can verify this when you paste the address into the “Pay To:” field, the label will autopopulate with the name you chose”, also make sure this is exactly 10,000 ALQO; No less, no more.)
+– Be absolutely 100% sure that this is copied correctly. And then check it again. We cannot help you, if you send 10,000 ALQO to an incorrect address.
+4) Still in the control wallet, enter the command into the console:
+getmasternodeoutputs (This gets the proof of transaction of sending 10,000)
+5) Still on the main computer, we need to edit the masternode.conf. You can find the file in the ALQO data directory, by default in Windows: it’ll be%Appdata%/ALQO or Linux:~
+Once you have the masternode.conf file open in a text editor, add the following line to it:
+<Name of Masternode(Use the name you entered earlier for simplicity)> <Unique IP address>:20480<The result of Step 1> <Result of Step 4> <The number after the long line in Step 4>
+Example: MN1 31.14.135.27:20480 892WPpkqbr7sr6Si4fdsfssjjapuFzAXwETCrpPJubnrmU6aKzh c8f4965ea57a68d0e6dd384324dfd28cfbe0c801015b973e7331db8ce018716999 1
+Substitute it with your own values and without the “<>”s2.1 Choose your VPS
 
-1.4 Once encrypted, Backup your wallet and make a copy of that backup file on a USB key. </br>
-![Image backup](https://github.com/zaemliss/installers/blob/master/atheneum/images/backup.png) </br>
+# 3. VPS Remote wallet install
 
-1.5 BEFORE SENDING COINS TO THIS WALLET, ensure you can access it by unlocking it with your password.  </br>
-![Image unlock](https://github.com/zaemliss/installers/blob/master/atheneum/images/unlock.png) </br>
-
-1.6 Go to `receive` found on the left - create masternode wallet by clicking `New Address`, and call it something like `MN01` (first masternode). If this is not your first MRJA masternode, name it appropriately (ex.: `MN03` if it's your third) <br />
-
-1.7 Send EXACTLY 10,000 coins to the wallet address you've just created by right-clicking on that new address and clicking on `Copy Address` then going to the send tab and pasting that address in the `Pay To` field. Make sure that it's exactly 10000 - no more, no less.<br />
-
-1.8. Go to your Transactions tab and wait for that "Payment to yourself" to have at least 1 confirmation 
-![Image BlockSync](https://github.com/zaemliss/installers/blob/master/atheneum/images/confirmations.png) </br>
-
-then, go to `Help / Debug Window / Console ` and type `masternode outputs` <br />
-
-1.9. Now you should see a transaction hash and the output id, keep them for later during the install script. (Copy them to a notepad or text editor) <br />
-![Image txhash](https://github.com/zaemliss/installers/blob/master/ganjacoin/images/txhash.png) </br>
-
-1.10. If you don't have a transaction hash (or a new one if this is not your first masternode), that means that you've either NOT sent exactly 10000 coins OR it hasn't confirmed yet. If you HAVE sent EXACTLY 10000 coins, wait 5 minutes and try `masternode outputs` again.
-
-## 2. Set up the Masternode on a Linux VPS
-
-2.1 Choose your VPS
-
-VPS server required: We recommend the following specifications:
 - [www.vultr.com](https://www.vultr.com/?ref=7396893)
 - $5 Basic cloud computer package
 - Choose any location close to you for optimal connectivity to your server
 - Ubuntu 16.04.x64
 - Server (Name anything you want, i.e matrix)</br>
-![Image Vultr](https://github.com/zaemliss/installers/blob/master/ganjacoin/images/vultr1.png) </br>
 
-2.2 Start an SSH session
+# 3.1 Start an SSH session
 
 Depending upon which operating system you are using. Download the following software:
 
@@ -52,28 +46,28 @@ Depending upon which operating system you are using. Download the following soft
 
 Next:
 
-2.2.1 Load the SSH terminal<br />
+3.1.1 Load the SSH terminal<br />
 
-2.2.2 Copy your IP from the VPS - And for windows Putty simply put in the IP and press enter. For Mac/Linux, use the command: 
+3.1.2 Copy your IP from the VPS - And for windows Putty simply put in the IP and press enter. For Mac/Linux, use the command: 
 ```
 ssh root@(yourserveripaddress)
 ```
 
-2.2.3 It will connect to the server. Enter your user (root) and VPS password:<br />
+3.1.3 It will connect to the server. Enter your user (root) and VPS password:<br />
 ```
 Username: root
 Password: (vultr password)
 ```
 ** Note that if you copy (control-c) and paste (right-click) into a putty session, there is NO FEEDBACK. That means you won't see the characters being typed or pasted in. So, if you do happen to copy and paste your password in there, just right-click and press [enter]</br>
 
-# 3. Installing the Masternode on the VPS
+# 3.2 Installing the Masternode on the VPS
 
-3.1 Copy the following text and paste it at the terminal prompt:
+3.2.1 Copy the following text and paste it at the terminal prompt:
 ```
-cd ~ && wget https://github.com/zaemliss/installers/raw/master/atheneum/aeminstall.sh -O aeminstall.sh && chmod +x aeminstall.sh && ./aeminstall.sh
+cd ~ && wget https://github.com/zaemliss/installers/raw/master/atheneum/aeminstall.sh -O aeminstall.sh && chmod +x aeminstall.sh && ./aeminstall.sh (needs to change)
 ```
 
-3.2 Press `ENTER` Then Simply follow the on-screen instructions.
+3.2.2 Press `ENTER` Then Simply follow the on-screen instructions.
 
 # 4. Questions?
 
