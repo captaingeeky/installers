@@ -198,20 +198,26 @@ function copy_binaries()
     #deleting previous install folders in case of failed install attempts. Also ensures latest binaries are used
     rm -rf $PROJECT_FOLDER
     echo
-    echo -e "${BLUE}Copying Binaries...this may take a while${NC}"
+    echo -e "${BLUE}Compiling the wallet...this may take a while${NC}"
     mkdir $PROJECT_FOLDER
     cd $PROJECT_FOLDER
+    echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
     
     git clone https://github.com/ALQO-Universe/ALQO.git > /dev/null 2>&1
+    echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
     sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y > /dev/null 2>&1
+    echo -ne "${GREEN} >Progress: ${BLUE}[#######-------]\r"
     cd ALQO > /dev/null 2>&1
     ./autogen.sh > /dev/null 2>&1
+     echo -ne "${GREEN} >Progress: ${BLUE}[#########-----]\r"
     ./configure --without-gui --disable-tests > /dev/null 2>&1
+    echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
     make > /dev/null 2>&1
+    echo -ne "${GREEN} >Progress: ${BLUE}[############--]\r"
     mv src/alqod $PROJECT_FOLDER > /dev/null 2>&1
     mv src/alqo-cli $PROJECT_FOLDER > /dev/null 2>&1
     cd $PROJECT_FOLDER > /dev/null 2>&1
-    
+    echo -ne "${GREEN} >Progress: ${BLUE}[##############]${NC}"
     if [ $? -ne 0 ]; then
        echo 
        echo -e "${RED}Getting latest binaries failed!${NC}"
@@ -252,7 +258,7 @@ EOF
 function create_conf_file()
 {
   echo
-  GENKEY=$($STARTCLI masternode genkey)
+  GENKEY=$($STARTCLI createmasternodekey)
   echo
   echo -e "${BLUE}Creating conf file...${NC}"
   echo -e "${YELLOW}Ignore any errors you see below. (5 seconds)${NC}"
