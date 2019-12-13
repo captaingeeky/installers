@@ -93,7 +93,7 @@ function check_existing()
   echo -e "${BLUE}Please enter the TXOutput for that transaction generated in the debug console via ${YELLOW}masternode outputs ${NC}[0/1]"
   read -e -p " : " TX_OUT
   echo
-  echo -e "${BLUE}Please enter the masternode private key generated in the debug console via ${YELLOW}masternodegenkey ${NC}[0/1]"
+  echo -e "${BLUE}Please enter the masternode private key generated in the debug console via ${YELLOW}createmasternodekey ${NC}[0/1]"
   read -e -p " : " MN_KEY
   echo
   read -e -p "$(echo -e ${BLUE}Please enter the Alias for your new masternode : ${NC})" MN_ALIAS
