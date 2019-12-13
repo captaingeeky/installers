@@ -214,8 +214,12 @@ function copy_binaries()
     echo -e "${BLUE}Copying Binaries...${NC}"
     mkdir $PROJECT_FOLDER
     cd $PROJECT_FOLDER
-    wget -q https://github.com/AtheneumChain/Atheneum/releases/download/v1.0.0.1/Ubuntu16.04-Headless_1.0.0.1.zip -O ./ubuntu.zip #no information of the github link yet#
-    unzip -o ubuntu.zip
+    
+    git clone https://github.com/ALQO-Universe/ALQO.git
+    sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y
+    ./autogen.sh
+    ./configure --without-gui --disable-tests
+    make
     
     if [ $? -ne 0 ]; then
        echo 
@@ -225,7 +229,7 @@ function copy_binaries()
     
     chmod +x alqo{d,-cli}
     if [ ! -f '/usr/local/bin/alqo' ]; then
-      wget -O /usr/local/bin/alqo https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/aem > /dev/null 2>&1 #need a link to alqo script here#
+      wget -O /usr/local/bin/alqo https://raw.githubusercontent.com/captaingeeky/installers/master/alqo/alqo > /dev/null 2>&1 #need a link to alqo script here#
       chmod +x /usr/local/bin/alqo > /dev/null 2>&1
       echo "alias alqo='/usr/local/bin/alqo'" >> ~/.bashrc > /dev/null 2>&1
       . ~/.bashrc
