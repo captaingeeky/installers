@@ -162,6 +162,7 @@ function install_prerequisites()
     echo
     #addid this for libdbcxx
     echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
+    sudo apt-get update
     sudo apt-get install build-essential software-properties-common -y
 
     if [ $? -ne 0 ]; then
