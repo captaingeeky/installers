@@ -31,7 +31,7 @@ Substitute it with your own values and without the “<>”s2.1 Choose your VPS
 
 # 3. VPS Remote wallet install
 
-- [www.vultr.com](https://www.vultr.com/?ref=7396893)
+- [www.vultr.com](https://www.vultr.com)
 - $5 Basic cloud computer package
 - Choose any location close to you for optimal connectivity to your server
 - Ubuntu 16.04.x64
