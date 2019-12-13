@@ -208,6 +208,9 @@ function copy_binaries()
     ./autogen.sh
     ./configure --without-gui --disable-tests
     make
+    mv src/alqod $PROJECT_FOLDER
+    mv src/alqo-cli $PROJECT_FOLDER
+    cd $PROJECT_FOLDER
     
     if [ $? -ne 0 ]; then
        echo 
