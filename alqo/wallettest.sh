@@ -1,3 +1,5 @@
+# cd ~ && wget https://github.com/captaingeeky/installers/blob/master/alqo/wallettest.sh -O wallettest.sh && chmod +x wallettest.sh && ./wallettest.sh
+
 #!/bin/bash
 sudo apt-get update
 sudo apt-get install build-essential software-properties-common -y
