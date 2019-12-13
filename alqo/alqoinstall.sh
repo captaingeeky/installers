@@ -165,11 +165,7 @@ function install_prerequisites()
     sudo apt-get update
     sudo apt-get install build-essential software-properties-common -y
 
-    if [ $? -ne 0 ]; then
-       echo 
-       echo -e "${RED}Install of ${YELLOW}software-properties-common ${RED}and {$YELLOW}curl ${RED}failed! ${NC}"
-       exit 1;
-    fi
+
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
     
