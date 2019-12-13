@@ -81,7 +81,7 @@ function check_existing()
   #Get masternode.conf data to create new entry for QT wallet
   echo
   echo -e "${YELLOW}Masternode Transaction Information for masternode.conf in the QT Wallet${NC}"
-  echo -e "For this section, you will need the debug console of your QT wallet by going to ${GREEN}Tools ${NC}then ${GREEN}Debug Console.${NC}"
+  echo -e "For this section, you will need the debug console of your QT wallet by going to ${GREEN}Settings ${NC}then ${GREEN}Debug and ${YELLOW}Console.${NC}"
   echo -e "When executing the command ${GREEN}masternode outputs${NC}, you will see the following information (example):"
   echo -e "{"
   echo -e "  \"${RED}c8f4965ea57a68d0e6dd384324dfd28cfbe0c801015b973e7331db8ce018716999${NC}\": \"${YELLOW}1${NC}\","
