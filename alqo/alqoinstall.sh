@@ -120,9 +120,9 @@ function set_environment()
 function show_header()
 {
   clear
-  echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
+  echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
   echo -e "${YELLOW}$PROJECT Masternode Installer v$VERSION - chris and ALQO community 2019-2020"
-  echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
+  echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
   echo
   echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
   echo -e "It will:"
@@ -185,10 +185,10 @@ function install_prerequisites()
     fi
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
-    sudo apt install -y jq libdb4.8-dev libdb4.8++-dev > /dev/null 2>&1
+    sudo apt install -y jq libdb5.3-dev libdb5.3++-dev > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
-       echo -e "${RED}Install of ${YELLOW}libdb4.8 libraries ${RED}failed! ${NC}"
+       echo -e "${RED}Install of ${YELLOW}libdb5.3 libraries ${RED}failed! ${NC}"
        exit 1;
     fi
     echo -ne "${GREEN} >Progress: ${BLUE}[############--]${NC}\r"
