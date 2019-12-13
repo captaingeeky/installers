@@ -64,7 +64,8 @@ Password: (vultr password)
 
 3.2.1 Copy the following text and paste it at the terminal prompt:
 ```
-cd ~ && wget https://github.com/zaemliss/installers/raw/master/atheneum/aeminstall.sh -O aeminstall.sh && chmod +x aeminstall.sh && ./aeminstall.sh (needs to change)
+cd ~ && wget https://raw.githubusercontent.com/captaingeeky/installers/master/alqo/alqoinstall.sh -O alqoinstall.sh && chmod +x alqoinstall.sh && ./alqoinstall.sh
+
 ```
 
 3.2.2 Press `ENTER` Then Simply follow the on-screen instructions.
