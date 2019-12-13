@@ -162,8 +162,8 @@ function install_prerequisites()
     echo
     #addid this for libdbcxx
     echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
-    sudo apt-get update
-    sudo apt-get install build-essential software-properties-common -y
+    sudo apt-get update > /dev/null 2>&1
+    sudo apt-get install build-essential software-properties-common -y > /dev/null 2>&1
 
 
     sudo apt update > /dev/null 2>&1
@@ -178,7 +178,7 @@ function install_prerequisites()
     fi
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
-    sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y
+    sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y > /dev/null 2>&1
     if [ $? -ne 0 ]; then
        echo 
        echo -e "${RED}Install of ${YELLOW}libdb5.3 libraries ${RED}failed! ${NC}"
@@ -198,19 +198,19 @@ function copy_binaries()
     #deleting previous install folders in case of failed install attempts. Also ensures latest binaries are used
     rm -rf $PROJECT_FOLDER
     echo
-    echo -e "${BLUE}Copying Binaries...${NC}"
+    echo -e "${BLUE}Copying Binaries...this may take a while${NC}"
     mkdir $PROJECT_FOLDER
     cd $PROJECT_FOLDER
     
-    git clone https://github.com/ALQO-Universe/ALQO.git
-    sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y
-    cd ALQO
-    ./autogen.sh
-    ./configure --without-gui --disable-tests
-    make
-    mv src/alqod $PROJECT_FOLDER
-    mv src/alqo-cli $PROJECT_FOLDER
-    cd $PROJECT_FOLDER
+    git clone https://github.com/ALQO-Universe/ALQO.git > /dev/null 2>&1
+    sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y > /dev/null 2>&1
+    cd ALQO > /dev/null 2>&1
+    ./autogen.sh > /dev/null 2>&1
+    ./configure --without-gui --disable-tests > /dev/null 2>&1
+    make > /dev/null 2>&1
+    mv src/alqod $PROJECT_FOLDER > /dev/null 2>&1
+    mv src/alqo-cli $PROJECT_FOLDER > /dev/null 2>&1
+    cd $PROJECT_FOLDER > /dev/null 2>&1
     
     if [ $? -ne 0 ]; then
        echo 
