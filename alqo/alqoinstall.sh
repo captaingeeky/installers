@@ -63,7 +63,7 @@ function check_existing()
   IP_IN_USE=$(netstat -tulpn | grep :20480 | awk {'print $4'})
   
   echo -e "${RED}IMPORTANT - ${YELLOW} please make sure you don't select an IP that is already in use! ${RED}- IMPORTANT${NC}"
-  echo -e "${BLUE}IP List using port 20480 (Active Atheneum nodes):${NC}"
+  echo -e "${BLUE}IP List using port 20480 (Active ALQO nodes):${NC}"
   echo $IP_IN_USE
   echo
   echo -e "${GREEN}List of all IPs on this machine${NC}"
