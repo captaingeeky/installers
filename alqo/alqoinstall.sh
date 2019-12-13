@@ -93,6 +93,9 @@ function check_existing()
   echo -e "${BLUE}Please enter the TXOutput for that transaction generated in the debug console via ${YELLOW}masternode outputs ${NC}[0/1]"
   read -e -p " : " TX_OUT
   echo
+  echo -e "${BLUE}Please enter the masternode private key generated in the debug console via ${YELLOW}masternodegenkey ${NC}[0/1]"
+  read -e -p " : " MN_KEY
+  echo
   read -e -p "$(echo -e ${BLUE}Please enter the Alias for your new masternode : ${NC})" MN_ALIAS
   
   if [[ $DIR_COUNT -gt 0 ]]; then
@@ -279,7 +282,7 @@ maxconnections=256
 bind=$NEXT_AVAIL_IP
 externalip=$NEXT_AVAIL_IP:$MN_PORT
 masternode=1
-masternodeprivkey=$GENKEY
+masternodeprivkey=$MN_KEY
 #Addnodes (Addnodes not yet known)
 addnode=
 addnode=
@@ -324,7 +327,7 @@ function start_wallet()
     echo -e "${BLUE}If you are using Putty, just select the text. It will automatically go to your clipboard.${NC}"
     echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
     echo
-    echo -e "Paste this in your masternode.conf file (accessed via ${GREEN}on Windows: %Appdata%/alqocrypto on Linux: ~/ALQO ${NC}then ${GREEN}open masternode.conf file${NC})"
+    echo -e "Paste this in your masternode.conf file (accessed via ${GREEN}on Win %Appdata%/alqocrypto or Linux:~/ALQO ${NC}then ${GREEN}open masternode.conf file${NC})"
     echo
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
@@ -379,11 +382,11 @@ function start_wallet()
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
     read -n 1 -s -r -p "Press any key to continue"
     echo
-    MNSTATUS=$($CLI masternode debug)
+    MNSTATUS=$($CLI masternodedebug)
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation....${NC}"
     while [ "$MNSTATUS" != "Masternode successfully started" ]; do
-      MNSTATUS=$($CLI masternode debug)
-      sleep 2
+      MNSTATUS=$($CLI masternodedebug)
+      sleep 10
     done
     echo
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Masternode Activated!"
