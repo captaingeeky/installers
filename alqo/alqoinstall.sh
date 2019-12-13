@@ -11,7 +11,7 @@
 # restore stderr
 #exec 2>/dev/tty
 
-VERSION="TO BE DECIDED"
+VERSION="6.1"
 PROJECT="ALQO"
 PROJECT_FOLDER="$HOME/ALQO"
 DAEMON_BINARY="alqod"
@@ -59,11 +59,11 @@ function check_existing()
 
   echo -e "${YELLOW}Found ${BLUE} $DIR_COUNT ${YELLOW} $PROJECT Masternodes and ${BLUE} $IP_NUM ${YELLOW} IP addresses.${NC}"
 
-  #Now confirm available IPs by removing those that are already bound to 55500
-  IP_IN_USE=$(netstat -tulpn | grep :55500 | awk {'print $4'})
+  #Now confirm available IPs by removing those that are already bound to 20480
+  IP_IN_USE=$(netstat -tulpn | grep :20480 | awk {'print $4'})
   
   echo -e "${RED}IMPORTANT - ${YELLOW} please make sure you don't select an IP that is already in use! ${RED}- IMPORTANT${NC}"
-  echo -e "${BLUE}IP List using port 55500 (Active Atheneum nodes):${NC}"
+  echo -e "${BLUE}IP List using port 20480 (Active Atheneum nodes):${NC}"
   echo $IP_IN_USE
   echo
   echo -e "${GREEN}List of all IPs on this machine${NC}"
@@ -106,7 +106,7 @@ function set_environment()
 
   TMP_FOLDER=$(mktemp -d)
   RPC_USER="$PROJECT-Admin"
-  MN_PORT=55500
+  MN_PORT=20480
   RPC_PORT=$((15647+DIR_NUM))
 
   DAEMON="$PROJECT_FOLDER/$DAEMON_BINARY"
@@ -121,7 +121,7 @@ function show_header()
 {
   clear
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
-  echo -e "${YELLOW}$PROJECT Masternode Installer v$VERSION - chris and ALQO community 2019"
+  echo -e "${YELLOW}$PROJECT Masternode Installer v$VERSION - chris and ALQO community 2019-2020"
   echo -e "${RED}■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■${NC}"
   echo
   echo -e "${BLUE}This script will automate the installation of your ${YELLOW}$PROJECT ${BLUE}masternode along with the server configuration."
@@ -279,13 +279,11 @@ bind=$NEXT_AVAIL_IP
 externalip=$NEXT_AVAIL_IP:$MN_PORT
 masternode=1
 masternodeprivkey=$GENKEY
-
 #Addnodes (Addnodes not yet known)
 addnode=
 addnode=
 addnode=
 addnode=
-
 EOF
 }
 
