@@ -333,40 +333,40 @@ function start_wallet()
     echo
     $DAEMON_START
     echo -e "${BLUE}Starting Synchronization...${NC}"
-    sleep 3
-    APIBLOCKS=$(curl -s https://explorer.alqo.app/api/getblockcount) #exact link not yet known#
-    CURBLOCK=$($CLI getinfo | jq .blocks)
+    sleep 300
+    #APIBLOCKS=$(curl -s https://explorer.alqo.app/api/getblockcount) #exact link not yet known#
+    #CURBLOCK=$($CLI getinfo | jq .blocks)
 
-    echo -ne "${YELLOW}Current Block: ${GREEN}$APIBLOCKS${NC}\n\n"
-    echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $APIBLOCKS ${BLUE}...${NC} \r"
-    while [[ $CURBLOCK -lt $APIBLOCKS ]]; do
-      CURBLOCK=$($CLI getinfo | jq .blocks)
-      echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $APIBLOCKS ${BLUE}...${NC} \r"
-      sleep 2
-    done
-    echo
+    #echo -ne "${YELLOW}Current Block: ${GREEN}$APIBLOCKS${NC}\n\n"
+    #echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $APIBLOCKS ${BLUE}...${NC} \r"
+    #while [[ $CURBLOCK -lt $APIBLOCKS ]]; do
+    #  CURBLOCK=$($CLI getinfo | jq .blocks)
+    #  echo -ne "${BLUE} >syncing${YELLOW} $CURBLOCK ${BLUE}out of${YELLOW} $APIBLOCKS ${BLUE}...${NC} \r"
+    #  sleep 2
+    #done
+    #echo
     
-    MNSTATUS=$($CLI mnsync status | jq .RequestedMasternodeAssets)
-    while [ "$MNSTATUS" != 999 ]; do
-      GETSYNC=$($CLI mnsync status)
-      MNSYNC=$(echo $GETSYNC | jq .RequestedMasternodeAssets | tr -d '\"')
-      MNSTATUS=$($CLI mnsync status | jq .RequestedMasternodeAssets)
-      MNSTAGE=$(echo $GETSYNC | jq .RequestedMasternodeAttempt)
-      echo -ne "${YELLOW} >Masternode Sync Stage: ${BLUE}$MNSYNC ${YELLOW}attempt [${GREEN}$MNSTAGE of 8${YELLOW}]                \r"
-      sleep 2
-    done
+    #MNSTATUS=$($CLI mnsync status | jq .RequestedMasternodeAssets)
+    #while [ "$MNSTATUS" != 999 ]; do
+    #  GETSYNC=$($CLI mnsync status)
+    #  MNSYNC=$(echo $GETSYNC | jq .RequestedMasternodeAssets | tr -d '\"')
+    #  MNSTATUS=$($CLI mnsync status | jq .RequestedMasternodeAssets)
+    #  MNSTAGE=$(echo $GETSYNC | jq .RequestedMasternodeAttempt)
+    #  echo -ne "${YELLOW} >Masternode Sync Stage: ${BLUE}$MNSYNC ${YELLOW}attempt [${GREEN}$MNSTAGE of 8${YELLOW}]                \r"
+    #  sleep 2
+    #done
     
-    TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations) > /dev/null 2>&1
-    while (( TXSTATUS < 1 )); do
-      echo -ne "${YELLOW} >Waiting for the transaction to appear on the blockchain...${YELLOW}                \r"
-      sleep 15
-    done
+    #TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations) > /dev/null 2>&1
+    #while (( TXSTATUS < 1 )); do
+    #  echo -ne "${YELLOW} >Waiting for the transaction to appear on the blockchain...${YELLOW}                \r"
+    #  sleep 15
+    #done
     
-    while (( TXSTATUS < 15 )); do
-      TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations) > /dev/null 2>&1
-      echo -ne "${YELLOW} >Transaction Confirmation: ${BLUE}$TXSTATUS of 15${YELLOW}]                \r"
-      sleep 15
-    done
+    #while (( TXSTATUS < 15 )); do
+    #  TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations) > /dev/null 2>&1
+    #  echo -ne "${YELLOW} >Transaction Confirmation: ${BLUE}$TXSTATUS of 15${YELLOW}]                \r"
+    #  sleep 15
+    #done
     
     echo
     echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
@@ -384,8 +384,8 @@ function start_wallet()
     echo
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
     echo    
-    echo -e "${BLUE}Type ${YELLOW}aem.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}" #not sure about this line#
-    echo -e "${BLUE}Ex: ${GREEN}aem.sh atheneum2 masternode status ${NC}" #not sure about this line#
+    echo -e "${BLUE}Type ${YELLOW}alqo.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}" #not sure about this line#
+    echo -e "${BLUE}Ex: ${GREEN}alqo.sh alqo2 masternode status ${NC}" #not sure about this line#
     echo
 
     
