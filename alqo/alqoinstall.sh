@@ -204,6 +204,7 @@ function copy_binaries()
     
     git clone https://github.com/ALQO-Universe/ALQO.git
     sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y
+    cd ALQO
     ./autogen.sh
     ./configure --without-gui --disable-tests
     make
