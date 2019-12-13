@@ -1,4 +1,4 @@
-# cd ~ && wget https://github.com/captaingeeky/installers/blob/master/alqo/wallettest.sh -O wallettest.sh && chmod +x wallettest.sh && ./wallettest.sh
+# cd ~ && wget https://raw.githubusercontent.com/captaingeeky/installers/master/alqo/wallettest.sh -O wallettest.sh && chmod +x wallettest.sh && ./wallettest.sh
 
 #!/bin/bash
 sudo apt-get update
