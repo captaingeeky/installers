@@ -385,6 +385,7 @@ function start_wallet()
     MNSTATUS=$($CLI masternodedebug)
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Waiting for remote Activation....${NC}"
     while [ "$MNSTATUS" != "Masternode successfully started" ]; do
+      echo -e "${YELLOW} >Masternode Status : $MNSTATUS{NC}"
       MNSTATUS=$($CLI masternodedebug)
       sleep 10
     done
