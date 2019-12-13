@@ -71,4 +71,4 @@ cd ~ && wget https://github.com/zaemliss/installers/raw/master/atheneum/aeminsta
 
 # 4. Questions?
 
-If you have a problem or a question you can find us in the #support channel on our Discord. 
+If you have a problem or a question you can find us in the #general_support channel on our Discord - https://discord.gg/PkFQwne
