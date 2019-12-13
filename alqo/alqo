@@ -13,4 +13,4 @@ if [ -z $1 ]; then
         exit 1;
 fi
 
-/root/Atheneum/alqo-cli -datadir=/root/.$1 -conf=/root/.$1/alqo.conf $2 $3 $4
+/root/alqo/alqo-cli -datadir=/root/.$1 -conf=/root/.$1/alqo.conf $2 $3 $4
