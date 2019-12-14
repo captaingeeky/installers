@@ -56,6 +56,10 @@ rm alqo-cli
 wget https://github.com/ALQO-Universe/ALQO/releases/download/v6.2.0.0-d4d958e4f/ALQO-v6.2.0.0-d4d958e4f-lin64.tgz > /dev/null 2>&1
 tar zxvf ALQO-v6.2.0.0-d4d958e4f-lin64.tgz -C ~/ALQO  > /dev/null 2>&1
 
+
+mv ~/ALQO/ALQO-v6.2.0.0-d4d958e4f-lin64/alqod ~/ALQO
+mv ~/ALQO/ALQO-v6.2.0.0-d4d958e4f-lin64/alqo-cli ~/ALQO
+
 chmod +x ~/ALQO/alqod ~/ALQO/alqo-cli
 echo -e "${grn}Starting Daemon using datadir /.alqo"
 #$workDir/alqod -datadir=/root/.alqo -conf=/root/.alqo/alqo.conf -daemon
