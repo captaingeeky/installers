@@ -1,6 +1,9 @@
 == Blockchain ==
+
 getbestblockhash
+
 getblock "hash" ( verbose )
+
 getblockchaininfo
 getblockcount
 getblockhash index
