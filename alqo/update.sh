@@ -49,7 +49,6 @@ echo
 echo -e "${blu}Downloading new binaries...${clr}"
 sleep 10
 echo
-cd ALQO
 rm alqod
 rm alqo-cli
 
