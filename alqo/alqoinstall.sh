@@ -1,15 +1,6 @@
 
 #!/bin/bash
 #Masternode Installer script by chris and ALQO community, 2019.
-#exec >/dev/null
-# still shows the prompt
-#exec 2>/dev/null
-# now the prompt is gone, too
-
-# restore stdout
-#exec >/dev/tty
-# restore stderr
-#exec 2>/dev/tty
 
 VERSION="6.1"
 PROJECT="ALQO"
@@ -26,7 +17,8 @@ NC='\033[0m'
 printf '\e[48;5;0m'
 clear
 
-function checks() 
+#check for Ubuntu 16.04 and root user
+function checks()
 {
   if [[ ($(lsb_release -d) != *16.04*) ]]; then
       echo -e "${RED}You are not running Ubuntu 16.04. Installation is cancelled.${NC}"
@@ -50,7 +42,7 @@ function check_existing()
 
   #Get number of existing masternode directories
   DIR_COUNT=$(ls -la /root/ | grep "\.ALQO" | grep -c '^')
-  
+
   #Check if there are more IPs than existing nodes
   if [[ $DIR_COUNT -ge $IP_NUM ]]; then
     echo -e "${RED}Not enough available IP addresses to run another node! Please add other IPs to this VPS first.${NC}"
@@ -61,7 +53,7 @@ function check_existing()
 
   #Now confirm available IPs by removing those that are already bound to 20480
   IP_IN_USE=$(netstat -tulpn | grep :20480 | awk {'print $4'})
-  
+
   echo -e "${RED}IMPORTANT - ${YELLOW} please make sure you don't select an IP that is already in use! ${RED}- IMPORTANT${NC}"
   echo -e "${BLUE}IP List using port 20480 (Active ALQO nodes):${NC}"
   echo $IP_IN_USE
@@ -77,12 +69,12 @@ function check_existing()
   if [[ ("$CHOICE" == "n" || "$CHOICE" == "N") ]]; then
     exit 1;
   fi
-  
+
   #Get masternode.conf data to create new entry for QT wallet
   echo
   echo -e "${YELLOW}Masternode Transaction Information for masternode.conf in the QT Wallet${NC}"
   echo -e "For this section, you will need the debug console of your QT wallet by going to ${GREEN}Settings ${NC}then ${GREEN}Debug and ${GREEN}Console.${NC}"
-  echo -e "When executing the command ${GREEN}masternode outputs${NC}, you will see the following information (example):"
+  echo -e "When executing the command ${GREEN}getmasternodeoutputs${NC}, you will see the following information (example):"
   echo -e "{"
   echo -e "  \"${RED}c8f4965ea57a68d0e6dd384324dfd28cfbe0c801015b973e7331db8ce018716999${NC}\": \"${YELLOW}1${NC}\","
   echo -e "}"
@@ -93,11 +85,15 @@ function check_existing()
   echo -e "${BLUE}Please enter the TXOutput for that transaction generated in the debug console via ${YELLOW}masternode outputs ${NC}[0/1]"
   read -e -p " : " TX_OUT
   echo
+  echo -e "When executing the command ${GREEN}createmasternodekey${NC}, you will see the following information (example):"
+  echo -e "{"
+  echo -e "  \"${RED}85fGZkLUrAdNzPm7oUHM2tXTjb1D7pGAtkd82jxhQNuH15P8T5M${NC}\": \"${YELLOW}1${NC}\","
+  echo -e "}"
   echo -e "${BLUE}Please enter the masternode private key generated in the debug console via ${YELLOW}createmasternodekey ${NC}[0/1]"
   read -e -p " : " MN_KEY
   echo
   read -e -p "$(echo -e ${BLUE}Please enter the Alias for your new masternode : ${NC})" MN_ALIAS
-  
+
   if [[ $DIR_COUNT -gt 0 ]]; then
     DIR_NUM=$((DIR_COUNT+1))
   fi
@@ -171,11 +167,11 @@ function install_prerequisites()
 
     sudo apt update > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
-    
+
     echo -ne "${GREEN} >Progress: ${BLUE}[#######-------]\r"
     sudo add-apt-repository -y ppa:bitcoin/bitcoin > /dev/null 2>&1
     if [ $? -ne 0 ]; then
-       echo 
+       echo
        echo -e "${RED}Adding ${YELLOW}BITCOIN PPA ${RED}failed! ${NC}"
        exit 1;
     fi
@@ -183,13 +179,10 @@ function install_prerequisites()
     echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
     sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y > /dev/null 2>&1
     if [ $? -ne 0 ]; then
-       echo 
-       echo -e "${RED}Install of ${YELLOW}libdb5.3 libraries ${RED}failed! ${NC}"
+       echo
+       echo -e "${RED}Install of ${YELLOW}libdb4.8 libraries ${RED}failed! ${NC}"
        exit 1;
     fi
-    echo -ne "${GREEN} >Progress: ${BLUE}[############--]${NC}\r"
-    #end libdbcxx section
-  
     echo -ne "${GREEN} >Progress: ${BLUE}[##############]${NC}"
     echo
   fi
@@ -204,32 +197,32 @@ function copy_binaries()
     echo -e "${BLUE}Compiling the wallet...this may take a while${NC}"
     mkdir $PROJECT_FOLDER
     cd $PROJECT_FOLDER
-    echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
-    
+    echo -ne "${GREEN} >Progress: ${BLUE}[#-------------]\r"
+
     git clone https://github.com/ALQO-Universe/ALQO.git > /dev/null 2>&1
-    echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
+    echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
     sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y > /dev/null 2>&1
-    echo -ne "${GREEN} >Progress: ${BLUE}[#######-------]\r"
+    echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
     cd ALQO > /dev/null 2>&1
     ./autogen.sh > /dev/null 2>&1
-     echo -ne "${GREEN} >Progress: ${BLUE}[#########-----]\r"
+     echo -ne "${GREEN} >Progress: ${BLUE}[#######-------]\r"
     ./configure --without-gui --disable-tests > /dev/null 2>&1
-    echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
+    echo -ne "${GREEN} >Progress: ${BLUE}[########------]\r"
     make > /dev/null 2>&1
-    echo -ne "${GREEN} >Progress: ${BLUE}[############--]\r"
+    echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
     mv src/alqod $PROJECT_FOLDER > /dev/null 2>&1
     mv src/alqo-cli $PROJECT_FOLDER > /dev/null 2>&1
     cd $PROJECT_FOLDER > /dev/null 2>&1
     echo -ne "${GREEN} >Progress: ${BLUE}[##############]${NC}"
     if [ $? -ne 0 ]; then
-       echo 
+       echo
        echo -e "${RED}Getting latest binaries failed!${NC}"
        exit 1;
     fi
-    
+
     chmod +x alqo{d,-cli}
     if [ ! -f '/usr/local/bin/alqo' ]; then
-      wget -O /usr/local/bin/alqo https://raw.githubusercontent.com/captaingeeky/installers/master/alqo/alqo > /dev/null 2>&1 #need a link to alqo script here#
+      wget -O /usr/local/bin/alqo https://raw.githubusercontent.com/captaingeeky/installers/master/alqo/alqo > /dev/null 2>&1
       chmod +x /usr/local/bin/alqo > /dev/null 2>&1
       echo "alias alqo='/usr/local/bin/alqo'" >> ~/.bashrc > /dev/null 2>&1
       . ~/.bashrc
@@ -240,7 +233,6 @@ function copy_binaries()
       echo -e "${BLUE}Starting daemon ...(5 seconds)${NC}"
       echo -e "${YELLOW}Ignore any errors you see below. (5 seconds)${NC}"
       $DAEMON -daemon > /dev/null 2>&1
-#      PASSWORD=$(pwgen -s 64 1)
       sleep 10
       $STARTCLI stop
 cat <<EOF > $CONF_FILE
@@ -270,7 +262,7 @@ function create_conf_file()
   echo -e "${BLUE}Stopping the daemon and writing config (5 seconds)${NC}"
   $STARTCLI stop
   sleep 5
-  
+
 cat <<EOF > $CONF_FILE
 rpcuser=$RPC_USER
 rpcpassword=$PASSWORD
@@ -283,11 +275,11 @@ bind=$NEXT_AVAIL_IP
 externalip=$NEXT_AVAIL_IP:$MN_PORT
 masternode=1
 masternodeprivkey=$MN_KEY
-#Addnodes (Addnodes not yet known)
-addnode=
-addnode=
-addnode=
-addnode=
+#Addnodes
+addnode=45.77.199.41:20480
+addnode=95.179.140.175:20480
+addnode=166.48.188.231:20480
+addnode=84.65.3.34:20480
 EOF
 }
 
@@ -297,7 +289,7 @@ function configure_firewall()
   echo -e "${BLUE}setting up firewall...${NC}"
   sudo apt-get install -y ufw > /dev/null 2>&1
   sudo apt-get update -y > /dev/null 2>&1
-  
+
   #configure ufw firewall
   sudo ufw default allow outgoing > /dev/null 2>&1
   sudo ufw default deny incoming > /dev/null 2>&1
@@ -315,7 +307,7 @@ function add_cron()
 
 function start_wallet()
 {
-  
+
   echo
   echo -e "${BLUE}Re-Starting the wallet...${NC}"
   if [ -f $DAEMON ]; then
@@ -327,7 +319,7 @@ function start_wallet()
     echo -e "${BLUE}If you are using Putty, just select the text. It will automatically go to your clipboard.${NC}"
     echo -e "${BLUE}If you are using SSH, use CTRL-INSERT / CTRL-V${NC}"
     echo
-    echo -e "Paste this in your masternode.conf file (accessed via ${GREEN}on Windows: %Appdata%/alqocrypto on Linux: ~/ALQO ${NC}then ${GREEN}open masternode.conf file${NC})"
+    echo -e "Paste this in your masternode.conf file (accessed via ${GREEN}on Windows: %Appdata%/alqocrypto on Linux: ~/ALQO on OSX /Users/<username>/Library/Application Support/alqocrypto ${NC}then ${GREEN}open masternode.conf file${NC})"
     echo
     echo -e "${YELLOW}Typing the key out incorrectly is 99% of all installation issues. ${NC}"
     echo
@@ -341,7 +333,7 @@ function start_wallet()
     echo
     echo
     $DAEMON_START
-    echo -e "${BLUE}Starting Synchronization...${NC}"
+    echo -e "${BLUE}Starting Synchronization...please wait${NC}"
     sleep 300
     #APIBLOCKS=$(curl -s https://explorer.alqo.app/api/getblockcount) #exact link not yet known#
     #CURBLOCK=$($CLI getinfo | jq .blocks)
@@ -354,7 +346,7 @@ function start_wallet()
     #  sleep 2
     #done
     #echo
-    
+
     #MNSTATUS=$($CLI mnsync status | jq .RequestedMasternodeAssets)
     #while [ "$MNSTATUS" != 999 ]; do
     #  GETSYNC=$($CLI mnsync status)
@@ -364,19 +356,19 @@ function start_wallet()
     #  echo -ne "${YELLOW} >Masternode Sync Stage: ${BLUE}$MNSYNC ${YELLOW}attempt [${GREEN}$MNSTAGE of 8${YELLOW}]                \r"
     #  sleep 2
     #done
-    
+
     #TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations) > /dev/null 2>&1
     #while (( TXSTATUS < 1 )); do
     #  echo -ne "${YELLOW} >Waiting for the transaction to appear on the blockchain...${YELLOW}                \r"
     #  sleep 15
     #done
-    
+
     #while (( TXSTATUS < 15 )); do
     #  TXSTATUS=$($CLI getrawtransaction $TX_ID 1 | jq .confirmations) > /dev/null 2>&1
     #  echo -ne "${YELLOW} >Transaction Confirmation: ${BLUE}$TXSTATUS of 15${YELLOW}]                \r"
     #  sleep 15
     #done
-    
+
     echo
     echo -e "${YELLOW}After pressing any key to continue below, go to the masternodes tab / my masternodes in your QT wallet and Start Alias on your new node.${NC}"
     echo -e "${YELLOW}The command prompt will return once your node is started. If the Status goes to Expired in your QT wallet, please start alias again.${NC}"
@@ -393,12 +385,13 @@ function start_wallet()
     echo -e "${YELLOW} >Masternode Status : ${BLUE}Masternode Activated!"
     echo
     echo -e "${BLUE}Congratulations, you've set up your masternode!${NC}"
-    echo    
-    echo -e "${BLUE}Type ${YELLOW}alqo.sh <data directory> <command> ${BLUE} to interact with your server(s). ${NC}" #not sure about this line#
-    echo -e "${BLUE}Ex: ${GREEN}alqo.sh alqo2 masternode status ${NC}" #not sure about this line#
+    echo
+    #this uses another file to send requests to the different alqo datadirs
+    echo -e "${BLUE}Type ${YELLOW}alqo <data directory> <command> ${BLUE} to interact with your server(s). ${NC}"
+    echo -e "${BLUE}Ex: ${GREEN}alqo alqo2 masternode status ${NC}"
     echo
 
-    
+
   else
     RETVAL=$?
     echo -e "${RED}Binary not found! Please scroll up to see errors above : $RETVAL ${NC}"
@@ -408,7 +401,7 @@ function start_wallet()
 
 function cleanup()
 {
-    echo -e "${YELLOW}finalizing...${NC}" 
+    echo -e "${YELLOW}finalizing...${NC}"
 }
 
 function deploy()
