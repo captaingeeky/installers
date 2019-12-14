@@ -23,9 +23,9 @@ getaccountaddress <AnyNameForYourMasternode>
 – Be absolutely 100% sure that this is copied correctly. And then check it again. We cannot help you, if you send 10,000 ALQO to an incorrect address.
 4) Still in the control wallet, enter the command into the console:
 getmasternodeoutputs (This gets the proof of transaction of sending 10,000)
-5) Still on the main computer, we need to edit the masternode.conf. You can find the file in the ALQO data directory, by default in Windows: it’ll be %Appdata%/alqocrypto on Linux: ~/ALQO
+5) Still on the main computer, we need to edit the masternode.conf. You can find the file in the ALQO data directory, by default in Windows: it’ll be %Appdata%/alqocrypto on Linux: ~/alqocrypto
 Once you have the masternode.conf file open in a text editor, add the following line to it:
-<Name of Masternode(Use the name you entered earlier for simplicity)> <Unique IP address>:20480<The result of Step 1> <Result of Step 4> <The number after the long line in Step 4>
+<Name of Masternode(Use the name you entered earlier for simplicity)>alqocrypto <Unique IP address>:20480<The result of Step 1> <Result of Step 4> <The number after the long line in Step 4>
 Example: MN1 31.14.135.27:20480 892WPpkqbr7sr6Si4fdsfssjjapuFzAXwETCrpPJubnrmU6aKzh c8f4965ea57a68d0e6dd384324dfd28cfbe0c801015b973e7331db8ce018716999 1
 Substitute it with your own values and without the “<>”s
 
