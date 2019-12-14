@@ -16,7 +16,7 @@ sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config auto
 ./autogen.sh
 ./configure --without-gui --disable-tests
 make
-mv src/alqod ~/ALQO
-mv src/alqo-cli ~/ALQO
+mv src/alqod ~/build
+mv src/alqo-cli ~/build
 cd ~
 ls
