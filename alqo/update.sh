@@ -1,5 +1,5 @@
 #!/bin/bash
-# wget https://raw.githubusercontent.com/zaemliss/installers/master/atheneum/update.sh -O update.sh && chmod +x update.sh && ./update.sh
+# cd ~ && wget https://raw.githubusercontent.com/captaingeeky/installers/master/alqo/update.sh -O update.sh && chmod +x update.sh && ./update.sh
 
 VERSION="1.0.6"
 PROJECT="Alqo"
