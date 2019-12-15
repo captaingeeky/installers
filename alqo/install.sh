@@ -1,5 +1,6 @@
 # cd ~ && wget https://raw.githubusercontent.com/captaingeeky/installers/master/alqo/install.sh -O install.sh && chmod +x install.sh && ./install.sh
 #!/bin/bash
+Cur_Wallet=""
 red='\033[1;31m'
 grn='\033[1;32m'
 yel='\033[1;33m'
