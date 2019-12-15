@@ -11,11 +11,11 @@ sudo apt-get install build-essential software-properties-common -y
 sudo add-apt-repository ppa:bitcoin/bitcoin
 sudo apt-get update
 sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y
-wget https://github.com/ALQO-Universe/ALQO/releases/download/v6.2.0.0-d4d958e4f/ALQO-v6.2.0.0-d4d958e4f-lin64.tgz > /dev/null 2>&1
-tar zxvf ALQO-v6.2.0.0-d4d958e4f-lin64.tgz -C ~/ALQO  > /dev/null 2>&1
 cd ~
 mkdir ALQO
 cd ALQO
+wget https://github.com/ALQO-Universe/ALQO/releases/download/v6.2.0.0-d4d958e4f/ALQO-v6.2.0.0-d4d958e4f-lin64.tgz > /dev/null 2>&1
+tar zxvf ALQO-v6.2.0.0-d4d958e4f-lin64.tgz -C ~/ALQO  > /dev/null 2>&1
 mv ~/ALQO/ALQO-v6.2.0.0-d4d958e4f-lin64/alqod ~/ALQO
 mv ~/ALQO/ALQO-v6.2.0.0-d4d958e4f-lin64/alqo-cli ~/ALQO
 ./alqod -daemon
@@ -28,6 +28,7 @@ read -e -p " : " PASSWORD
 echo -e "${BLUE}Please enter the masternode IP Address${NC}[0/1]"
 read -e -p " : " IPADDRESS
 ./alqo-cli stop
+
 cat <<EOF > ~/.alqocrypto/alqo.conf
 rpcuser=$RPC_USER
 rpcpassword=$PASSWORD
@@ -45,7 +46,7 @@ addnode=95.179.140.175:20480
 addnode=166.48.188.231:20480
 addnode=84.65.3.34:20480
 EOF
-}
+
 
 ./alqod -daemon
 sleep 10
