@@ -1,4 +1,4 @@
-# cd ~ && wget https://raw.githubusercontent.com/captaingeeky/installers/master/alqo/wallettest.sh -O wallettest.sh && chmod +x wallettest.sh && ./wallettest.sh
+# cd ~ && wget https://raw.githubusercontent.com/captaingeeky/installers/master/alqo/install.sh -O install.sh && chmod +x install.sh && ./install.sh
 #!/bin/bash
 red='\033[1;31m'
 grn='\033[1;32m'
