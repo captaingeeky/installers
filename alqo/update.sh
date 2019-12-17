@@ -63,7 +63,9 @@ chmod +x ~/ALQO/alqod ~/ALQO/alqo-cli
 echo -e "${grn}Starting Daemon using datadir /.alqo"
 #$workDir/alqod -datadir=/root/.alqo -conf=/root/.alqo/alqo.conf -daemon
 cd ~/ALQO  > /dev/null 2>&1
-./alqod -daemon
+./alqod -daemon -resync
+sleep 4
+./alqo-cli addnode 45.32.136.6:20480 add
 #if [[ $DIR_COUNT -gt 1 ]]; then
   #for i in `seq 2 $DIR_COUNT`;
   #  do
