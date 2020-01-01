@@ -12,7 +12,7 @@ echo
 echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
 sudo apt-get update  > /dev/null 2>&1
 sudo apt-get install build-essential software-properties-common -y  > /dev/null 2>&1
-sudo add-apt-repository ppa:bitcoin/bitcoin  > /dev/null 2>&1
+sudo add-apt-repository ppa:bitcoin/bitcoin -y > /dev/null 2>&1
 echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
 sudo apt-get update  > /dev/null 2>&1
 sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y  > /dev/null 2>&1
