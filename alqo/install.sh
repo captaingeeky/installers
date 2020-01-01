@@ -17,11 +17,19 @@ echo -ne "${grn} >Progress: ${blu}[#####---------]\r"
 sudo apt-get update  > /dev/null 2>&1
 sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y  > /dev/null 2>&1
 echo -ne "${grn} >Progress: ${blu}[#######-------]\r"
-fallocate -l 3G /swapfile	  > /dev/null 2>&1
-chmod 600 /swapfile	  > /dev/null 2>&1
-mkswap /swapfile  > /dev/null 2>&1
-swapon /swapfile  > /dev/null 2>&1
-echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+CHKSWAP=`free | grep Swap | awk '{print $2}'`
+if [ "CHKSWAP" == "0" ]
+then
+  fallocate -l 3G /swapfile      > /dev/null 2>&1
+  chmod 600 /swapfile      > /dev/null 2>&1
+  mkswap /swapfile  > /dev/null 2>&1
+  swapon /swapfile  > /dev/null 2>&1
+  echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+else
+  echo "Swap already exists, not creating..."
+fi
+
 cd ~
 mkdir ALQO
 cd ALQO
