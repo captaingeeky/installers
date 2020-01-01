@@ -7,16 +7,16 @@ yel='\033[1;33m'
 blu='\033[1;36m'
 clr='\033[0m'
 echo
-echo -ne "${BLUE}Installing Requisites${NC}"
+echo -ne "${blu}Installing Requisites${NC}"
 echo
-echo -ne "${GREEN} >Progress: ${BLUE}[###-----------]\r"
+echo -ne "${grn} >Progress: ${BLUE}[###-----------]\r"
 sudo apt-get update  > /dev/null 2>&1
 sudo apt-get install build-essential software-properties-common -y  > /dev/null 2>&1
 sudo add-apt-repository ppa:bitcoin/bitcoin -y > /dev/null 2>&1
-echo -ne "${GREEN} >Progress: ${BLUE}[#####---------]\r"
+echo -ne "${grn} >Progress: ${BLUE}[#####---------]\r"
 sudo apt-get update  > /dev/null 2>&1
 sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y  > /dev/null 2>&1
-echo -ne "${GREEN} >Progress: ${BLUE}[#######-------]\r"
+echo -ne "${grn} >Progress: ${BLUE}[#######-------]\r"
 fallocate -l 3G /swapfile	  > /dev/null 2>&1
 chmod 600 /swapfile	  > /dev/null 2>&1
 mkswap /swapfile  > /dev/null 2>&1
@@ -25,12 +25,12 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 cd ~
 mkdir ALQO
 cd ALQO
-echo -ne "${GREEN} >Progress: ${BLUE}[##########----]\r"
+echo -ne "${grn} >Progress: ${BLUE}[##########----]\r"
 wget https://github.com/ALQO-Universe/ALQO/releases/download/v6.3.0.0-c7fc25cad/ALQO-v6.3.0.0-c7fc25cad-lin64.tgz > /dev/null 2>&1
 tar zxvf ALQO-v6.3.0.0-c7fc25cad-lin64.tgz -C ~/ALQO  > /dev/null 2>&1
 mv ~/ALQO/ALQO-v6.3.0.0-c7fc25cad-lin64/alqod ~/ALQO
 mv ~/ALQO/ALQO-v6.3.0.0-c7fc25cad-lin64/alqo-cli ~/ALQO
-echo -ne "${GREEN} >Progress: ${BLUE}[##############]${NC}"
+echo -ne "${grn} >Progress: ${BLUE}[##############]${NC}"
 ./alqod -daemon
 echo -e "${blu}Please enter the masternode private key generated in the debug console via ${yel}createmasternodekey ${NC}[0/1]"
 read -e -p " : " MN_KEY
@@ -50,7 +50,7 @@ server=1
 daemon=1
 logintimestamps=1
 maxconnections=256
-externalip=$IPADDRESS:20480
+externalip=$IPADDRESS
 masternode=1
 masternodeprivkey=$MN_KEY
 #Addnodes
