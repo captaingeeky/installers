@@ -34,10 +34,10 @@ cd ~
 mkdir ALQO
 cd ALQO
 echo -ne "${grn} >Progress: ${blu}[##########----]\r"
-wget https://github.com/ALQO-Universe/ALQO/releases/download/v6.3.0.0-c7fc25cad/ALQO-v6.3.0.0-c7fc25cad-lin64.tgz > /dev/null 2>&1
-tar zxvf ALQO-v6.3.0.0-c7fc25cad-lin64.tgz -C ~/ALQO  > /dev/null 2>&1
-mv ~/ALQO/ALQO-v6.3.0.0-c7fc25cad-lin64/alqod ~/ALQO
-mv ~/ALQO/ALQO-v6.3.0.0-c7fc25cad-lin64/alqo-cli ~/ALQO
+wget https://github.com/ALQO-Universe/ALQO/releases/download/v6.4.0.0-7d5f56499/ALQO-v6.4.0.0-7d5f56499-lin64.tgz > /dev/null 2>&1
+tar zxvf ALQO-v6.4.0.0-7d5f56499-lin64.tgz -C ~/ALQO  > /dev/null 2>&1
+mv ~/ALQO/ALQO-v6.4.0.0-7d5f56499-lin64/alqod ~/ALQO
+mv ~/ALQO/ALQO-v6.4.0.0-7d5f56499-lin64/alqo-cli ~/ALQO
 echo -ne "${grn} >Progress: ${blu}[##############]${NC}"
 ./alqod -daemon
 echo -e "${blu}Please enter the masternode private key generated in the debug console via ${yel}createmasternodekey ${NC}[0/1]"
