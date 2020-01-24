@@ -57,7 +57,7 @@ tar zxvf ALQO-v6.4.0.0-7d5f56499-legacylin64.tgz -C ~/ALQO  > /dev/null 2>&1
 
 
 mv ~/ALQO/ALQO-v6.4.0.0-7d5f56499-legacylin64/alqod ~/ALQO
-mv ~/ALQO/ALQO-v6.4.0.0-7d5f56499-legacylin64.tgz/alqo-cli ~/ALQO
+mv ~/ALQO/ALQO-v6.4.0.0-7d5f56499-legacylin64/alqo-cli ~/ALQO
 
 chmod +x ~/ALQO/alqod ~/ALQO/alqo-cli
 echo -e "${grn}Starting Daemon using datadir /.alqo"
