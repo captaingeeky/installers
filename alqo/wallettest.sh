@@ -17,5 +17,8 @@ sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config auto
 make
 mv src/alqod ~/ALQO
 mv src/alqo-cli ~/ALQO
-cd ~
+cd ~/ALQO
+./alqod -daemon
+sleep 10
+./alqo-cli stop
 ls
