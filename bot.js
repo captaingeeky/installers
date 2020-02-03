@@ -10,10 +10,10 @@ bot.on('ready', () => {
     setInterval(function() {
   console.log("I am doing my 5 minutes check");
   // do your stuff here
-  cmc.requestCoinBySymbol('BTC', 'price')
+  cmc.requestCoinBySymbol('ALQO', 'price')
   	.then(data => {
-      bot.user.setUsername("XLQ Price: " + data);
-  		console.log(data);
+      bot.user.setUsername("XLQ Price " + data);
+  		console.log(date.now() + " price " + data);
   	})
   	.catch(error => {
   		console.error("error");
