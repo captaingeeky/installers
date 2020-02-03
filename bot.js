@@ -6,14 +6,14 @@ const bot = new Discord.Client();
 const genchannel = `415334876129263653`;
 bot.on('ready', () => {
     console.log(' >NameCheck Bot Ready....');
-    var minutes = 5, the_interval = minutes * 60 * 1000;
+    var minutes = 20, the_interval = minutes * 60 * 1000;
     setInterval(function() {
   console.log("I am doing my 5 minutes check");
   // do your stuff here
   cmc.requestCoinBySymbol('XLQ', 'price')
   	.then(data => {
-      console.log(datetime.now().toString + " price " + data.toString().slice(0,6));
-      bot.user.setNickname("XLQ-USD " + data.toString().slice(0,6));
+      console.log(datetime.now().toString + " price " + data.toString());
+      bot.user.setUsername("XLQ-USD " + data.toString().slice(0,6));
   	})
   	.catch(error => {
   		console.error(error);
