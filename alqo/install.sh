@@ -15,16 +15,15 @@ sudo apt-get install build-essential software-properties-common -y  > /dev/null 
 sudo add-apt-repository ppa:bitcoin/bitcoin -y > /dev/null 2>&1
 echo -ne "${grn} >Progress: ${blu}[#####---------]\r"
 
-sudo add-apt-repository ppa:ubuntu-toolchain-r/test  > /dev/null 2>&1
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get dist-upgrade   
 
+sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y
 
-sudo apt-get install libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 libssl-dev libgmp-dev libevent-dev libboost-all-dev libdb4.8-dev libdb4.8++-dev libzmq3-dev libminiupnpc-dev -y  > /dev/null 2>&1
-
-sudo apt-get install gcc-4.9  > /dev/null 2>&1
-sudo apt-get upgrade libstdc++6  > /dev/null 2>&1
+sudo apt-get install gcc-4.9
+sudo apt-get upgrade libstdc++6
 echo -ne "${grn} >Progress: ${blu}[#######-------]\r"
 
 CHKSWAP=`free | grep Swap | awk '{print $2}'`
