@@ -10,7 +10,7 @@ bot.on('ready', () => {
     setInterval(function() {
   console.log("I am doing my 5 minutes check");
   // do your stuff here
-  cmc.requestCoinBySymbol('ALQO', 'price')
+  cmc.requestCoinBySymbol('XLQ', 'price')
   	.then(data => {
       bot.user.setNickname("XLQ Price " + data);
   		console.log(date.now() + " price " + data);
