@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const botconfig = require('./botconfig.json');
-let cmc_api = require('cmc-api');
+const cmc_api = require('cmc-info');
 let cmc = new cmc_api(botconfig.cmctoken);
 const bot = new Discord.Client();
 const genchannel = `415334876129263653`;
