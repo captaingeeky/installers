@@ -8,7 +8,7 @@ bot.on('ready', () => {
 
 bot.on('guildMemberAdd', member => {
         var nameCheck = member.displayName.toUpperCase()
-        // add uppercase || (or) conditions to the list for more names to check
+        // add uppercase || (or) conditions to the list for more names to check here
         if(["JARED GREY", "TOMWRX", "DAVID WILSON", "FELIX HUBER", "NASH"].find(name => nameCheck === name)) {
           const genchannel = bot.channels.get(`415334876129263653`);
             genchannel.send(member.displayName + " is impersonating a user !!!");
