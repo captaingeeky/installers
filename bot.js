@@ -21,7 +21,7 @@ bot.on('guildMemberAdd', member => {
 bot.on('guildMemberUpdate', (oldMember, newMember) => {
     if (oldMember.displayName !== newMember.displayName || oldMember.user.username !== newMember.user.username) {
         var nameCheck = newMember.displayName.toUpperCase()
-        // add uppercase || (or) conditions to the list for more names to check here!!
+        // add uppercase || (or) conditions to the list for more names to check here
         if(["JARED GREY", "TOMWRX", "DAVID WILSON", "FELIX HUBER", "NASH"].find(name => nameCheck === name)) {
           const genchannel = bot.channels.get(`415334876129263653`);
              genchannel.send(oldMember.displayName + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
