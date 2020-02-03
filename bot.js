@@ -13,7 +13,7 @@ bot.on('ready', () => {
   cmc.requestCoinBySymbol('XLQ', 'price')
   	.then(data => {
       console.log(" price " + data.toString());
-      bot.user.setUsername("XLQ-USD " + data.toString().slice(1,5));
+      bot.user.setUsername("XLQ-USD $" + data.toString().slice(1,5));
   	})
   	.catch(error => {
   		console.error(error);
