@@ -13,6 +13,7 @@ bot.on('guildMemberAdd', member => {
           const genchannel = bot.channels.get(`415334876129263653`);
             genchannel.send(member.displayName + " is impersonating a user !!!");
             //member.ban()
+            member.setNickname('SCAMMER');
               console.log(member.displayName + " is impersonating a user !!!");
         }
 });
@@ -26,6 +27,7 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
              genchannel.send(oldMember.displayName + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
              //member.ban()
                console.log(oldMember.displayName + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
+               member.setNickname('SCAMMER');
         }
     }
 });
