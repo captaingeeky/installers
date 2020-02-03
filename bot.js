@@ -3,7 +3,7 @@ const botconfig = require('./botconfig.json');
 const cmc_api = require('cmc-info');
 let cmc = new cmc_api(botconfig.cmctoken);
 const bot = new Discord.Client();
-const genchannel = `415334876129263653`;
+const genchannel = `655917250791997470`; //bot_test on alqo discord: 655917250791997470  captgeektest: 415334876129263653
 bot.on('ready', () => {
     console.log(' >NameCheck Bot Ready....');
     var minutes = 20, the_interval = minutes * 60 * 1000;
