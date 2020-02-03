@@ -6,7 +6,7 @@ const bot = new Discord.Client();
 const genchannel = `655917250791997470`; //bot_test on alqo discord: 655917250791997470  captgeektest: 415334876129263653
 bot.on('ready', () => {
     console.log(' >NameCheck Bot Ready....');
-    var minutes = 20, the_interval = minutes * 60 * 1000;
+    var minutes = 5, the_interval = minutes * 60 * 1000;
     setInterval(function() {
   console.log("I am doing my 5 minutes check");
   // do your stuff here
