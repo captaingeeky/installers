@@ -12,7 +12,7 @@ bot.on('ready', () => {
   // do your stuff here
   cmc.requestCoinBySymbol('ALQO', 'price')
   	.then(data => {
-      bot.user.setUsername("XLQ Price " + data);
+      bot.user.setNickname("XLQ Price " + data);
   		console.log(date.now() + " price " + data);
   	})
   	.catch(error => {
