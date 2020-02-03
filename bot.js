@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const botconfig = require('./botconfig.json');
 const bot = new Discord.Client();
-
+const genchannel = bot.channels.get(`415334876129263653`);
 bot.on('ready', () => {
     console.log(' >NameCheck Bot Ready....');
 });
@@ -10,11 +10,9 @@ bot.on('guildMemberAdd', member => {
         var nameCheck = member.displayName.toUpperCase()
         // add uppercase || (or) conditions to the list for more names to check here
         if(["JARED GREY", "TOMWRX", "DAVID WILSON", "FELIX HUBER", "NASH"].find(name => nameCheck === name)) {
-          const genchannel = bot.channels.get(`415334876129263653`);
-            genchannel.send(member.displayName + " is impersonating a user !!!");
-            //member.ban()
-          
-              console.log(member.displayName + " is impersonating a user !!!");
+            genchannel.send(member.user.tag + " is impersonating " + member.displayName);
+            //member.ban();
+            console.log(member.user.tag + " is impersonating " + member.displayName);
         }
 });
 
@@ -23,14 +21,11 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
         var nameCheck = newMember.displayName.toUpperCase()
         // add uppercase || (or) conditions to the list for more names to check here
         if(["JARED GREY", "TOMWRX", "DAVID WILSON", "FELIX HUBER", "NASH"].find(name => nameCheck === name)) {
-          const genchannel = bot.channels.get(`415334876129263653`);
-             genchannel.send(oldMember.displayName + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
-             //newmember.ban()
-               console.log(oldMember.displayName + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
-
+             genchannel.send(oldMember.user.tag + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
+             //newmember.ban();
+             console.log(oldMember.user.tag + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
         }
     }
 });
-
 
 bot.login(botconfig.token);
