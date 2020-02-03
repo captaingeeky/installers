@@ -10,7 +10,7 @@ bot.on('guildMemberAdd', member => {
         var nameCheck = member.displayName.toUpperCase()
         // add uppercase || (or) conditions to the list for more names to check
         if(["JARED GREY", "TOMWRX", "DAVID WILSON", "FELIX HUBER", "NASH"].find(name => nameCheck === name)) {
-          const genchannel = bot.channels.find(channel => channel.name === "general_chat");
+          const genchannel = bot.channels.get(`415334876129263653`);
             genchannel.send(member.displayName + " is impersonating a user !!!");
             //member.ban()
               console.log(member.displayName + " is impersonating a user !!!");
@@ -22,7 +22,7 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
         var nameCheck = newMember.displayName.toUpperCase()
         // add uppercase || (or) conditions to the list for more names to check
         if(["JARED GREY", "TOMWRX", "DAVID WILSON", "FELIX HUBER", "NASH"].find(name => nameCheck === name)) {
-          const genchannel = bot.channels.find(channel => channel.name === "general_chat");
+          const genchannel = bot.channels.get(`415334876129263653`);
              genchannel.send(oldMember.displayName + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
              //member.ban()
                console.log(oldMember.displayName + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
