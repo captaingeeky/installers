@@ -27,7 +27,7 @@ bot.on('guildMemberUpdate', (oldMember, newMember) => {
              genchannel.send(oldMember.displayName + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
              //member.ban()
                console.log(oldMember.displayName + " is impersonating a user and has changed his name to " + newMember.displayName + " ! ");
-               member.setNickname('SCAMMER');
+               newMember.setNickname('SCAMMER');
         }
     }
 });
