@@ -1,9 +1,26 @@
 const Discord = require('discord.js');
 const botconfig = require('./botconfig.json');
+let cmc_api = require('./cmc-api.js');
+let cmc = new cmc_api(cmctoken);
 const bot = new Discord.Client();
 const genchannel = `415334876129263653`;
 bot.on('ready', () => {
     console.log(' >NameCheck Bot Ready....');
+    var minutes = 5, the_interval = minutes * 60 * 1000;
+    setInterval(function() {
+  console.log("I am doing my 5 minutes check");
+  // do your stuff here
+  cmc.requestCoinBySymbol('BTC', 'price')
+  	.then(data => {
+      bot.user.setUsername("XLQ Price: " + data);
+  		console.log(data);
+  	})
+  	.catch(error => {
+  		console.error("error");
+  	});
+
+
+}, the_interval);
 });
 
 bot.on('guildMemberAdd', member => {
