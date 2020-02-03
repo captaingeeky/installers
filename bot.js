@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const botconfig = require('./botconfig.json');
 const bot = new Discord.Client();
-const genchannel = bot.guild.channels.find(channel => channel.name === "general_chat");
+const genchannel = bot.channels.find(channel => channel.name === "general_chat");
 bot.on('ready', () => {
     console.log(' >NameCheck Bot Ready....');
 });
